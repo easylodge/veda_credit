@@ -1,0 +1,1539 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- ? Copyright Veda Advantage Information Services and Solutions Ltd 2007 --><!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by nancy (private) --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+    
+    
+    
+    <xs:complexType name="errorType">
+        <xs:sequence>
+            <xs:element ref="error-type"/>
+            <xs:element ref="input-container"/>
+            <xs:element ref="error-description"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="error-typeType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="code" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="error-descriptionType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="code" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    
+    
+    <xs:element name="input-container" type="xs:string"/>
+    <xs:element name="general-message" type="xs:string"/>
+    <xs:element name="error-type" type="error-typeType"/>
+    <xs:element name="error-description" type="error-descriptionType"/>
+
+	
+	
+	<xs:element name="bureau-reference" type="xs:string"/>
+
+	
+	
+    <xs:element name="family-name" type="xs:string"/>
+    <xs:element name="first-given-name" type="xs:string"/>
+    <xs:element name="other-given-name" type="xs:string"/>
+
+	<xs:complexType name="individual-nameType">
+		<xs:sequence>
+			<xs:element ref="family-name" minOccurs="0"/>
+			<xs:element ref="first-given-name" minOccurs="0"/>
+			<xs:element ref="other-given-name" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:attributeGroup name="create-date-response">
+		<xs:attribute name="create-date" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+
+	<xs:complexType name="individual-cross-referenceType">
+		<xs:sequence>
+			<xs:element ref="bureau-reference" minOccurs="0"/>
+			<xs:element name="individual-name" type="individual-nameType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="create-date-response"/>
+	</xs:complexType>
+
+	
+    <xs:complexType name="BCAservice-dataType">
+        <xs:choice>
+            <xs:element ref="response"/>
+            <xs:element name="BCAerror">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="BCAerror-code" type="xs:string"/>
+                        <xs:element name="BCAerror-description" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="type" type="xs:string" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="BCAservice-code" type="xs:string"/>
+    <xs:element name="BCAservice-code-version" type="xs:string"/>
+    <xs:element name="BCAservice-client-ref" type="xs:string"/>
+    <xs:element name="BCAservices">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="BCAservice"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="BCAservice">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="BCAservice-code"/>
+                <xs:element ref="BCAservice-code-version"/>
+                <xs:element ref="BCAservice-client-ref"/>
+                <xs:element name="BCAservice-data">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="BCAservice-dataType"/>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="BCAmessageType">
+        <xs:sequence>
+            <xs:element ref="BCAservices"/>
+        </xs:sequence>
+        <xs:attribute name="service-request-id" type="xs:string" use="required"/>
+        <xs:attribute name="type" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+	
+	
+	
+	
+	
+    <xs:attributeGroup name="countryCodes">
+        <xs:attribute name="country-code" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AU"/>
+                    <xs:enumeration value="NZ"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="countryCodesRequired">
+        <xs:attribute name="country-code" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AU"/>
+                    <xs:enumeration value="NZ"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="countryCodesEmpty">
+        <xs:attribute name="country-code" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+
+	<xs:element name="drivers-licence-number">
+		<xs:annotation>
+			<xs:documentation>{country-code} optional AU or NZ</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attributeGroup ref="countryCodes"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+	
+	
+	
+	
+	<xs:element name="state" type="xs:string"/>
+
+	<xs:complexType name="addressType">
+		<xs:sequence>
+			<xs:element name="unit-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="property" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-name" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-type" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="code" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suburb" type="xs:string" minOccurs="0"/>
+			<xs:element name="city" type="xs:string" minOccurs="0"/>
+			<xs:element ref="state" minOccurs="0"/>
+			<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+			<xs:element name="country" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="countryCodes"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:attributeGroup name="address-individual-indicators">
+		<xs:annotation>
+			<xs:documentation>Individual types</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="residential-current"/>
+					<xs:enumeration value="residential-previous"/>
+					<xs:enumeration value="postal"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="address-individual-indicators-response">
+		<xs:annotation>
+			<xs:documentation>Individual types - response</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="residential-current"/>
+					<xs:enumeration value="residential-previous"/>
+					<xs:enumeration value="postal"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="address-create-date">
+		<xs:annotation>
+			<xs:documentation>used with Individual response</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="create-date" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="address-legal-entity-indicators">
+		<xs:annotation>
+			<xs:documentation>legal entity  types</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="registered-office"/>
+					<xs:enumeration value="trading-address"/>
+					<xs:enumeration value="principal-place-of-business"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="address-first-reported-date">
+		<xs:annotation>
+			<xs:documentation>used with trading address response</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="first-reported-date" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="address-legal-entity-request-indicators">
+		<xs:annotation>
+			<xs:documentation>trading address only</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="trading-address"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	
+	<xs:complexType name="individual-extensionType">
+		<xs:sequence>
+			<xs:element name="individual-name" minOccurs="0">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="individual-nameType">
+							<xs:attributeGroup ref="address-create-date"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="gender" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="type" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="male"/>
+								<xs:enumeration value="female"/>
+								<xs:enumeration value="unknown"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="date-of-birth" type="xs:string" minOccurs="0"/>
+			<xs:element ref="drivers-licence-number" minOccurs="0"/>
+			<xs:element name="address" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="addressType">
+							<xs:attributeGroup ref="address-individual-indicators-response"/>
+							<xs:attributeGroup ref="address-create-date"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="employment" type="individual-employmentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individual-employmentType">
+		<xs:sequence>
+			<xs:element name="employer" type="xs:string" minOccurs="0"/>
+			<xs:element name="occupation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="create-date" type="xs:string"/>
+		<xs:attributeGroup ref="countryCodes"/>
+	</xs:complexType>
+
+	
+	
+	
+	
+    <xs:element name="client-reference" type="xs:string"/>
+
+	
+  <xs:element name="co-borrower" type="xs:string"/>
+
+	
+	
+	<xs:element name="credit-provider" type="xs:string"/>
+
+	
+	<xs:element name="date-recorded" type="xs:string"/>
+
+	
+	
+	<xs:attributeGroup name="currency-codeType">
+		<xs:attribute name="currency-code">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AUD"/>
+					<xs:enumeration value="NZD"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:element name="default-amount">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attributeGroup ref="currency-codeType"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+	
+	<xs:attributeGroup name="consumerReasonCodes">
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="DC"/>
+					<xs:enumeration value="PD"/>
+					<xs:enumeration value="SA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="consumerReasonCodes-response">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="DC"/>
+					<xs:enumeration value="PD"/>
+					<xs:enumeration value="SA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialReasonCodes">
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="CX"/>
+					<xs:enumeration value="DC"/>
+					<xs:enumeration value="II"/>
+					<xs:enumeration value="IS"/>
+					<xs:enumeration value="JD"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="OA"/>
+					<xs:enumeration value="PD"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="RC"/>
+					<xs:enumeration value="RL"/>
+					<xs:enumeration value="SA"/>
+					<xs:enumeration value="VS"/>
+					<xs:enumeration value="WO"/>
+					<xs:enumeration value="WX"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialReasonCodes-response">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="CX"/>
+					<xs:enumeration value="DC"/>
+					<xs:enumeration value="II"/>
+					<xs:enumeration value="IS"/>
+					<xs:enumeration value="JD"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="OA"/>
+					<xs:enumeration value="PD"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="RC"/>
+					<xs:enumeration value="RL"/>
+					<xs:enumeration value="SA"/>
+					<xs:enumeration value="VS"/>
+					<xs:enumeration value="WO"/>
+					<xs:enumeration value="WX"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	
+	<xs:attributeGroup name="consumerRoleCodes">
+		<xs:attribute name="role" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="principal"/>
+					<xs:enumeration value="co-borrower"/>
+					<xs:enumeration value="joint"/>
+					<xs:enumeration value="guarantor"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialRoleCodes">
+		<xs:attribute name="role" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="principal"/>
+					<xs:enumeration value="co-borrower"/>
+					<xs:enumeration value="joint"/>
+					<xs:enumeration value="guarantor"/>
+					<xs:enumeration value="director"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="relationshipCodes">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="insured"/>
+					<xs:enumeration value="co-insured"/>
+					<xs:enumeration value="driver"/>
+					<xs:enumeration value="insurable-interest"/>
+					<xs:enumeration value="third-party-claimant"/>
+					<xs:enumeration value="witness"/>
+					<xs:enumeration value="claimant"/>
+					<xs:enumeration value="defendant"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="consumerRoleTypeCodes">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="principal"/>
+					<xs:enumeration value="co-borrower"/>
+					<xs:enumeration value="joint"/>
+					<xs:enumeration value="guarantor"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="consumerRoleTypeCodes-response">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="principal"/>
+					<xs:enumeration value="co-borrower"/>
+					<xs:enumeration value="joint"/>
+					<xs:enumeration value="guarantor"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialRoleTypeCodes">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="principal"/>
+					<xs:enumeration value="co-borrower"/>
+					<xs:enumeration value="joint"/>
+					<xs:enumeration value="guarantor"/>
+					<xs:enumeration value="director"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialRoleTypeCodes-response">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="principal"/>
+					<xs:enumeration value="co-borrower"/>
+					<xs:enumeration value="joint"/>
+					<xs:enumeration value="guarantor"/>
+					<xs:enumeration value="director"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="relationshipTypeCodes">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="insured"/>
+					<xs:enumeration value="co-insured"/>
+					<xs:enumeration value="driver"/>
+					<xs:enumeration value="insurable-interest"/>
+					<xs:enumeration value="third-party-claimant"/>
+					<xs:enumeration value="witness"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	
+	<xs:attributeGroup name="consumerAccountTypeCodes">
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CC"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="CM"/>
+					<xs:enumeration value="DB"/>
+					<xs:enumeration value="LC"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="T"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="UA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="consumerAccountTypeCodes-response">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CC"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="CM"/>
+					<xs:enumeration value="DB"/>
+					<xs:enumeration value="LC"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="T"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="UA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialAccountTypeCodes">
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BF"/>
+					<xs:enumeration value="BS"/>
+					<xs:enumeration value="CD"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="CP"/>
+					<xs:enumeration value="CR"/>
+					<xs:enumeration value="D"/>
+					<xs:enumeration value="DB"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="HC"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="LP"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="PF"/>
+					<xs:enumeration value="PL"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="SR"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="TF"/>
+					<xs:enumeration value="UA"/>
+					<xs:enumeration value="WF"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="30"/>
+					<xs:enumeration value="60"/>
+					<xs:enumeration value="90"/>
+					<xs:enumeration value="DA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialAccountTypeCodes-response">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BF"/>
+					<xs:enumeration value="BS"/>
+					<xs:enumeration value="CD"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="CP"/>
+					<xs:enumeration value="CR"/>
+					<xs:enumeration value="D"/>
+					<xs:enumeration value="DB"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="HC"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="LP"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="PF"/>
+					<xs:enumeration value="PL"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="SR"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="TF"/>
+					<xs:enumeration value="UA"/>
+					<xs:enumeration value="WF"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="30"/>
+					<xs:enumeration value="60"/>
+					<xs:enumeration value="90"/>
+					<xs:enumeration value="DA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="allAccountTypeCodes">
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BF"/>
+					<xs:enumeration value="BS"/>
+					<xs:enumeration value="CC"/>
+					<xs:enumeration value="CD"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="CM"/>
+					<xs:enumeration value="CP"/>
+					<xs:enumeration value="CR"/>
+					<xs:enumeration value="D"/>
+					<xs:enumeration value="DA"/>
+					<xs:enumeration value="DB"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="HC"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="LC"/>
+					<xs:enumeration value="LP"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="PF"/>
+					<xs:enumeration value="PL"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="SR"/>
+					<xs:enumeration value="T"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="TF"/>
+					<xs:enumeration value="UA"/>
+					<xs:enumeration value="WF"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="30"/>
+					<xs:enumeration value="60"/>
+					<xs:enumeration value="90"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="allAccountTypeCodes-response">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BF"/>
+					<xs:enumeration value="BS"/>
+					<xs:enumeration value="CC"/>
+					<xs:enumeration value="CD"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="CM"/>
+					<xs:enumeration value="CP"/>
+					<xs:enumeration value="CR"/>
+					<xs:enumeration value="D"/>
+					<xs:enumeration value="DA"/>
+					<xs:enumeration value="DB"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="HC"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="LC"/>
+					<xs:enumeration value="LP"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="PF"/>
+					<xs:enumeration value="PL"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="SR"/>
+					<xs:enumeration value="T"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="TF"/>
+					<xs:enumeration value="UA"/>
+					<xs:enumeration value="WF"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="30"/>
+					<xs:enumeration value="60"/>
+					<xs:enumeration value="90"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:complexType name="consumer-defaultType">
+		<xs:sequence>
+			<xs:element name="account-details" type="consumer-account-detailsType" minOccurs="0"/>
+			<xs:element name="original-default" type="consumer-default-amount-detailsType" minOccurs="0"/>
+			<xs:element name="current-default" type="consumer-default-amount-detailsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="consumer-account-detailsType">
+		<xs:sequence>
+			<xs:element name="account-type" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="consumerAccountTypeCodes-response"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="client-reference" minOccurs="0"/>
+			<xs:element name="role" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="consumerRoleTypeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="co-borrower" minOccurs="0"/>
+			<xs:element name="default-status" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="date" type="xs:string" use="optional"/>
+							<xs:attribute name="code" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="consumer-default-amount-detailsType">
+		<xs:sequence>
+			<xs:element ref="date-recorded" minOccurs="0"/>
+			<xs:element ref="default-amount" minOccurs="0"/>
+			<xs:element name="reason-to-report" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="consumerReasonCodes-response"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="credit-provider" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="file-noteType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="date-recorded" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	
+	
+	
+	<xs:complexType name="current-credit-providerType">
+		<xs:sequence>
+			<xs:element ref="credit-provider" minOccurs="0"/>
+			<xs:element ref="client-reference" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="date-provided" type="xs:string"/>
+	</xs:complexType>
+
+	
+	
+	<xs:attributeGroup name="consumer-credit-enquiryType">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-application"/>
+					<xs:enumeration value="authorised-agent-enquiry"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="consumer-credit-enquiryType-response">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-application"/>
+					<xs:enumeration value="authorised-agent-enquiry"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercial-credit-enquiryType">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-enquiry"/>
+					<xs:enumeration value="credit-review"/>
+					<xs:enumeration value="authorised-agent-enquiry"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercial-credit-enquiryType-response">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-enquiry"/>
+					<xs:enumeration value="credit-review"/>
+					<xs:enumeration value="authorised-agent-enquiry"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="individual-credit-enquiryType">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-application"/>
+					<xs:enumeration value="credit-enquiry"/>
+					<xs:enumeration value="credit-review"/>
+					<xs:enumeration value="authorised-agent-enquiry"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="individual-credit-enquiryType-response">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-application"/>
+					<xs:enumeration value="credit-enquiry"/>
+					<xs:enumeration value="credit-review"/>
+					<xs:enumeration value="authorised-agent-enquiry"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="company-business-credit-enquiryType-request">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-enquiry"/>
+					<xs:enumeration value="credit-review"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="company-business-credit-enquiryType-response">
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="credit-enquiry"/>
+					<xs:enumeration value="broker-dealer-enquiry"/>
+					<xs:enumeration value="credit-review"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="company-business-broker-dealer-enquiryType-request">
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="broker-dealer"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	
+	
+	
+	
+	
+	
+	
+	<xs:element name="enquiry-amount">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attributeGroup ref="currency-codeType"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+	
+	<xs:element name="credit-enquirer" type="xs:string"/>
+
+	<xs:complexType name="consumer-credit-enquiryType">
+		<xs:sequence>
+			<xs:element name="account-type" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="consumerAccountTypeCodes-response"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="enquiry-amount" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="currency-codeType"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="role" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="consumerRoleTypeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="co-borrower" minOccurs="0"/>
+			<xs:element ref="credit-enquirer" minOccurs="0"/>
+			<xs:element ref="client-reference" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="consumer-credit-enquiryType-response"/>
+		<xs:attribute name="enquiry-date" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	
+  <xs:element name="file-message" type="xs:string"/>
+
+	<xs:complexType name="individual-consumer-credit-fileType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="individual-cross-reference" type="individual-cross-referenceType"/>
+			<xs:element name="default" type="consumer-defaultType"/>
+			<xs:element name="file-note" type="file-noteType"/>
+			<xs:element name="current-credit-provider" type="current-credit-providerType"/>
+			<xs:element name="credit-enquiry" type="consumer-credit-enquiryType"/>
+			<xs:element ref="file-message"/>
+		</xs:choice>
+	</xs:complexType>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:complexType name="commercial-default-amount-detailsType">
+		<xs:sequence>
+			<xs:element ref="date-recorded" minOccurs="0"/>
+			<xs:element ref="default-amount" minOccurs="0"/>
+			<xs:element name="reason-to-report" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="commercialReasonCodes-response"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="credit-provider" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="commercial-defaultType">
+		<xs:complexContent>
+			<xs:extension base="commercial-default-detailsType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="commercial-default-detailsType">
+		<xs:sequence>
+			<xs:element name="account-details" type="commercial-account-detailsType" minOccurs="0"/>
+			<xs:element name="original-default" type="commercial-default-amount-detailsType" minOccurs="0"/>
+			<xs:element name="current-default" type="commercial-default-amount-detailsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="commercial-account-detailsType">
+		<xs:sequence>
+			<xs:element name="account-type" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="commercialAccountTypeCodes-response"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="client-reference" minOccurs="0"/>
+			<xs:element name="role" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="commercialRoleTypeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="co-borrower" minOccurs="0"/>
+			<xs:element name="default-status" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="date" type="xs:string" use="optional"/>
+							<xs:attribute name="code" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:complexType name="commercial-credit-enquiryType">
+		<xs:sequence>
+			<xs:element name="account-type" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="commercialAccountTypeCodes-response"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="enquiry-amount" minOccurs="0"/>
+			<xs:element name="role" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="commercialRoleTypeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="co-borrower" minOccurs="0"/>
+			<xs:element ref="credit-enquirer" minOccurs="0"/>
+			<xs:element ref="client-reference" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="commercial-credit-enquiryType-response"/>
+		<xs:attribute name="enquiry-date" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	
+	<xs:complexType name="individual-commercial-credit-fileType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="individual-cross-reference" type="individual-cross-referenceType"/>
+			<xs:element name="default" type="commercial-defaultType"/>
+			<xs:element name="file-note" type="file-noteType"/>
+			<xs:element name="current-credit-provider" type="current-credit-providerType"/>
+			<xs:element name="credit-enquiry" type="commercial-credit-enquiryType"/>
+			<xs:element ref="file-message"/>
+		</xs:choice>
+	</xs:complexType>
+
+	
+	
+	
+	
+	
+    <xs:element name="creditor" type="xs:string"/>
+
+	
+	
+	<xs:element name="court-action-amount">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attributeGroup ref="currency-codeType"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="court-action-status">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="date" type="xs:string" use="optional"/>
+					<xs:attribute name="code" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string"/>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="action-date" type="xs:string"/>
+	<xs:element name="court-type" type="xs:string"/>
+	<xs:element name="plaint-number" type="xs:string"/>
+
+	<xs:complexType name="court-actionType">
+		<xs:sequence>
+			<xs:element ref="action-date" minOccurs="0"/>
+			<xs:element ref="creditor" minOccurs="0"/>
+			<xs:element ref="court-action-amount" minOccurs="0"/>
+			<xs:element ref="plaint-number" minOccurs="0"/>
+			<xs:element ref="court-type" minOccurs="0"/>
+			<xs:element name="role" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="commercialRoleTypeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="co-borrower" minOccurs="0"/>
+			<xs:element ref="court-action-status" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="default-judgement"/>
+					<xs:enumeration value="court-writ"/>
+					<xs:enumeration value="court-summons"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	
+	<xs:complexType name="disqualified-directorshipType">
+		<xs:sequence>
+			<xs:element ref="date-disqualified" minOccurs="0"/>
+			<xs:element ref="date-disqualified-until" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="date-disqualified" type="xs:string"/>
+	<xs:element name="date-disqualified-until" type="xs:string"/>
+
+	
+	
+	
+  <xs:element name="date-appointed" type="xs:string"/>
+
+	<xs:element name="date-ceased" type="xs:string"/>
+	<xs:element name="date-last-known-as-director" type="xs:string"/>
+
+	
+	
+	<xs:attributeGroup name="organisation-typeCodes">
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="PTY"/>
+					<xs:enumeration value="P/L"/>
+					<xs:enumeration value="N/L"/>
+					<xs:enumeration value="INC"/>
+					<xs:enumeration value="LTD"/>
+					<xs:enumeration value="R/B"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="organisation-typeCodes-response">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="PTY"/>
+					<xs:enumeration value="P/L"/>
+					<xs:enumeration value="N/L"/>
+					<xs:enumeration value="INC"/>
+					<xs:enumeration value="LTD"/>
+					<xs:enumeration value="R/B"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="organisation-nameCodes">
+		<xs:attribute name="name-start-date" type="xs:string" use="optional"/>
+		<xs:attribute name="asic-search-date" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="organisationCodes">
+		<xs:attribute name="file-create-date" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="previous-organisation-typeCodes">
+		<xs:attribute name="code" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="PTY"/>
+					<xs:enumeration value="P/L"/>
+					<xs:enumeration value="N/L"/>
+					<xs:enumeration value="INC"/>
+					<xs:enumeration value="LTD"/>
+					<xs:enumeration value="R/B"/>
+					<xs:enumeration value="*"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	
+  <xs:element name="australian-business-number" type="xs:string"/>
+
+	
+    <xs:element name="organisation-number" type="xs:string"/>
+
+	
+	
+	<xs:complexType name="organisationPlusBureauType">
+		<xs:sequence>
+			<xs:element ref="bureau-reference" minOccurs="0"/>
+			<xs:element name="organisation-name" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attributeGroup ref="organisation-nameCodes"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="organisation-type" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="organisation-typeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="organisation-details" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="organisation-status" minOccurs="0">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="code" use="optional">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="APPR"/>
+													<xs:enumeration value="DRGD"/>
+													<xs:enumeration value="EXAD"/>
+													<xs:enumeration value="EXMQ"/>
+													<xs:enumeration value="NRGD"/>
+													<xs:enumeration value="PEND"/>
+													<xs:enumeration value="SOFF"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="organisation-number" minOccurs="0"/>
+			<xs:element ref="australian-business-number" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="directorshipType">
+		<xs:sequence>
+			<xs:element ref="date-appointed" minOccurs="0"/>
+			<xs:element ref="date-ceased" minOccurs="0"/>
+			<xs:element ref="date-last-known-as-director" minOccurs="0"/>
+			<xs:element name="organisation" type="organisationPlusBureauType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="current"/>
+					<xs:enumeration value="previous"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	
+	
+	
+    
+	<xs:element name="number" type="xs:string"/>
+
+    
+    <xs:complexType name="business-registrationType">
+        <xs:sequence>
+            <xs:element ref="state" minOccurs="0"/>
+            <xs:element ref="number" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	
+	
+	<xs:element name="business-name" type="xs:string"/>
+
+	
+	
+	<xs:complexType name="businessPlusBureauType">
+		<xs:sequence>
+			<xs:element ref="bureau-reference" minOccurs="0"/>
+			<xs:element ref="business-name" minOccurs="0"/>
+			<xs:element name="business-registration" type="business-registrationType" minOccurs="0"/>
+			<xs:element ref="australian-business-number" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="proprietorshipType">
+		<xs:sequence>
+			<xs:element ref="date-appointed" minOccurs="0"/>
+			<xs:element name="business" type="businessPlusBureauType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	
+	
+	
+	
+	<xs:complexType name="bankruptcyType">
+		<xs:sequence>
+			<xs:element ref="bankruptcy-type" minOccurs="0"/>
+			<xs:element ref="date-declared" minOccurs="0"/>
+			<xs:element ref="narrative" minOccurs="0"/>
+			<xs:element name="proceedings" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="state" minOccurs="0"/>
+						<xs:element ref="year" minOccurs="0"/>
+						<xs:element ref="number" minOccurs="0"/>
+						<xs:element name="proceedings-status" minOccurs="0">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="type" use="optional">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="part 9"/>
+													<xs:enumeration value="part 10"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="discharge-status" minOccurs="0"/>
+			<xs:element name="role" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="commercialRoleTypeCodes-response"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="co-borrower" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="bankruptcy-type">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="code" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string"/>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="discharge-status">
+		<xs:complexType>
+			<xs:attribute name="type" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="discharged"/>
+						<xs:enumeration value="completed"/>
+						<xs:enumeration value="not-discharged-not-completed"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="date" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="date-declared" type="xs:string"/>
+	<xs:element name="narrative" type="xs:string"/>
+	<xs:element name="year" type="xs:string"/>
+
+	
+	<xs:complexType name="individual-public-data-fileType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="court-action" type="court-actionType"/>
+			<xs:element name="disqualified-directorship" type="disqualified-directorshipType"/>
+			<xs:element name="directorship" type="directorshipType"/>
+			<xs:element name="proprietorship" type="proprietorshipType"/>
+			<xs:element name="bankruptcy" type="bankruptcyType"/>
+			<xs:element ref="file-message"/>
+		</xs:choice>
+	</xs:complexType>
+
+	
+	
+	<xs:complexType name="summary-dataType">
+		<xs:sequence>
+			<xs:element name="summary" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" use="optional"/>
+							<xs:attribute name="type" use="optional">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="count"/>
+										<xs:enumeration value="months"/>
+										<xs:enumeration value="amount"/>
+										<xs:enumeration value="years"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="currency-code" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="score-dataType">
+		<xs:sequence>
+			<xs:element name="score" type="scoreType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoreType">
+		<xs:sequence>
+			<xs:element ref="scorecard-model" minOccurs="0"/>
+			<xs:element ref="relative-risk" minOccurs="0"/>
+			<xs:element ref="vedascore-1.1-index" minOccurs="0"/>
+			<xs:element name="applicant-odds" minOccurs="0"/>
+			<xs:element name="contributing-factor" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="contributing-factorType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="population" type="populationType" minOccurs="0"/>
+			<xs:element name="veda-score" minOccurs="0"/>
+			<xs:element name="percentile" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="populationType">
+		<xs:sequence>
+			<xs:element ref="population-odds" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="contributing-factorType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="impact" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="population-name" type="xs:string"/>
+	<xs:element name="population-odds" type="xs:string"/>
+	<xs:element name="relative-risk" type="xs:string"/>
+	<xs:element name="vedascore-1.1-index" type="xs:string"/>
+	<xs:element name="scorecard-model" type="xs:string"/>
+
+	<xs:complexType name="individual-enquiry-reportType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="primary-match" type="primary-matchType" minOccurs="0"/>
+			<xs:element name="summary-data" type="summary-dataType" minOccurs="0"/>
+			<xs:element name="score-data" type="score-dataType" minOccurs="0"/>
+			<xs:element name="possible-match" type="possible-matchType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="primary-matchType">
+		<xs:sequence>
+			<xs:element ref="bureau-reference" minOccurs="0"/>
+			<xs:element name="individual" type="individual-extensionType" minOccurs="0"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="individual-consumer-credit-file" type="individual-consumer-credit-fileType" minOccurs="0"/>
+				<xs:element name="individual-commercial-credit-file" type="individual-commercial-credit-fileType" minOccurs="0"/>
+				<xs:element name="individual-public-data-file" type="individual-public-data-fileType" minOccurs="0"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="create"/>
+					<xs:enumeration value="strong"/>
+					<xs:enumeration value="no-match"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="possible-matchType">
+		<xs:sequence>
+			<xs:element ref="bureau-reference" minOccurs="0"/>
+			<xs:element name="individual" type="individual-extensionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="response">
+		<xs:annotation>
+			<xs:documentation>Root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="enquiry-reportType">
+					<xs:attribute name="version" type="xs:string"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BCAmessage" type="BCAmessageType">
+		<xs:annotation>
+			<xs:documentation>Root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="enquiry-reportType">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="enquiry-report" type="individual-enquiry-reportType" minOccurs="0"/>
+				<xs:element ref="general-message" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:element name="error" type="errorType"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
