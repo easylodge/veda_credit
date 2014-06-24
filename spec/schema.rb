@@ -1,7 +1,7 @@
 ActiveRecord::Schema.define do
 self.verbose = false
 
-  create_table :veda_requests do |t|
+  create_table :veda_credit_requests do |t|
     t.text :xml
     t.text :access
     t.text :product
@@ -13,7 +13,7 @@ self.verbose = false
     # t.date_time :updated_at
   end
 
-  create_table :veda_responses  do |t|
+  create_table :veda_credit_responses  do |t|
     t.text :headers
     t.integer :code
     t.text :xml

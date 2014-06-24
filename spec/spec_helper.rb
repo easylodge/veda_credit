@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'veda'
+require 'veda_credit'
 require 'shoulda/matchers'
 require_relative 'helpers/constants'
 include Helpers

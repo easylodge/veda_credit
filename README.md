@@ -1,4 +1,4 @@
-# Veda
+# Veda Credit
 
 Ruby gem to make requests to Veda Credit service. Website: [https://www.veda.com.au](https://www.veda.com.au/) Saves both requests and responses to db.
 
@@ -6,7 +6,7 @@ Ruby gem to make requests to Veda Credit service. Website: [https://www.veda.com
 
 Add this line to your application's Gemfile:
 
-    gem 'veda'
+    gem 'veda_credit'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Then run install generator:
 	
-	rails g veda:install
+	rails g veda_credit:install
 
 Then run migrations:
 
@@ -26,7 +26,7 @@ Then run migrations:
 ### Request
 
 
-    request = Veda::Request.create(access: access_hash, product: product_hash, entity: entity_hash, enquiry: enquiry_hash)
+    request = VedaCredit::Request.create(access: access_hash, product: product_hash, entity: entity_hash, enquiry: enquiry_hash)
 
 Attributes for access_hash:
 
@@ -73,7 +73,7 @@ Attributes for enquiry_hash:
 
 #### Class Methods:
 
-    Veda::Request.access - Veda access details hash as defined by 'config/veda_config.yml'
+    VedaCredit::Request.access - Veda access details hash as defined by 'config/veda_config.yml'
 
 #### Instance Methods:
 
@@ -88,7 +88,7 @@ Attributes for enquiry_hash:
 
 ### Response
 
-    response = Veda::Response.create(xml: request.body, headers: request.headers, code: request.code, request_id: request.id)
+    response = VedaCredit::Response.create(xml: request.body, headers: request.headers, code: request.code, request_id: request.id)
 
 #### Instance Methods:
 
