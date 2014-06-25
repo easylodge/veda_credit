@@ -153,7 +153,7 @@ module VedaCredit
     end
 
  		def schema
-			fname = File.expand_path(File.dirname(__FILE__) + '/Vedascore-individual-enquiries-request-version-1.1.xsd')
+			fname = File.expand_path('../../lib/assets/Vedascore-individual-enquiries-request-version-1.1.xsd', File.dirname(__FILE__) )
 			File.read(fname)
 		end
 

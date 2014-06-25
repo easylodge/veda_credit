@@ -1,8 +1,7 @@
 module VedaCredit
   class Response < ActiveRecord::Base
     self.table_name = "veda_credit_responses"
-    self.primary_key = :id
-
+    
     belongs_to :request, dependent: :destroy
 
     serialize :headers
@@ -11,19 +10,15 @@ module VedaCredit
 
     validates :request_id, presence: true
     validates :xml, presence: true
+    validates :headers, presence: true
+    validates :code, presence: true
+    validates :success, presence: true
 
-    after_initialize :to_struct!
+    after_initialize :to_struct
     
     def to_hash!
       Hash.from_xml(self.xml)
     end
-
-    # def match
-    #   match = VedaCredit::Response.nested_hash_value(self.to_hash!, "primary_match")
-    #   if match  
-    #     RecursiveOpenStruct.new(self.to_hash!["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"])
-    #   end
-    # end
 
     def self.nested_hash_value(obj,key)
       if obj.respond_to?(:key?) && obj.key?(key)
@@ -36,18 +31,18 @@ module VedaCredit
     end
 
     def error
-      # connection_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "BCAerror")
-      # product_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "error")
-      # if connection_error || product_error
-      #   connection_error || product_error
-      if self.success?
-        "No error"
-      else
+      connection_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "BCAerror")
+      product_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "error")
+      if connection_error || product_error
+        connection_error || product_error
+      elsif !self.success? 
         self.xml
+      else        
+        "No Error"
       end
     end
 
-    def to_struct!
+    def to_struct
       if self.xml
         self.struct = RecursiveOpenStruct.new(self.to_hash!["BCAmessage"])
       end
@@ -62,7 +57,7 @@ module VedaCredit
     end
 
     def schema
-      fname = File.expand_path(File.dirname(__FILE__) + '/Vedascore-individual-enquiries-response-version-1.1.xsd')
+      fname = File.expand_path('../../lib/assets/Vedascore-individual-enquiries-response-version-1.1.xsd', File.dirname(__FILE__) )
       File.read(fname)
     end
 	
