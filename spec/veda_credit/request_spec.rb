@@ -116,17 +116,7 @@ describe VedaCredit::Request do
         end
       end
 
-      describe ".struct" do
-        it "returns struct of xml body" do
-          expect(@request.struct.class).to eq(RecursiveOpenStruct)
-        end
-
-        it "accesses nested attributes" do
-          expect(@request.struct.type).to eq('REQUEST')
-        end
-      end
-
-  		describe ".xml" do
+      describe ".xml" do
         it "returns a xml request" do
   				expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
   			end

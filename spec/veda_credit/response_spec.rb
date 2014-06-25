@@ -55,7 +55,7 @@ describe VedaCredit::Response do
       
       before(:all) do 
         @post = @request.post
-        @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, request_id: @request.id)
+        @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
         
       
@@ -91,17 +91,23 @@ describe VedaCredit::Response do
         it "accesses nested attributes" do
           expect(@response.struct.type).to eq('RESPONSE')
         end
-      end 
-		
-      describe ".match" do
-        it "returns the primary match as open struct" do
-           expect(@response.match.class).to eq(RecursiveOpenStruct)
-        end
-
-        it "accesses nested attributes"  do
-          expect(@response.match.individual.individual_name.first_given_name).to eq("DORE")
-        end
       end
+
+      describe '.success?' do
+        it "returns true" do
+          expect(@response.success?).to eq(true)
+        end
+      end       
+		
+      # describe ".match" do
+      #   it "returns the primary match as open struct" do
+      #      expect(@response.match.class).to eq(RecursiveOpenStruct)
+      #   end
+
+      #   it "accesses nested attributes"  do
+      #     expect(@response.match.individual.individual_name.first_given_name).to eq("DORE")
+      #   end
+      # end
     end
   
   
@@ -118,7 +124,7 @@ describe VedaCredit::Response do
               }
       @request = VedaCredit::Request.new(access: access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
-      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, request_id: @request.id)
+      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
         
     it "has error response" do
@@ -139,7 +145,7 @@ describe VedaCredit::Response do
               }
       @request = VedaCredit::Request.new(access: @access_hash, product: product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
-      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, request_id: @request.id)
+      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
     
     it "has error response" do
@@ -163,7 +169,7 @@ describe VedaCredit::Response do
               }
       @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
-      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, request_id: @request.id)
+      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: success?, request_id: @request.id)
       end
         
       it "has error response" do

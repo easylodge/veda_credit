@@ -7,10 +7,7 @@ self.verbose = false
     t.text :product
     t.text :entity
     t.text :enquiry
-    t.text :struct
     t.timestamps
-    # t.date_time :created_at
-    # t.date_time :updated_at
   end
 
   create_table :veda_credit_responses  do |t|
@@ -18,10 +15,8 @@ self.verbose = false
     t.integer :code
     t.text :xml
     t.text :struct
-    t.text :match
+    t.boolean :success
     t.integer :request_id
     t.timestamps
-    # t.date_time :created_at
-    # t.date_time :updated_at
   end
 end

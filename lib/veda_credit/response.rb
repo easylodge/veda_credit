@@ -18,12 +18,12 @@ module VedaCredit
       Hash.from_xml(self.xml)
     end
 
-    def match
-      match = VedaCredit::Response.nested_hash_value(self.to_hash!, "primary_match")
-      if match  
-        RecursiveOpenStruct.new(self.to_hash!["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"])
-      end
-    end
+    # def match
+    #   match = VedaCredit::Response.nested_hash_value(self.to_hash!, "primary_match")
+    #   if match  
+    #     RecursiveOpenStruct.new(self.to_hash!["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"])
+    #   end
+    # end
 
     def self.nested_hash_value(obj,key)
       if obj.respond_to?(:key?) && obj.key?(key)
@@ -36,12 +36,14 @@ module VedaCredit
     end
 
     def error
-      connection_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "BCAerror")
-      product_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "error")
-      if connection_error || product_error
-        connection_error || product_error
-      else
+      # connection_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "BCAerror")
+      # product_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "error")
+      # if connection_error || product_error
+      #   connection_error || product_error
+      if self.success?
         "No error"
+      else
+        self.xml
       end
     end
 

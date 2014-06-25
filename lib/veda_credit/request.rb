@@ -9,68 +9,68 @@ module VedaCredit
     serialize :product
     serialize :entity
     serialize :enquiry
-    serialize :struct
+    # serialize :struct
 
     validates :access, presence: true
     validates :product, presence: true
     validates :entity, presence: true
     validates :enquiry, presence: true
 
-    after_initialize :to_xml!, :to_struct!
+    after_initialize :to_xml!
 
     
-    def self.access
-      if !defined?(Rails).nil?
-        rails_config = YAML.load_file('config/veda_config.yml')
-        access = {
-          :url => rails_config["url"],
-          :access_code => rails_config["access_code"],
-          :password => rails_config["password"],
-          :subscriber_id => rails_config["subscriber_id"],
-          :security_code => rails_config["security_code"],
-          :request_mode => rails_config["request_mode"] 
-        }
-        if access[:access_code].nil?
-          "Fill in your veda details in 'config/veda_config.yml"
-        else
-          access
-        end
+    # def self.access
+    #   if !defined?(Rails).nil?
+    #     rails_config = YAML.load_file('config/veda_config.yml')
+    #     access = {
+    #       :url => rails_config["url"],
+    #       :access_code => rails_config["access_code"],
+    #       :password => rails_config["password"],
+    #       :subscriber_id => rails_config["subscriber_id"],
+    #       :security_code => rails_config["security_code"],
+    #       :request_mode => rails_config["request_mode"] 
+    #     }
+    #     if access[:access_code].nil?
+    #       "Fill in your veda details in 'config/veda_config.yml"
+    #     else
+    #       access
+    #     end
 
-      elsif defined?(Rails).nil?
-        if File.read('dev_veda_access.yml')
-          dev_config = YAML.load_file('dev_veda_access.yml')
-          access = {
-            :url => dev_config["url"],
-            :access_code => dev_config["access_code"],
-            :password => dev_config["password"],
-            :subscriber_id => dev_config["subscriber_id"],
-            :security_code => dev_config["security_code"],
-            :request_mode => dev_config["request_mode"]
-          }
-        else
-          "Create 'dev_details_access.yml' in project root with:
-            url: 'https://ctaau.vedaxml.com/cta/sys1'
-            access_code: 'your details'
-            password: 'your details'
-            subscriber_id: 'your details'
-            security_code: 'your details'
-            request_mode: 'test'
-          "
-        end   
-      end
-    end  
+    #   elsif defined?(Rails).nil?
+    #     if File.read('dev_veda_access.yml')
+    #       dev_config = YAML.load_file('dev_veda_access.yml')
+    #       access = {
+    #         :url => dev_config["url"],
+    #         :access_code => dev_config["access_code"],
+    #         :password => dev_config["password"],
+    #         :subscriber_id => dev_config["subscriber_id"],
+    #         :security_code => dev_config["security_code"],
+    #         :request_mode => dev_config["request_mode"]
+    #       }
+    #     else
+    #       "Create 'dev_details_access.yml' in project root with:
+    #         url: 'https://ctaau.vedaxml.com/cta/sys1'
+    #         access_code: 'your details'
+    #         password: 'your details'
+    #         subscriber_id: 'your details'
+    #         security_code: 'your details'
+    #         request_mode: 'test'
+    #       "
+    #     end   
+    #   end
+    # end  
 
-    def to_hash!
-      if self.xml
-        Hash.from_xml(self.xml)
-      end
-    end
+    # def to_hash!
+    #   if self.xml
+    #     Hash.from_xml(self.xml)
+    #   end
+    # end
 
-    def to_struct!
-      if self.xml
-        self.struct = RecursiveOpenStruct.new(self.to_hash!["BCAmessage"])
-      end
-    end
+    # def to_struct!
+    #   if self.xml
+    #     self.struct = RecursiveOpenStruct.new(self.to_hash!["BCAmessage"])
+    #   end
+    # end
 
     def to_xml!
 
@@ -132,12 +132,16 @@ module VedaCredit
 		end
 
 		def post
-			auth = {:username => self.access[:access_code], :password => self.access[:password] }
-			base_uri = self.access[:url]
-			body = self.xml
-      headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
-			HTTParty.post(base_uri, :body => body, :basic_auth => auth, :headers => headers)
-		end
+      if self.access
+  			auth = {:username => self.access[:access_code], :password => self.access[:password] }
+  			base_uri = self.access[:url]
+  			body = self.xml
+        headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
+  			HTTParty.post(base_uri, :body => body, :basic_auth => auth, :headers => headers)
+		  else
+        "No access hash!"
+      end
+    end
 
     def validate_xml
       xsd = Nokogiri::XML::Schema(self.schema)
