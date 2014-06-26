@@ -59,6 +59,7 @@ dev_config = YAML.load_file('dev_config.yml')
 
 @enquiry_hash =
               {
+                :role => 'principal',
                 :enquiry_type => 'credit-application',
                 :account_type_code => 'LC',
                 :currency_code => 'AUD',
@@ -66,18 +67,20 @@ dev_config = YAML.load_file('dev_config.yml')
                 :client_reference => '123456789'
               }
 
-@consumer_req = VedaCredit::Request.create(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
-@consumber_post = @req.post
-@consumer = VedaCredit::Response.create(xml: @consumer_post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
+@bureau_reference = '186492371'              
 
-puts 'Seed objects'
-puts '@req, Request object with data'
-puts '@post, Raw response'
-puts '@res, Response object with data'
+@req = VedaCredit::Request.create(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+@post = @req.post
+@res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
 
-puts "@veda_url, Veda url: #{@veda_url} - if nil update dev_veda_access.yml with your details"
-puts "@access_code, Veda access code: #{@access_code} - if nil update dev_veda_access.yml with your details"
-puts "@password, Veda password: #{@password} - if nil update dev_veda_access.yml with your details"
-puts "@subscriber_id, Veda Subscriber id: #{@subscriber_id} - if nil update dev_veda_access.yml with your details"
-puts "@security_code, Veda Security Code: #{@security_code} - if nil update dev_veda_access.yml with your details"
-puts "@request_mode, Veda Request mode: #{@request_mode} - if nil update dev_veda_access.yml with your details"
+# puts 'Seed objects'
+# puts '@req, Request object with data'
+# puts '@post, Raw response'
+# puts '@res, Response object with data'
+
+# puts "@veda_url, Veda url: #{@veda_url} - if nil update dev_veda_access.yml with your details"
+# puts "@access_code, Veda access code: #{@access_code} - if nil update dev_veda_access.yml with your details"
+# puts "@password, Veda password: #{@password} - if nil update dev_veda_access.yml with your details"
+# puts "@subscriber_id, Veda Subscriber id: #{@subscriber_id} - if nil update dev_veda_access.yml with your details"
+# puts "@security_code, Veda Security Code: #{@security_code} - if nil update dev_veda_access.yml with your details"
+# puts "@request_mode, Veda Request mode: #{@request_mode} - if nil update dev_veda_access.yml with your details"

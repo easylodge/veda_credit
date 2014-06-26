@@ -33,7 +33,9 @@ describe VedaCredit::Request do
                 :street_name => "Arthur",
                 :suburb => "North Sydney",
                 :state => "NSW",
+                :country_code => 'AU',
                 :gender_type => 'male'
+                
               }
 
       
@@ -106,6 +108,7 @@ describe VedaCredit::Request do
                                       :street_name => "Arthur",
                                       :suburb => "North Sydney",
                                       :state => "NSW",
+                                      :country_code => "AU",
                                       :gender_type => 'male'
                                     })
           end
@@ -246,6 +249,7 @@ describe VedaCredit::Request do
                                       :street_name => "Arthur",
                                       :suburb => "North Sydney",
                                       :state => "NSW",
+                                      :country_code => "AU",
                                       :gender_type => 'male'
                                     })
           end
@@ -386,6 +390,7 @@ describe VedaCredit::Request do
                                       :street_name => "Arthur",
                                       :suburb => "North Sydney",
                                       :state => "NSW",
+                                      :country_code => "AU",
                                       :gender_type => 'male'
                                     })
           end
@@ -527,6 +532,7 @@ describe VedaCredit::Request do
                                       :street_name => "Arthur",
                                       :suburb => "North Sydney",
                                       :state => "NSW",
+                                      :country_code => "AU",
                                       :gender_type => 'male'
                                     })
           end
@@ -667,6 +673,7 @@ describe VedaCredit::Request do
                                       :street_name => "Arthur",
                                       :suburb => "North Sydney",
                                       :state => "NSW",
+                                      :country_code => "AU",
                                       :gender_type => 'male'
                                     })
           end
@@ -894,6 +901,118 @@ describe VedaCredit::Request do
 
       end
     
+
+      describe "with nested entity hash" do 
+        before do 
+          @entity_hash = {
+          :family_name => "Potter",
+          :first_given_name => "James",
+          :other_given_name => "Harry",
+          :date_of_birth => "1980-07-31",
+          :gender => "male",
+          :current_address => {
+            :property => "Potter Manor",
+            :unit_number => "3",
+            :street_number => "4",
+            :street_name => "Privet",
+            :street_type => "Drive",
+            :suburb => "Little Whinging",
+            :state => "NSW",
+            :postcode => "2999",
+            :unformatted_address => "Potter Manor 3/4 Privet Drive Little Whinging NSW 2999"
+          },
+          :previous_address => {
+            :property => "Veda House",
+            :unit_number => "15",
+            :street_number => "100",
+            :street_name => "Arthur",
+            :street_type => "Street",
+            :suburb => "North Sydney",
+            :state => "NSW",
+            :postcode => "2060",
+            :unformatted_address => "Veda House 15/100 Arthur Street North Sydney NSW 2060"
+          },
+          :home_phone_number => "0312345678",
+          :mobile_phone_number => "0487654321",
+          :work_phone_number => "040012312",
+          :email_address => "harry.potter@example.com",
+          :alternative_email_address => "hpotter@example.com",
+          :drivers_licence_state_code => "NSW",
+          :drivers_licence_number => "1234567890",
+         
+        }
+
+          @enquiry_hash =
+              {
+                :role => 'principal',   
+                :enquiry_type => 'credit-application',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-1.1",
+              :summary => "yes"
+            }    
+        @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+
+        end
+
+        describe ".access" do 
+          it "is not nil" do 
+            expect(@request.access).to_not eq(nil)
+          end
+        end
+
+        describe ".product" do 
+          it "is not nil" do 
+            expect(@request.product).to_not eq(nil)
+          end
+        end
+
+        describe ".entity" do 
+          it "is not nil" do 
+            expect(@request.entity).to_not eq(nil)
+          end
+        end
+
+        describe ".enquiry" do 
+          it "is not nil" do 
+            expect(@request.enquiry).to_not eq(nil)
+          end
+        end
+
+        describe ".bureau_reference" do 
+          it "is not nil" do 
+            expect(@request.bureau_reference).to eq(nil)
+          end
+        end
+
+
+        describe ".validate_xml" do
+            it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+
+
+
+        describe ".xml" do
+         
+          it "returns xml" do
+            expect(@request.xml).to be(nil)
+          end
+         
+        end
+
+      end
+
 
 
     # describe "with invalid post credentials" do
