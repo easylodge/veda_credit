@@ -22,14 +22,7 @@ describe VedaCredit::Request do
           :request_mode => @config["request_mode"]
           }
     
-      @product_hash = 
-        {
-          :service_code => "VDA001",
-          :service_code_version => 'V00',
-          :request_version => '1.0',
-          :product_name => "vedascore-financial-consumer-1.1",
-          :summary => "yes"
-        }
+      
 
       @entity_hash = 
               {
@@ -43,8 +36,27 @@ describe VedaCredit::Request do
                 :gender_type => 'male'
               }
 
-      @enquiry_hash =
+      
+    
+    end
+    
+    describe "with valid access_hash" do
+
+      describe "credit application individual - principal" do
+
+        before do 
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
               {
+                :role => 'principal',   
                 :enquiry_type => 'credit-application',
                 :account_type_code => 'LC',
                 :currency_code => 'AUD',
@@ -52,161 +64,869 @@ describe VedaCredit::Request do
                 :client_reference => '123456789'
               }
 
-      @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
-    
-    end
-    
-    describe "with valid inputs" do
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+        end
 
-    
+        it "is valid" do
+          expect(@request.valid?).to eq(true)
+        end
 
-      it "is valid" do
-        expect(@request.valid?).to eq(true)
-      end
+        describe ".access" do
+          it "returns access details hash used to build request" do
+            expect(@request.access).to eq({
+                                      :url => @access_hash[:url],
+                                      :access_code => @access_hash[:access_code],
+                                      :password => @access_hash[:password],
+                                      :subscriber_id => @access_hash[:subscriber_id],
+                                      :security_code => @access_hash[:security_code],
+                                      :request_mode => @access_hash[:request_mode]
+                                      })
+          end
+        end
 
-      describe ".access" do
-        it "returns access details hash used to build request" do
-          expect(@request.access).to eq({
-                                    :url => @access_hash[:url],
-                                    :access_code => @access_hash[:access_code],
-                                    :password => @access_hash[:password],
-                                    :subscriber_id => @access_hash[:subscriber_id],
-                                    :security_code => @access_hash[:security_code],
-                                    :request_mode => @access_hash[:request_mode]
+        describe ".product" do
+          it "returns product details hash used to build request" do
+            expect(@request.product).to eq({
+                                      :service_code => "VDA001",
+                                      :service_code_version => 'V00',
+                                      :request_version => '1.0',
+                                      :product_name => "vedascore-financial-consumer-1.1",
+                                      :summary => "yes"
                                     })
+          end
         end
+
+        describe ".entity" do
+          it "returns entity details hash used to build request" do
+            expect(@request.entity).to eq({
+                                      :family_name => 'Verry',
+                                      :first_given_name => 'Dore',
+                                      :employer => 'Veda',
+                                      :address_type => 'residential-current',
+                                      :street_name => "Arthur",
+                                      :suburb => "North Sydney",
+                                      :state => "NSW",
+                                      :gender_type => 'male'
+                                    })
+          end
+        end
+
+        describe ".enquiry" do
+          it "returns enquiry details hash used to build request" do
+            expect(@request.enquiry).to eq({
+                                      :role=>"principal",
+                                      :enquiry_type => 'credit-application',
+                                      :account_type_code => 'LC',
+                                      :currency_code => 'AUD',
+                                      :enquiry_amount => '5000',
+                                      :client_reference => '123456789'
+                                    })
+          end
+        end
+
+        describe ".xml" do
+          it "returns a xml request" do
+    				expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
+    			end
+
+          it "includes access code" do
+            expect(@request.xml).to include("<BCAaccess-code>#{@config["access_code"]}</BCAaccess-code>")
+          end
+
+          it "includes password" do
+            expect(@request.xml).to include("<BCAaccess-pwd>#{@config["password"]}</BCAaccess-pwd>")
+          end
+
+          it "includes subscriber_id" do
+            expect(@request.xml).to include("subscriber-identifier>#{@config["subscriber_id"]}</subscriber-identifier>")
+          end
+
+          it "includes security code" do
+            expect(@request.xml).to include("<security>#{@config["security_code"]}</security>")
+          end
+
+          it "includes mode" do
+            expect(@request.xml).to include(%Q{<request version="1.0" mode="#{@config["request_mode"]}">})
+          end
+
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-application">')
+          end
+
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="LC"/>')
+          end
+
+          
+        end
+
+    		describe ".schema" do
+    			it "returns xml schema" do
+    				expect(@request.schema).to include('<?xml version="1.0" encoding="UTF-8"?>')
+    			end
+    		end
+
+    		describe ".validate_xml" do
+    				it 'returns empty array' do
+    				expect(@request.validate_xml).to eq([])
+    			end
+    		end
+    	
+        # works 
+     		# describe ".post" do
+     		# 	describe "post the request to Veda" do
+    			# 	it "returns response from veda" do
+    			# 	  expect(@request.post).to be(nil)
+    			# 	end
+    			# end
+       #  end
       end
 
-      describe ".product" do
-        it "returns product details hash used to build request" do
-          expect(@request.product).to eq({
-                                    :service_code => "VDA001",
-                                    :service_code_version => 'V00',
-                                    :request_version => '1.0',
-                                    :product_name => "vedascore-financial-consumer-1.1",
-                                    :summary => "yes"
-                                  })
+      describe "credit application individual - co-borrower" do
+
+        before do 
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
+              {
+                :role => 'co-borrower',   
+                :enquiry_type => 'credit-application',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
+
+        it "is valid" do
+          expect(@request.valid?).to eq(true)
+        end
+
+        describe ".access" do
+          it "returns access details hash used to build request" do
+            expect(@request.access).to eq({
+                                      :url => @access_hash[:url],
+                                      :access_code => @access_hash[:access_code],
+                                      :password => @access_hash[:password],
+                                      :subscriber_id => @access_hash[:subscriber_id],
+                                      :security_code => @access_hash[:security_code],
+                                      :request_mode => @access_hash[:request_mode]
+                                      })
+          end
+        end
+
+        describe ".product" do
+          it "returns product details hash used to build request" do
+            expect(@request.product).to eq({
+                                      :service_code => "VDA001",
+                                      :service_code_version => 'V00',
+                                      :request_version => '1.0',
+                                      :product_name => "vedascore-financial-consumer-1.1",
+                                      :summary => "yes"
+                                    })
+          end
+        end
+
+        describe ".entity" do
+          it "returns entity details hash used to build request" do
+            expect(@request.entity).to eq({
+                                      :family_name => 'Verry',
+                                      :first_given_name => 'Dore',
+                                      :employer => 'Veda',
+                                      :address_type => 'residential-current',
+                                      :street_name => "Arthur",
+                                      :suburb => "North Sydney",
+                                      :state => "NSW",
+                                      :gender_type => 'male'
+                                    })
+          end
+        end
+
+        describe ".enquiry" do
+          it "returns enquiry details hash used to build request" do
+            expect(@request.enquiry).to eq({
+                                      :role=>"co-borrower",
+                                      :enquiry_type => 'credit-application',
+                                      :account_type_code => 'LC',
+                                      :currency_code => 'AUD',
+                                      :enquiry_amount => '5000',
+                                      :client_reference => '123456789'
+                                    })
+          end
+        end
+
+        describe ".xml" do
+          it "returns a xml request" do
+            expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+
+          it "includes access code" do
+            expect(@request.xml).to include("<BCAaccess-code>#{@config["access_code"]}</BCAaccess-code>")
+          end
+
+          it "includes password" do
+            expect(@request.xml).to include("<BCAaccess-pwd>#{@config["password"]}</BCAaccess-pwd>")
+          end
+
+          it "includes subscriber_id" do
+            expect(@request.xml).to include("subscriber-identifier>#{@config["subscriber_id"]}</subscriber-identifier>")
+          end
+
+          it "includes security code" do
+            expect(@request.xml).to include("<security>#{@config["security_code"]}</security>")
+          end
+
+          it "includes mode" do
+            expect(@request.xml).to include(%Q{<request version="1.0" mode="#{@config["request_mode"]}">})
+          end
+
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-application">')
+          end
+
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="LC"/>')
+          end
+
+          
+        end
+
+        describe ".schema" do
+          it "returns xml schema" do
+            expect(@request.schema).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+        end
+
+        describe ".validate_xml" do
+            it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+      
+        # works 
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post).to be(nil)
+        #     end
+        #   end
+        # end
       end
 
-      describe ".entity" do
-        it "returns entity details hash used to build request" do
-          expect(@request.entity).to eq({
-                                    :family_name => 'Verry',
-                                    :first_given_name => 'Dore',
-                                    :employer => 'Veda',
-                                    :address_type => 'residential-current',
-                                    :street_name => "Arthur",
-                                    :suburb => "North Sydney",
-                                    :state => "NSW",
-                                    :gender_type => 'male'
-                                  })
+      describe "credit application individual - joint" do
+
+        before do 
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
+              {
+                :role => 'joint',   
+                :enquiry_type => 'credit-application',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
+
+        it "is valid" do
+          expect(@request.valid?).to eq(true)
+        end
+
+        describe ".access" do
+          it "returns access details hash used to build request" do
+            expect(@request.access).to eq({
+                                      :url => @access_hash[:url],
+                                      :access_code => @access_hash[:access_code],
+                                      :password => @access_hash[:password],
+                                      :subscriber_id => @access_hash[:subscriber_id],
+                                      :security_code => @access_hash[:security_code],
+                                      :request_mode => @access_hash[:request_mode]
+                                      })
+          end
+        end
+
+        describe ".product" do
+          it "returns product details hash used to build request" do
+            expect(@request.product).to eq({
+                                      :service_code => "VDA001",
+                                      :service_code_version => 'V00',
+                                      :request_version => '1.0',
+                                      :product_name => "vedascore-financial-consumer-1.1",
+                                      :summary => "yes"
+                                    })
+          end
+        end
+
+        describe ".entity" do
+          it "returns entity details hash used to build request" do
+            expect(@request.entity).to eq({
+                                      :family_name => 'Verry',
+                                      :first_given_name => 'Dore',
+                                      :employer => 'Veda',
+                                      :address_type => 'residential-current',
+                                      :street_name => "Arthur",
+                                      :suburb => "North Sydney",
+                                      :state => "NSW",
+                                      :gender_type => 'male'
+                                    })
+          end
+        end
+
+        describe ".enquiry" do
+          it "returns enquiry details hash used to build request" do
+            expect(@request.enquiry).to eq({
+                                      :role=>"joint",
+                                      :enquiry_type => 'credit-application',
+                                      :account_type_code => 'LC',
+                                      :currency_code => 'AUD',
+                                      :enquiry_amount => '5000',
+                                      :client_reference => '123456789'
+                                    })
+          end
+        end
+
+        describe ".xml" do
+          it "returns a xml request" do
+            expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+
+          it "includes access code" do
+            expect(@request.xml).to include("<BCAaccess-code>#{@config["access_code"]}</BCAaccess-code>")
+          end
+
+          it "includes password" do
+            expect(@request.xml).to include("<BCAaccess-pwd>#{@config["password"]}</BCAaccess-pwd>")
+          end
+
+          it "includes subscriber_id" do
+            expect(@request.xml).to include("subscriber-identifier>#{@config["subscriber_id"]}</subscriber-identifier>")
+          end
+
+          it "includes security code" do
+            expect(@request.xml).to include("<security>#{@config["security_code"]}</security>")
+          end
+
+          it "includes mode" do
+            expect(@request.xml).to include(%Q{<request version="1.0" mode="#{@config["request_mode"]}">})
+          end
+
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-application">')
+          end
+
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="LC"/>')
+          end
+
+          
+        end
+
+        describe ".schema" do
+          it "returns xml schema" do
+            expect(@request.schema).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+        end
+
+        describe ".validate_xml" do
+            it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+      
+         
+        # works
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post).to be(nil)
+        #     end
+        #   end
+        # end
       end
 
-      describe ".enquiry" do
-        it "returns enquiry details hash used to build request" do
-          expect(@request.enquiry).to eq({
-                                    :enquiry_type => 'credit-application',
-                                    :account_type_code => 'LC',
-                                    :currency_code => 'AUD',
-                                    :enquiry_amount => '5000',
-                                    :client_reference => '123456789'
-                                  })
+      describe "credit application individual - guarantor" do
+
+        before do 
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
+              {
+                :role => 'guarantor',   
+                :enquiry_type => 'credit-application',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
+
+        it "is valid" do
+          expect(@request.valid?).to eq(true)
+        end
+
+        describe ".access" do
+          it "returns access details hash used to build request" do
+            expect(@request.access).to eq({
+                                      :url => @access_hash[:url],
+                                      :access_code => @access_hash[:access_code],
+                                      :password => @access_hash[:password],
+                                      :subscriber_id => @access_hash[:subscriber_id],
+                                      :security_code => @access_hash[:security_code],
+                                      :request_mode => @access_hash[:request_mode]
+                                      })
+          end
+        end
+
+        describe ".product" do
+          it "returns product details hash used to build request" do
+            expect(@request.product).to eq({
+                                      :service_code => "VDA001",
+                                      :service_code_version => 'V00',
+                                      :request_version => '1.0',
+                                      :product_name => "vedascore-financial-consumer-1.1",
+                                      :summary => "yes"
+                                    })
+          end
+        end
+
+        describe ".entity" do
+          it "returns entity details hash used to build request" do
+            expect(@request.entity).to eq({
+                                      :family_name => 'Verry',
+                                      :first_given_name => 'Dore',
+                                      :employer => 'Veda',
+                                      :address_type => 'residential-current',
+                                      :street_name => "Arthur",
+                                      :suburb => "North Sydney",
+                                      :state => "NSW",
+                                      :gender_type => 'male'
+                                    })
+          end
+        end
+
+        describe ".enquiry" do
+          it "returns enquiry details hash used to build request" do
+            expect(@request.enquiry).to eq({
+                                      :role=>"guarantor",
+                                      :enquiry_type => 'credit-application',
+                                      :account_type_code => 'LC',
+                                      :currency_code => 'AUD',
+                                      :enquiry_amount => '5000',
+                                      :client_reference => '123456789'
+                                    })
+          end
+        end
+
+        describe ".xml" do
+          it "returns a xml request" do
+            expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+
+          it "includes access code" do
+            expect(@request.xml).to include("<BCAaccess-code>#{@config["access_code"]}</BCAaccess-code>")
+          end
+
+          it "includes password" do
+            expect(@request.xml).to include("<BCAaccess-pwd>#{@config["password"]}</BCAaccess-pwd>")
+          end
+
+          it "includes subscriber_id" do
+            expect(@request.xml).to include("subscriber-identifier>#{@config["subscriber_id"]}</subscriber-identifier>")
+          end
+
+          it "includes security code" do
+            expect(@request.xml).to include("<security>#{@config["security_code"]}</security>")
+          end
+
+          it "includes mode" do
+            expect(@request.xml).to include(%Q{<request version="1.0" mode="#{@config["request_mode"]}">})
+          end
+
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-application">')
+          end
+
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="LC"/>')
+          end
+
+          
+        end
+
+        describe ".schema" do
+          it "returns xml schema" do
+            expect(@request.schema).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+        end
+
+        describe ".validate_xml" do
+            it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+      
+        # works 
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post).to be(nil)
+        #     end
+        #   end
+        # end
       end
 
-      describe ".xml" do
-        it "returns a xml request" do
-  				expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
-  			end
+      describe "credit application individual - director" do
 
-        it "includes access code" do
-          expect(@request.xml).to include("<BCAaccess-code>#{@config["access_code"]}</BCAaccess-code>")
+        before do 
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-plus-commercial-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
+              {
+                :role => 'director',   
+                :enquiry_type => 'credit-enquiry',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
 
-        it "includes password" do
-          expect(@request.xml).to include("<BCAaccess-pwd>#{@config["password"]}</BCAaccess-pwd>")
+        it "is valid" do
+          expect(@request.valid?).to eq(true)
         end
 
-        it "includes subscriber_id" do
-          expect(@request.xml).to include("subscriber-identifier>#{@config["subscriber_id"]}</subscriber-identifier>")
+        describe ".access" do
+          it "returns access details hash used to build request" do
+            expect(@request.access).to eq({
+                                      :url => @access_hash[:url],
+                                      :access_code => @access_hash[:access_code],
+                                      :password => @access_hash[:password],
+                                      :subscriber_id => @access_hash[:subscriber_id],
+                                      :security_code => @access_hash[:security_code],
+                                      :request_mode => @access_hash[:request_mode]
+                                      })
+          end
         end
 
-        it "includes security code" do
-          expect(@request.xml).to include("<security>#{@config["security_code"]}</security>")
+        describe ".product" do
+          it "returns product details hash used to build request" do
+            expect(@request.product).to eq({
+                                      :service_code => "VDA001",
+                                      :service_code_version => 'V00',
+                                      :request_version => '1.0',
+                                      :product_name => "vedascore-financial-consumer-plus-commercial-1.1",
+                                      :summary => "yes"
+                                    })
+          end
         end
 
-        it "includes mode" do
-          expect(@request.xml).to include(%Q{<request version="1.0" mode="#{@config["request_mode"]}">})
+        describe ".entity" do
+          it "returns entity details hash used to build request" do
+            expect(@request.entity).to eq({
+                                      :family_name => 'Verry',
+                                      :first_given_name => 'Dore',
+                                      :employer => 'Veda',
+                                      :address_type => 'residential-current',
+                                      :street_name => "Arthur",
+                                      :suburb => "North Sydney",
+                                      :state => "NSW",
+                                      :gender_type => 'male'
+                                    })
+          end
+        end
+
+        describe ".enquiry" do
+          it "returns enquiry details hash used to build request" do
+            expect(@request.enquiry).to eq({
+                                      :role=>"director",
+                                      :enquiry_type => 'credit-enquiry',
+                                      :account_type_code => 'LC',
+                                      :currency_code => 'AUD',
+                                      :enquiry_amount => '5000',
+                                      :client_reference => '123456789'
+                                    })
+          end
+        end
+
+        describe ".xml" do
+          it "returns a xml request" do
+            expect(@request.xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+
+          it "includes access code" do
+            expect(@request.xml).to include("<BCAaccess-code>#{@config["access_code"]}</BCAaccess-code>")
+          end
+
+          it "includes password" do
+            expect(@request.xml).to include("<BCAaccess-pwd>#{@config["password"]}</BCAaccess-pwd>")
+          end
+
+          it "includes subscriber_id" do
+            expect(@request.xml).to include("subscriber-identifier>#{@config["subscriber_id"]}</subscriber-identifier>")
+          end
+
+          it "includes security code" do
+            expect(@request.xml).to include("<security>#{@config["security_code"]}</security>")
+          end
+
+          it "includes mode" do
+            expect(@request.xml).to include(%Q{<request version="1.0" mode="#{@config["request_mode"]}">})
+          end
+
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-enquiry">')
+          end
+
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="LC"/>')
+          end
+
+          
+        end
+
+        describe ".schema" do
+          it "returns xml schema" do
+            expect(@request.schema).to include('<?xml version="1.0" encoding="UTF-8"?>')
+          end
+        end
+
+        describe ".validate_xml" do
+            it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+      
+         
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post).to be(nil)
+        #     end
+        #   end
+        # end
+      end
+
+      describe "credit enquiry commercial plus consumer" do 
+        before do 
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-commercial-plus-consumer-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
+              {
+                :role => 'joint',  
+                :enquiry_type => 'credit-enquiry',
+                :account_type_code => 'CR',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+        end
+
+        describe ".validate_xml" do
+            it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+
+        describe ".xml" do
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-enquiry">')
+          end
+
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="CR"/>')
+          end
+         
         end
 
         
-      end
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post.code).to be(200)
+        #     end
+        #   end
+        # end
+    	end
 
-  		describe ".schema" do
-  			it "returns xml schema" do
-  				expect(@request.schema).to include('<?xml version="1.0" encoding="UTF-8"?>')
-  			end
-  		end
+      describe "credit enquiry commercial" do 
+        before do
 
-  		describe ".validate_xml" do
-  				it 'returns empty array' do
-  				expect(@request.validate_xml).to eq([])
-  			end
-  		end
-  	
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-commercial-1.1",
+              :summary => "yes"
+            }
 
-   		describe ".post" do
-   			describe "post the request to Veda" do
-  				before do
-            @req = @request.post
+          @enquiry_hash =
+              {
+                :role => 'director',    
+                :enquiry_type => 'credit-enquiry',
+                :account_type_code => 'CR',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+        end
+
+        describe ".validate_xml" do
+          it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+
+        describe ".xml" do
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-enquiry">')
           end
 
-  				it "returns status code 200" do
-  					expect(@req.code).to eq(200)
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="CR"/>')
+          end
+         
+        end
+      end
+
+      describe "bureau reference" do 
+        before do
+
+          @product_hash = 
+            {
+              :service_code => "VDA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+              :product_name => "vedascore-financial-consumer-1.1",
+              :summary => "yes"
+            }
+
+          @enquiry_hash =
+              {
+                :role => 'principal',    
+                :enquiry_type => 'credit-enquiry',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @bureau_reference = "186492371"
+           
+          @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, bureau_reference: @bureau_reference, enquiry: @enquiry_hash)
+        end
+
+        describe ".validate_xml" do
+          it 'returns empty array' do
+            expect(@request.validate_xml).to eq([])
+          end
+        end
+
+        describe ".xml" do
+          # it "includes xml" do
+          #   expect(@request.xml).to be(nil)
+          # end
+
+          it "includes enquiry type" do
+            expect(@request.xml).to include('<enquiry type="credit-enquiry">')
           end
 
-  				it "returns response from veda" do
-  				  expect(@req.body).to include('<?xml version="1.0"?>')
-  				end
-  			end
+          it "includes account type" do
+            expect(@request.xml).to include('<account-type code="LC"/>')
+          end
+        end
+      
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post).to be(nil)
+        #     end
+        #   end
+        # end
+
       end
-  	end
     
 
 
-    describe "with invalid post credentials" do
-      describe ".post" do
-        describe "post the request to Veda" do
-          before do
+    # describe "with invalid post credentials" do
+    #   describe ".post" do
+    #     describe "post the request to Veda" do
+    #       before do
 
-            @access_hash = 
-                    {
-                      :url => @config["url"],
-                      :access_code => 'xxxxxxx',
-                      :password => 'xxxxxxx',
-                      :subscriber_id => @config["subscriber_id"],
-                      :security_code => @config["security_code"],
-                      :request_mode => @config["request_mode"]
-                      }
+    #         @access_hash = 
+    #                 {
+    #                   :url => @config["url"],
+    #                   :access_code => 'xxxxxxx',
+    #                   :password => 'xxxxxxx',
+    #                   :subscriber_id => @config["subscriber_id"],
+    #                   :security_code => @config["security_code"],
+    #                   :request_mode => @config["request_mode"]
+    #                   }
 
           
 
-            @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
+    #         @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
           
-            @req = @request.post
-          end
+    #         @req = @request.post
+    #       end
 
-          it "returns status code 200" do
-            expect(@req.code).to eq(200)
-          end
+    #       it "returns status code 200" do
+    #         expect(@req.code).to eq(200)
+    #       end
 
-          it "returns response from veda" do
-            expect(@req.body).to include('The Request Manager was unable to authenticate the VedaXML access code and password supplied. Check values of: /BCAmessage/BCAaccess/BCAaccess-code and /BCAmessage/BCAaccess/BCAaccess-pwd')
-          end
-        end
-      end
+    #       it "returns response from veda" do
+    #         expect(@req.body).to include('The Request Manager was unable to authenticate the VedaXML access code and password supplied. Check values of: /BCAmessage/BCAaccess/BCAaccess-code and /BCAmessage/BCAaccess/BCAaccess-pwd')
+    #       end
+    #     end
+    #   end
 
     end 
   end

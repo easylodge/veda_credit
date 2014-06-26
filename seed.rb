@@ -18,7 +18,7 @@ ActiveRecord::Base.establish_connection(
 require_relative 'spec/schema'
 
 
-dev_config = YAML.load_file('dev_veda_access.yml')
+dev_config = YAML.load_file('dev_config.yml')
 @veda_url = dev_config["url"]
 @access_code = dev_config["access_code"]
 @password = dev_config["password"]
@@ -66,9 +66,9 @@ dev_config = YAML.load_file('dev_veda_access.yml')
                 :client_reference => '123456789'
               }
 
-@req = Veda::Request.create(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
-@post = @req.post
-@res = Veda::Response.create(xml: @post.body, headers: @post.header, code: @post.code,request_id: @req.id)
+@consumer_req = VedaCredit::Request.create(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+@consumber_post = @req.post
+@consumer = VedaCredit::Response.create(xml: @consumer_post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
 
 puts 'Seed objects'
 puts '@req, Request object with data'

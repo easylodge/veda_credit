@@ -5,6 +5,7 @@ class CreateVedaCreditRequest < ActiveRecord::Migration
       t.text :access
       t.text :product
       t.text :entity
+      t.text :bureau_reference
       t.text :enquiry
       t.timestamps
     end
