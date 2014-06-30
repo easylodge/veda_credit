@@ -36,13 +36,12 @@ dev_config = YAML.load_file('dev_config.yml')
                 :request_mode => @request_mode
                 }
 
-@product_hash = 
+@service_hash = 
               {
                 :service_code => "VDA001",
                 :service_code_version => 'V00',
                 :request_version => '1.0',
-                :product_name => "vedascore-financial-consumer-1.1",
-                :summary => "yes"
+                
               }
 
 @entity_hash = 
@@ -59,6 +58,8 @@ dev_config = YAML.load_file('dev_config.yml')
 
 @enquiry_hash =
               {
+                :product_name => "vedascore-financial-consumer-1.1",
+                :summary => "yes",  
                 :role => 'principal',
                 :enquiry_type => 'credit-application',
                 :account_type_code => 'LC',
@@ -67,12 +68,42 @@ dev_config = YAML.load_file('dev_config.yml')
                 :client_reference => '123456789'
               }
 
+@business_entity_hash = 
+              {
+                :business_name => "Martina Johanna Broos",
+                :abn => "88130945306",
+                :trading_address => {
+                  :unit_number=>"3", 
+                  :street_number=>"51", 
+                  :street_name=>"Australia", 
+                  :street_type=>"ST", 
+                  :suburb=>"St Marys", 
+                  :state=>"NSW", 
+                  :postcode=>"2760",
+                  :country_code => "AU"
+                }
+              }
+
+@business_enquiry_hash =
+              {
+                :product_name => "vedascore-financial-commercial-1.1",
+                :summary => "yes",  
+                :role => 'principal',
+                :enquiry_type => 'broker-dealer',
+                :account_type_code => 'HC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }              
+
+
+
 @bureau_reference = '186492371'              
 
-@req = VedaCredit::Request.create(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+@req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 @post = @req.post
 @res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
-
+@business_req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)
 # puts 'Seed objects'
 # puts '@req, Request object with data'
 # puts '@post, Raw response'

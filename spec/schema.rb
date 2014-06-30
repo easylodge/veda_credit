@@ -4,7 +4,7 @@ self.verbose = false
   create_table :veda_credit_requests do |t|
     t.text :xml
     t.text :access
-    t.text :product
+    t.text :service
     t.text :entity
     t.text :bureau_reference
     t.text :enquiry

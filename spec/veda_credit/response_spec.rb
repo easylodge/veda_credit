@@ -22,13 +22,12 @@ describe VedaCredit::Response do
           :request_mode => @config["request_mode"]
           }
     
-      @product_hash = 
+      @service_hash = 
         {
           :service_code => "VDA001",
           :service_code_version => 'V00',
-          :request_version => '1.0',
-          :product_name => "vedascore-financial-consumer-1.1",
-          :summary => "yes"
+          :request_version => '1.0'
+          
         }
 
       @entity_hash = 
@@ -36,22 +35,25 @@ describe VedaCredit::Response do
                 :family_name => 'Verry',
                 :first_given_name => 'Dore',
                 :employer => 'Veda',
-                :address_type => 'residential-current',
-                :street_name => "Arthur",
-                :suburb => "North Sydney",
-                :state => "NSW",
+                :current_address => {
+                  :street_name => "Arthur",
+                  :suburb => "North Sydney",
+                  :state => "NSW"
+                },
                 :gender_type => 'male'
               }
 
       @enquiry_hash =
               {
+                :product_name => "vedascore-financial-consumer-1.1",
+                :summary => "yes",
                 :enquiry_type => 'credit-application',
                 :account_type_code => 'LC',
                 :currency_code => 'AUD',
                 :enquiry_amount => '5000',
                 :client_reference => '123456789'
               }
-       @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash)      
+       @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)      
     end
      	
     describe "with valid request post" do
@@ -102,15 +104,7 @@ describe VedaCredit::Response do
         end
       end       
 		
-      # describe ".match" do
-      #   it "returns the primary match as open struct" do
-      #      expect(@response.match.class).to eq(RecursiveOpenStruct)
-      #   end
-
-      #   it "accesses nested attributes"  do
-      #     expect(@response.match.individual.individual_name.first_given_name).to eq("DORE")
-      #   end
-      # end
+      
     end
   
   
@@ -125,7 +119,7 @@ describe VedaCredit::Response do
               :security_code => 'xx',
               :request_mode => 'test'
               }
-      @request = VedaCredit::Request.new(access: access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
+      @request = VedaCredit::Request.new(access: access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
       @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
@@ -138,15 +132,14 @@ describe VedaCredit::Response do
   describe "with post with invalid product details" do
          
     before do 
-      product_hash = 
+      service_hash = 
               {
                 :service_code => "xxxxx",
                 :service_code_version => 'xx',
                 :request_version => '1.0',
-                :product_name => "consumer-enquiry",
-                :summary => "yes"
+                
               }
-      @request = VedaCredit::Request.new(access: @access_hash, product: product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
+      @request = VedaCredit::Request.new(access: @access_hash, service: service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
       @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
@@ -164,13 +157,14 @@ describe VedaCredit::Response do
                 :family_name => 'Verry',
                 :first_given_name => 'Dore',
                 :employer => 'Veda',
-                :address_type => 'residential-current',
-                :street_name => "Arthur",
-                :suburb => "North Sydney",
-                :state => "",
+                :current_address => {
+                  :street_name => "Arthur",
+                  :suburb => "North Sydney",
+                  :state => ""
+                },
                 :gender_type => 'male'
               }
-      @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: entity_hash, enquiry: @enquiry_hash) 
+      @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
       @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
