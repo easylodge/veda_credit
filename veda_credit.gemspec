@@ -27,6 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'shoulda-matchers'
   spec.add_dependency "nokogiri"
   spec.add_dependency "httparty"
-  spec.add_dependency "recursive-open-struct"
   spec.add_dependency 'activesupport'
 end
