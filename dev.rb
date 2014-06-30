@@ -49,10 +49,11 @@ dev_config = YAML.load_file('dev_config.yml')
                 :family_name => 'Verry',
                 :first_given_name => 'Dore',
                 :employer => 'Veda',
-                :address_type => 'residential-current',
-                :street_name => "Arthur",
-                :suburb => "North Sydney",
-                :state => "NSW",
+                :current_address => {
+                  :street_name => "Arthur",
+                  :suburb => "North Sydney",
+                  :state => "NSW"
+                },
                 :gender_type => 'male'
               }
 

@@ -4,19 +4,18 @@ class VedaCredit::Response < ActiveRecord::Base
   belongs_to :request, dependent: :destroy
 
   serialize :headers
-  serialize :struct
-  serialize :match
-
+  serialize :as_hash
+  
   validates :request_id, presence: true
   validates :xml, presence: true
   validates :headers, presence: true
   validates :code, presence: true
   validates :success, presence: true
 
-  after_initialize :to_struct
+  after_initialize :to_hash
   
-  def to_hash!
-    Hash.from_xml(self.xml)
+  def to_hash
+    self.as_hash = Hash.from_xml(self.xml)
   end
 
   def self.nested_hash_value(obj,key)
@@ -30,20 +29,14 @@ class VedaCredit::Response < ActiveRecord::Base
   end
 
   def error
-    connection_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "BCAerror")
-    product_error = VedaCredit::Response.nested_hash_value(self.to_hash!, "error")
+    connection_error = VedaCredit::Response.nested_hash_value(self.to_hash, "BCAerror")
+    product_error = VedaCredit::Response.nested_hash_value(self.to_hash, "error")
     if connection_error || product_error
       connection_error || product_error
     elsif !self.success? 
       self.xml
     else        
       "No Error"
-    end
-  end
-
-  def to_struct
-    if self.xml
-      self.struct = RecursiveOpenStruct.new(self.to_hash!["BCAmessage"])
     end
   end
 

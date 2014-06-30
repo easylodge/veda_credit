@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe VedaCredit::Response do
   it { should belong_to(:request).dependent(:destroy) } 
   it { should validate_presence_of(:request_id) }
@@ -89,12 +88,12 @@ describe VedaCredit::Response do
         end
       end
 
-      describe ".struct" do
-        it "returns whole response as open struct" do
-          expect(@response.struct.class).to eq(RecursiveOpenStruct)
+      describe ".as_hash" do
+        it "returns whole response as hash" do
+          expect(@response.as_hash.class).to eq(Hash)
         end
         it "accesses nested attributes" do
-          expect(@response.struct.type).to eq('RESPONSE')
+          expect(@response.as_hash["BCAmessage"]["type"]).to eq('RESPONSE')
         end
       end
 
