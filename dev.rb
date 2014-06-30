@@ -1,5 +1,5 @@
-# For gem developer:
-# Create file called 'dev_veda_access.yml' in your project root with the following
+# For gem developer/contributor:
+# Create file called 'dev_config.yml' in your project root with the following
 #
 # url: 'https://ctaau.vedaxml.com/cta/sys1'
 # access_code: 'your access code'
@@ -9,7 +9,7 @@
 # request_mode: 'test'
 #
 # run 'bundle console'and then
-# load 'seed.rb' to load this seed data
+# load 'dev.rb' to load this seed data
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
@@ -104,14 +104,3 @@ dev_config = YAML.load_file('dev_config.yml')
 @post = @req.post
 @res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
 @business_req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)
-# puts 'Seed objects'
-# puts '@req, Request object with data'
-# puts '@post, Raw response'
-# puts '@res, Response object with data'
-
-# puts "@veda_url, Veda url: #{@veda_url} - if nil update dev_veda_access.yml with your details"
-# puts "@access_code, Veda access code: #{@access_code} - if nil update dev_veda_access.yml with your details"
-# puts "@password, Veda password: #{@password} - if nil update dev_veda_access.yml with your details"
-# puts "@subscriber_id, Veda Subscriber id: #{@subscriber_id} - if nil update dev_veda_access.yml with your details"
-# puts "@security_code, Veda Security Code: #{@security_code} - if nil update dev_veda_access.yml with your details"
-# puts "@request_mode, Veda Request mode: #{@request_mode} - if nil update dev_veda_access.yml with your details"
