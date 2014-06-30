@@ -89,7 +89,7 @@ Attributes for entity_hash:
 Attributes for enquiry_hash:
 
     {
-      :product_name=>"vedascore-financial-consumer-1.1", 
+      :product_name=>"vedascore-financial-consumer-1.1",
       :summary=>"yes",
       :role=>"principal",
       :enquiry_type => 'credit-application',
