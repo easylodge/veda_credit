@@ -968,9 +968,17 @@ describe VedaCredit::Request do
       describe "business search" do 
         before do
 
+
+          @service_hash = 
+            {
+              :service_code => "BCA001",
+              :service_code_version => 'V00',
+              :request_version => '1.0',
+            }
+
           @enquiry_hash =
               {
-                :product_name => "vedascore-financial-commercial-1.1",
+                :product_name => "company-business-enquiry",
                 :summary => "yes",  
                 :role => 'principal',    
                 :enquiry_type => 'credit-enquiry',
@@ -1045,13 +1053,13 @@ describe VedaCredit::Request do
         end
       
         # This does currently not work: 
-        # describe ".post" do
-        #   describe "post the request to Veda" do
-        #     it "returns response from veda" do
-        #       expect(@request.post).to be(nil)
-        #     end
-        #   end
-        # end
+        describe ".post" do
+          describe "post the request to Veda" do
+            it "returns response from veda" do
+              expect(@request.post).to be(nil)
+            end
+          end
+        end
 
       end
     

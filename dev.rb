@@ -44,6 +44,14 @@ dev_config = YAML.load_file('dev_config.yml')
                 
               }
 
+@bca_service_hash = 
+              {
+                :service_code => "BCA001",
+                :service_code_version => 'V00',
+                :request_version => '1.0',
+                
+              }              
+
 @entity_hash = 
               {
                 :family_name => 'Verry',
@@ -87,7 +95,7 @@ dev_config = YAML.load_file('dev_config.yml')
 
 @business_enquiry_hash =
               {
-                :product_name => "vedascore-financial-commercial-1.1",
+                :product_name => "company-business-broker-dealer-enquiry",
                 :summary => "yes",  
                 :role => 'principal',
                 :enquiry_type => 'broker-dealer',
@@ -104,4 +112,4 @@ dev_config = YAML.load_file('dev_config.yml')
 @req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 @post = @req.post
 @res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
-@business_req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)
+@business_req = VedaCredit::Request.create(access: @access_hash, service: @bca_service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)

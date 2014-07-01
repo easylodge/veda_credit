@@ -58,11 +58,11 @@ class VedaCredit::Request < ActiveRecord::Base
   end
 
   def individual?
-    true if self.enquiry[:product_name] == "vedascore-financial-consumer-1.1"
+    true if ["vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "authorised-agent-consumer-plus-commercial-enquiry"].include? self.enquiry[:product_name] 
   end
 
   def business?
-    true if self.enquiry[:product_name] == "vedascore-financial-commercial-1.1" 
+    true if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry"].include? self.enquiry[:product_name] 
   end
 
   def to_individual(xml)
@@ -105,7 +105,7 @@ class VedaCredit::Request < ActiveRecord::Base
     xml.send(:"address", "type" => address_type) {
       xml.send(:"unit-number", self.entity[type][:unit_number])
       xml.send(:"street-number", self.entity[type][:street_number])
-      xml.send(:"property", self.entity[type][:property])
+      xml.send(:"property", self.entity[type][:property]) if self.entity[type][:property]
       xml.send(:"street-name", self.entity[type][:street_name])
       xml.send(:"street-type", "code" => self.entity[type][:street_type])
       xml.send(:"suburb", self.entity[type][:suburb])

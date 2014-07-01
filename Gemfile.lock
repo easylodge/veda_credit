@@ -5,7 +5,6 @@ PATH
       activesupport
       httparty
       nokogiri
-      recursive-open-struct
 
 GEM
   remote: https://rubygems.org/
@@ -72,7 +71,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
-    recursive-open-struct (0.5.0)
     rspec-core (3.0.0)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.0)
