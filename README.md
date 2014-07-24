@@ -86,6 +86,9 @@ Attributes for entity_hash:
       :drivers_licence_number => "1234567890"
     }
 
+    if unformatted address is present as below it will be used instead of the formatted address above
+    :current_address => {:unformatted_address => "Potter Manor 3/4 Privet Drive Little Whinging NSW 2999"}
+
 Attributes for enquiry_hash:
 
     {
