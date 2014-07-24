@@ -75,6 +75,35 @@ describe VedaCredit::Request do
 
     describe "with valid access, service and entity hash" do
 
+      describe "with unformatted address" do
+
+         before do 
+          @enquiry_hash =
+              {
+                :product_name => "vedascore-financial-consumer-1.1",
+                :summary => "yes",
+                :role => 'principal',   
+                :enquiry_type => 'credit-application',
+                :account_type_code => 'LC',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789'
+              }
+
+          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+        end
+
+        it "has unformatted_address in the entity hash"do
+          expect(@request.entity[:current_address][:unformatted_address]).to eq('Potter Manor 3/4 Privet Drive Little Whinging NSW 2999')
+        end
+
+        it "uses unformatted_address when present" do
+          expect(@request.xml).to include('<unformatted-address type="residential-current">Potter Manor 3/4 Privet Drive Little Whinging NSW 2999</unformatted-address>')
+        end
+
+
+      end
+
       describe "credit application individual - principal" do
 
         before do 
@@ -1052,14 +1081,14 @@ describe VedaCredit::Request do
 
         end
       
-        # This does currently not work: 
-        describe ".post" do
-          describe "post the request to Veda" do
-            it "returns response from veda" do
-              expect(@request.post).to be(nil)
-            end
-          end
-        end
+        # This does currently not work - Business Enquiries needs its own credentials
+        # describe ".post" do
+        #   describe "post the request to Veda" do
+        #     it "returns response from veda" do
+        #       expect(@request.post).to be(nil)
+        #     end
+        #   end
+        # end
 
       end
     

@@ -101,18 +101,21 @@ class VedaCredit::Request < ActiveRecord::Base
     elsif type == :trading_address
       address_type = 'trading-address'
     end
-    
-    xml.send(:"address", "type" => address_type) {
-      xml.send(:"unit-number", self.entity[type][:unit_number])
-      xml.send(:"street-number", self.entity[type][:street_number])
-      xml.send(:"property", self.entity[type][:property]) if self.entity[type][:property]
-      xml.send(:"street-name", self.entity[type][:street_name])
-      xml.send(:"street-type", "code" => self.entity[type][:street_type])
-      xml.send(:"suburb", self.entity[type][:suburb])
-      xml.send(:"state", self.entity[type][:state])
-      xml.send(:"postcode", self.entity[type][:postcode])
-      xml.send(:"country", "country-code" => self.entity[type][:country_code])
-    }
+    if self.entity[type][:unformatted_address]
+      xml.send(:"unformatted-address", self.entity[type][:unformatted_address], "type" => address_type)
+    else
+      xml.send(:"address", "type" => address_type) {
+        xml.send(:"unit-number", self.entity[type][:unit_number])
+        xml.send(:"street-number", self.entity[type][:street_number])
+        xml.send(:"property", self.entity[type][:property]) if self.entity[type][:property]
+        xml.send(:"street-name", self.entity[type][:street_name])
+        xml.send(:"street-type", "code" => self.entity[type][:street_type])
+        xml.send(:"suburb", self.entity[type][:suburb])
+        xml.send(:"state", self.entity[type][:state])
+        xml.send(:"postcode", self.entity[type][:postcode])
+        xml.send(:"country", "country-code" => self.entity[type][:country_code])
+      }
+    end
   end
 
   

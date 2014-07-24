@@ -60,7 +60,8 @@ dev_config = YAML.load_file('dev_config.yml')
                 :current_address => {
                   :street_name => "Arthur",
                   :suburb => "North Sydney",
-                  :state => "NSW"
+                  :state => "NSW",
+                  :unformatted_address => '90 Arthur Street North Sydney NSW 2060'
                 },
                 :gender_type => 'male'
               }
@@ -76,6 +77,18 @@ dev_config = YAML.load_file('dev_config.yml')
                 :enquiry_amount => '5000',
                 :client_reference => '123456789'
               }
+
+# @bca_enquiry_hash =
+#               {
+#                 :product_name => "vedascore-financial-consumer-1.1",
+#                 :summary => "yes",  
+#                 :role => 'principal',
+#                 :enquiry_type => 'credit-application',
+#                 :account_type_code => 'LC',
+#                 :currency_code => 'AUD',
+#                 :enquiry_amount => '5000',
+#                 :client_reference => '123456789'
+#               }
 
 @business_entity_hash = 
               {

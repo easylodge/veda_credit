@@ -166,11 +166,11 @@ describe VedaCredit::Response do
       @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
       @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
-      end
+    end
         
-      it "has error response" do
-        expect(@response.error).to eq({"error_type"=>"validation", "input_container"=>"Address Details", "error_description"=>"STATE MUST BE ENTERED"})
-      end  
+    it "has error response" do
+      expect(@response.error).to eq({"error_type"=>"validation", "input_container"=>"Address Details", "error_description"=>"STATE MUST BE ENTERED"})
+    end  
   end
   end
 end
