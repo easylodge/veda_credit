@@ -90,7 +90,7 @@ describe VedaCredit::Request do
                 :client_reference => '123456789'
               }
 
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
 
         it "has unformatted_address in the entity hash"do
@@ -119,7 +119,7 @@ describe VedaCredit::Request do
                 :client_reference => '123456789'
               }
 
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
 
         it "is valid" do
@@ -289,7 +289,7 @@ describe VedaCredit::Request do
                 :client_reference => '123456789'
               }
 
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
 
         it "is valid" do
@@ -434,7 +434,7 @@ describe VedaCredit::Request do
                 :client_reference => '123456789'
               }
 
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
 
         it "is valid" do
@@ -580,7 +580,7 @@ describe VedaCredit::Request do
                 :client_reference => '123456789'
               }
 
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
         end
 
         it "is valid" do
@@ -727,7 +727,7 @@ describe VedaCredit::Request do
       #           :client_reference => '123456789'
       #         }
 
-      #     @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      #     @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
       #   end
 
       #   it "is valid" do
@@ -872,7 +872,7 @@ describe VedaCredit::Request do
      #            :client_reference => '123456789'
      #          }
 
-     #      @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+     #      @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
      #    end
 
      #    describe ".validate_xml" do
@@ -923,7 +923,7 @@ describe VedaCredit::Request do
       #           :client_reference => '123456789'
       #         }
 
-      #     @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+      #     @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
       #   end
 
       #   describe ".validate_xml" do
@@ -961,7 +961,7 @@ describe VedaCredit::Request do
 
           @bureau_reference = "186492371"
            
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, bureau_reference: @bureau_reference, enquiry: @enquiry_hash)
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, bureau_reference: @bureau_reference, enquiry: @enquiry_hash)
         end
 
         describe ".validate_xml" do
@@ -1034,7 +1034,7 @@ describe VedaCredit::Request do
 
           
            
-          @request = VedaCredit::Request.new(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+          @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
         end
 
         # Does not work with current individual xsd
@@ -1114,7 +1114,7 @@ describe VedaCredit::Request do
 
           
 
-    #         @request = VedaCredit::Request.new(access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
+    #         @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, product: @product_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
           
     #         @req = @request.post
     #       end

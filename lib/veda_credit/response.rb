@@ -15,7 +15,7 @@ class VedaCredit::Response < ActiveRecord::Base
   after_initialize :to_hash
   
   def to_hash
-    self.as_hash = Hash.from_xml(self.xml)
+    Hash.from_xml(self.xml)
   end
 
   def self.nested_hash_value(obj,key)

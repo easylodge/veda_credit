@@ -26,7 +26,7 @@ Then run migrations:
 ### Request
 
 
-    request = VedaCredit::Request.create(access: access_hash, service: service_hash, entity: entity_hash, enquiry: enquiry_hash)
+    request = VedaCredit::Request.create(application_id: 123456, access: access_hash, service: service_hash, entity: entity_hash, enquiry: enquiry_hash)
 
 Attributes for access_hash:
 
@@ -99,11 +99,11 @@ Attributes for enquiry_hash:
       :account_type_code => 'LC',
       :currency_code => 'AUD',
       :enquiry_amount => '5000',
-      :client_reference => '123456789'
     }
 
 #### Instance Methods:
 
+    request.application_id - Your reference number
     request.access - Access Hash
     request.service - Service Hash
     request.entity - Entity Hash
@@ -120,7 +120,7 @@ Attributes for enquiry_hash:
 
 #### Instance Methods:
 
-    response.as_hash - Hash of whole response
+    response.to_hash - Hash of whole response
     response.xml - XML of response
     response.code - Response status code
     response.headers - Response headers

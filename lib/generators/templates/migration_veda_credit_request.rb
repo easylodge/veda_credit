@@ -1,6 +1,7 @@
 class CreateVedaCreditRequest < ActiveRecord::Migration
   def self.up
     create_table :veda_credit_requests do |t|
+      t.integer :application_id
       t.text :xml
       t.text :access
       t.text :service
