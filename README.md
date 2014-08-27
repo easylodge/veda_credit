@@ -126,6 +126,9 @@ Attributes for enquiry_hash:
     response.headers - Response headers
     response.success? - Returns true or false (based on Httparty response)
     response.error - Response errors if any
+    response.primary_match - Hash of primary match result
+    response.summary_data - Hash of summary data result
+    response.score_card - Hash of score card result
 
 ## Contributing
 
