@@ -124,7 +124,7 @@ describe VedaCredit::Response do
     end
         
     it "has error response" do
-      expect(@response.error).to eq({"type"=>"AUTHENTICATION", "BCAerror_code"=>"ERR1005", "BCAerror_description"=>"The Request Manager was unable to authenticate the VedaXML access code and password supplied. Check values of: /BCAmessage/BCAaccess/BCAaccess-code and /BCAmessage/BCAaccess/BCAaccess-pwd"})
+      expect(@response.error).to eq("The Request Manager was unable to authenticate the VedaXML access code and password supplied. Check values of: /BCAmessage/BCAaccess/BCAaccess-code and /BCAmessage/BCAaccess/BCAaccess-pwd")
     end  
   end
 
@@ -144,7 +144,7 @@ describe VedaCredit::Response do
     end
     
     it "has error response" do
-      expect(@response.error).to eq({"type"=>"VALIDATION", "BCAerror_code"=>"ERR1015.2", "BCAerror_description"=>"The BCAservice-code-version supplied was not valid. Check value of: /BCAmessage/BCAservice/BCAservice-code-version"})
+      expect(@response.error).to eq("The BCAservice-code-version supplied was not valid. Check value of: /BCAmessage/BCAservice/BCAservice-code-version")
     end  
   end
 
@@ -169,7 +169,7 @@ describe VedaCredit::Response do
     end
         
     it "has error response" do
-      expect(@response.error).to eq({"error_type"=>"validation", "input_container"=>"Address Details", "error_description"=>"STATE MUST BE ENTERED"})
+      expect(@response.error).to eq("Validation error: Address Details, STATE MUST BE ENTERED")
     end  
   end
   end

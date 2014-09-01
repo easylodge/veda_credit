@@ -37,12 +37,12 @@ class VedaCredit::Response < ActiveRecord::Base
   end
 
   def error
-    connection_error = VedaCredit::Response.nested_hash_value(self.to_hash, "BCAerror")
+    bca_error = VedaCredit::Response.nested_hash_value(self.to_hash, "BCAerror")
     product_error = VedaCredit::Response.nested_hash_value(self.to_hash, "error")
-    if connection_error || product_error
-      connection_error || product_error
-    elsif !self.success? 
-      self.xml
+    if bca_error
+      self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]
+    elsif product_error
+      ("#{product_error["error_type"].humanize} error: #{product_error["input_container"]}, #{product_error["error_description"]}" rescue "There was an Veda product error")
     else        
       "No Error"
     end
@@ -73,9 +73,19 @@ class VedaCredit::Response < ActiveRecord::Base
     doc = Nokogiri::XML(self.xml)
     hash = {}
     doc.xpath("//summary").each do |el|
-      hash[el.xpath("@name").text] = (el.text.present? ? el.text : "nil") 
+      if el.text.present? && (el.text =~ /^\d+$/)
+        hash[el.xpath("@name").text.underscore] = el.text.to_i
+      elsif el.text.present?
+        hash[el.xpath("@name").text.underscore] = el.text
+      else
+        "nil"
+      end
     end
     hash
+  end
+
+  def to_s
+    "Veda Credit Response"
   end
 
 end

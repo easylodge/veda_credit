@@ -119,14 +119,9 @@ class VedaCredit::Request < ActiveRecord::Base
     end
   end
 
-  
-
   def to_bureau_reference(xml)
     xml.send(:"bureau-reference", self.bureau_reference, "role" => self.enquiry[:role]) 
   end
-
-
-  
 
 	def post
     if self.access
@@ -153,5 +148,8 @@ class VedaCredit::Request < ActiveRecord::Base
 		File.read(fname)
 	end
 
+  def to_s
+    "Veda Credit Request"
+  end
 	
 end
