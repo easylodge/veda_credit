@@ -1,7 +1,7 @@
-class VedaCredit::Request < ActiveRecord::Base
-  self.table_name = "veda_credit_requests"
+class VedaCredit::CommercialRequest < ActiveRecord::Base
+  self.table_name = "veda_credit_commercial_requests"
   
-  has_one :response, dependent: :destroy
+  has_one :commercial_response, dependent: :destroy
 
   serialize :access
   serialize :service
@@ -149,7 +149,7 @@ class VedaCredit::Request < ActiveRecord::Base
 	end
 
   def to_s
-    "Veda Credit Request"
+    "Veda Credit Commercial Request"
   end
 	
 end

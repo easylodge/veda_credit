@@ -1,12 +1,12 @@
-class VedaCredit::Response < ActiveRecord::Base
-  self.table_name = "veda_credit_responses"
+class VedaCredit::CommercialResponse < ActiveRecord::Base
+  self.table_name = "veda_credit_commercial_responses"
   
-  belongs_to :request, dependent: :destroy
+  belongs_to :commercial_request, dependent: :destroy
 
   serialize :headers
   # serialize :as_hash
   
-  validates :request_id, presence: true
+  validates :commercial_request_id, presence: true
   validates :xml, presence: true
   validates :headers, presence: true
   validates :code, presence: true
@@ -85,7 +85,7 @@ class VedaCredit::Response < ActiveRecord::Base
   end
 
   def to_s
-    "Veda Credit Response"
+    "Veda Credit Commercial Response"
   end
 
 end

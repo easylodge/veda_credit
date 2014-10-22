@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe VedaCredit::Response do
-  it { should belong_to(:request).dependent(:destroy) } 
-  it { should validate_presence_of(:request_id) }
+describe VedaCredit::CommercialResponse do
+  it { should belong_to(:commercial_request).dependent(:destroy) } 
+  it { should validate_presence_of(:commercial_request_id) }
   it { should validate_presence_of(:xml) }
   it { should validate_presence_of(:headers) }
   it { should validate_presence_of(:code) }
@@ -52,21 +52,21 @@ describe VedaCredit::Response do
                 :enquiry_amount => '5000',
                 :client_reference => '123456789'
               }
-       @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)      
+       @request = VedaCredit::CommercialRequest.new(application_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)      
     end
      	
     describe "with valid request post" do
       
       before(:all) do 
         @post = @request.post
-        @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+        @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
         
       
       
       describe '.headers' do
 				it "returns response headers" do
-          expect(@response.headers.class).to eq(HTTParty::Response::Headers)
+          expect(@response.headers.class).to eq(HTTParty::CommercialResponse::Headers)
         end
 			end
 
@@ -118,9 +118,9 @@ describe VedaCredit::Response do
               :security_code => 'xx',
               :request_mode => 'test'
               }
-      @request = VedaCredit::Request.new(application_id: 1, access: access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
+      @request = VedaCredit::CommercialRequest.new(application_id: 1, access: access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
-      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+      @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
         
     it "has error response" do
@@ -138,9 +138,9 @@ describe VedaCredit::Response do
                 :request_version => '1.0',
                 
               }
-      @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
+      @request = VedaCredit::CommercialRequest.new(application_id: 1, access: @access_hash, service: service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
-      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+      @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
     
     it "has error response" do
@@ -163,9 +163,9 @@ describe VedaCredit::Response do
                 },
                 :gender_type => 'male'
               }
-      @request = VedaCredit::Request.new(application_id: 1, access: @access_hash, service: @service_hash, entity: entity_hash, enquiry: @enquiry_hash) 
+      @request = VedaCredit::CommercialRequest.new(application_id: 1, access: @access_hash, service: @service_hash, entity: entity_hash, enquiry: @enquiry_hash) 
       @post = @request.post
-      @response = VedaCredit::Response.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+      @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
     end
         
     it "has error response" do
