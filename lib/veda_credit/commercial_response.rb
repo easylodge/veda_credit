@@ -37,8 +37,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   end
 
   def error
-    bca_error = VedaCredit::Response.nested_hash_value(self.to_hash, "BCAerror")
-    product_error = VedaCredit::Response.nested_hash_value(self.to_hash, "error")
+    bca_error = VedaCredit::CommercialResponse.nested_hash_value(self.to_hash, "BCAerror")
+    product_error = VedaCredit::CommercialResponse.nested_hash_value(self.to_hash, "error")
     if bca_error
       self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]
     elsif product_error
