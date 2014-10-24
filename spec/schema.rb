@@ -36,6 +36,7 @@ self.verbose = false
     t.text :headers
     t.integer :code
     t.text :xml
+    t.text :as_hash
     t.boolean :success
     t.integer :consumer_request_id
     t.timestamps

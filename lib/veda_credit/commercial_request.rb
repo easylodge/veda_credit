@@ -144,7 +144,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
   end
 
 	def schema
-		fname = File.expand_path('../../lib/assets/Vedascore-individual-enquiries-request-version-1.1.xsd', File.dirname(__FILE__) )
+		fname = File.expand_path('../../lib/assets/company-enquiry-3-2-1.xsd', File.dirname(__FILE__) )
 		File.read(fname)
 	end
 

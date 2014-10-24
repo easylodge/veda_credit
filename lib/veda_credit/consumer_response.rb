@@ -4,7 +4,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   belongs_to :consumer_request, dependent: :destroy
 
   serialize :headers
-  # serialize :as_hash
+  serialize :as_hash
   
   validates :consumer_request_id, presence: true
   validates :xml, presence: true
@@ -16,16 +16,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   
   def to_hash
     hash = Hash.from_xml(self.xml)
-    doc = Nokogiri::XML(self.xml)
-    gender_value = (doc.xpath("//gender").first.attributes["type"].value rescue nil)
-    role_value = (doc.xpath("//role").first.attributes["type"].value rescue nil)
-    if (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] rescue false)
-      hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] = gender_value
-    end
-    if (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] rescue false)
-      hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] = role_value
-    end  
-    hash
+    self.as_hash = hash
   end
 
   def self.nested_hash_value(obj,key)
