@@ -1,0 +1,106 @@
+<?xml version="1.0"?><BCAmessage service-request-id="00487687313" type="RESPONSE"><BCAservices><BCAservice><BCAservice-code>VDA001</BCAservice-code><BCAservice-code-version>V00</BCAservice-code-version><BCAservice-client-ref/><BCAservice-data><response version="1-36-0">
+<enquiry-report>
+<primary-match type="strong">
+<bureau-reference>188665274</bureau-reference>
+<individual>
+<individual-name create-date="2014-09-05">
+<family-name>POTTER</family-name>
+<first-given-name>HARRY</first-given-name>
+</individual-name>
+<gender type="male"/>
+<drivers-licence-number country-code="AU">105239695</drivers-licence-number>
+<address create-date="2014-09-05" type="residential-current">
+<street-number>5</street-number>
+<street-name>WOODSPRING</street-name>
+<street-type code="TCE"/>
+<suburb>CANNING VALE</suburb>
+<state>WA</state>
+<postcode>6155</postcode>
+<country country-code="AU"/>
+</address>
+</individual>
+<individual-consumer-credit-file>
+<credit-enquiry enquiry-date="2014-09-12" type="credit-application">
+<account-type code="LC">Loan Contract</account-type>
+<enquiry-amount>30000</enquiry-amount>
+<role type="principal"/>
+<credit-enquirer>EQUIUS FINANCE P/L</credit-enquirer>
+<client-reference>65</client-reference>
+</credit-enquiry>
+<credit-enquiry enquiry-date="2014-09-12" type="credit-application">
+<account-type code="LC">Loan Contract</account-type>
+<enquiry-amount>20500</enquiry-amount>
+<role type="principal"/>
+<credit-enquirer>EQUIUS FINANCE P/L</credit-enquirer>
+<client-reference>63</client-reference>
+</credit-enquiry>
+<credit-enquiry enquiry-date="2014-09-05" type="credit-application">
+<account-type code="LC">Loan Contract</account-type>
+<enquiry-amount>20500</enquiry-amount>
+<role type="principal"/>
+<credit-enquirer>EQUIUS FINANCE P/L</credit-enquirer>
+<client-reference>63</client-reference>
+</credit-enquiry>
+</individual-consumer-credit-file>
+</primary-match>
+<summary-data>
+<summary currency-code="AUD" name="enquiry-amount" type="amount">30000</summary>
+<summary name="age-of-file" type="months">0</summary>
+<summary name="age-of-subject" type="years"/>
+<summary name="time-at-address" type="months">0</summary>
+<summary name="time-at-employer" type="months"/>
+<summary name="defaults" type="count">0</summary>
+<summary currency-code="AUD" name="total-value-of-outstanding-defaults" type="amount">0</summary>
+<summary name="defaults-paid" type="count">0</summary>
+<summary name="defaults-12" type="count">0</summary>
+<summary name="defaults-12-paid" type="count">0</summary>
+<summary name="defaults-12-unpaid" type="count">0</summary>
+<summary name="defaults-24-paid" type="count">0</summary>
+<summary name="defaults-24-unpaid" type="count">0</summary>
+<summary name="defaults-36-paid" type="count">0</summary>
+<summary name="defaults-36-unpaid" type="count">0</summary>
+<summary name="time-since-last-default" type="months"/>
+<summary name="total-credit-enquiries" type="count">3</summary>
+<summary name="credit-enquiries-1" type="count">3</summary>
+<summary name="credit-enquiries-3" type="count">3</summary>
+<summary name="credit-enquiries-6" type="count">3</summary>
+<summary name="credit-enquiries-12" type="count">3</summary>
+<summary name="credit-enquiries-60" type="count">3</summary>
+<summary name="time-since-last-enquiry" type="months">0</summary>
+<summary name="telco-and-utility-defaults" type="count">0</summary>
+<summary name="telco-and-utility-defaults-12" type="count">0</summary>
+<summary name="telco-and-utility-enquiries" type="count">0</summary>
+<summary name="telco-and-utility-enquiries-6" type="count">0</summary>
+<summary name="telco-and-utility-enquiries-12" type="count">0</summary>
+<summary name="authorised-agents-enquiries-12" type="count">0</summary>
+<summary name="authorised-agents-enquiries-60" type="count">0</summary>
+<summary name="directorships-current" type="count">0</summary>
+<summary name="directorships-previous" type="count">0</summary>
+<summary name="judgements" type="count">0</summary>
+<summary name="proprietorships" type="count">0</summary>
+<summary name="adverse-on-file">No</summary>
+<summary name="file-notes">No</summary>
+<summary name="known-identities" type="count">1</summary>
+<summary name="bankruptcies" type="count">0</summary>
+<summary name="writs-and-summons" type="count">0</summary>
+<summary name="external-administration-director" type="count">0</summary>
+</summary-data>
+<score-data>
+<score type="VS 1.1 CONSUMER">
+<scorecard-model>0303</scorecard-model>
+<relative-risk>1.8</relative-risk>
+<vedascore-1.1-index>3.7331</vedascore-1.1-index>
+<applicant-odds>21.0</applicant-odds>
+<contributing-factor impact="Greatly Decreases Risk">Lack of Consumer Adverse Information</contributing-factor>
+<contributing-factor impact="Moderately Decreases Risk">Current and Historic Credit Amount Sought</contributing-factor>
+<contributing-factor impact="Moderately Increases Risk">Age of File</contributing-factor>
+<contributing-factor impact="Moderately Decreases Risk">Number of Consumer Credit Applications</contributing-factor>
+<population>
+<population-odds>11.9</population-odds>
+</population>
+<veda-score>639</veda-score>
+<percentile>45</percentile>
+</score>
+</score-data>
+</enquiry-report>
+</response></BCAservice-data></BCAservice></BCAservices></BCAmessage>

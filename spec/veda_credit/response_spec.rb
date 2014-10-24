@@ -10,7 +10,7 @@ describe VedaCredit::Response do
 
   describe "with dev_config" do
     before(:all) do
-  		@config = YAML.load_file('dev_config.yml')
+      @config = YAML.load_file('dev_config.yml')
       @access_hash = 
         {
           :url => @config["url"],

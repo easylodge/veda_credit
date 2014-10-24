@@ -123,6 +123,6 @@ dev_config = YAML.load_file('dev_config.yml')
 @bureau_reference = '186492371'              
 
 @req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
-@post = @req.post
-@res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
-@business_req = VedaCredit::Request.create(access: @access_hash, service: @bca_service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)
+# @post = @req.post
+# @res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
+# @business_req = VedaCredit::Request.create(access: @access_hash, service: @bca_service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)

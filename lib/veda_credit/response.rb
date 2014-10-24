@@ -19,10 +19,12 @@ class VedaCredit::Response < ActiveRecord::Base
     doc = Nokogiri::XML(self.xml)
     gender_value = (doc.xpath("//gender").first.attributes["type"].value rescue nil)
     role_value = (doc.xpath("//role").first.attributes["type"].value rescue nil)
-    gender = (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] rescue nil)
-    role = (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] rescue nil)
-    gender = gender_value if gender
-    role = role_value if role
+    if (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] rescue false)
+      hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] = gender_value
+    end
+    if (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] rescue false)
+      hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] = role_value
+    end  
     hash
   end
 
