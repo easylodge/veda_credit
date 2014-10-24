@@ -1,12 +1,12 @@
-class VedaCredit::Response < ActiveRecord::Base
-  self.table_name = "veda_credit_responses"
+class VedaCredit::ConsumerResponse < ActiveRecord::Base
+  self.table_name = "veda_credit_consumer_responses"
   
-  belongs_to :request, dependent: :destroy
+  belongs_to :consumer_request, dependent: :destroy
 
   serialize :headers
   # serialize :as_hash
   
-  validates :request_id, presence: true
+  validates :consumer_request_id, presence: true
   validates :xml, presence: true
   validates :headers, presence: true
   validates :code, presence: true
@@ -39,8 +39,8 @@ class VedaCredit::Response < ActiveRecord::Base
   end
 
   def error
-    bca_error = VedaCredit::Response.nested_hash_value(self.to_hash, "BCAerror")
-    product_error = VedaCredit::Response.nested_hash_value(self.to_hash, "error")
+    bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.to_hash, "BCAerror")
+    product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.to_hash, "error")
     if bca_error
       self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]
     elsif product_error
@@ -87,7 +87,7 @@ class VedaCredit::Response < ActiveRecord::Base
   end
 
   def to_s
-    "Veda Credit Response"
+    "Veda Credit Consumer Response"
   end
 
 end
