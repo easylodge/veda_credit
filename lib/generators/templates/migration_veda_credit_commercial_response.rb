@@ -7,6 +7,7 @@ class CreateVedaCreditCommercialResponse < ActiveRecord::Migration
         t.text :xml
         t.boolean :success
         t.integer :commercial_request_id
+        t.text :as_hash
         t.timestamps
       end
     end
