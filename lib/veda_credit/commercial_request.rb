@@ -18,138 +18,95 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
 
   def to_xml_body
     if self.access && self.service && self.enquiry
-      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-        xml.send(:"BCAmessage", "type" => "REQUEST") {
-          xml.BCAaccess {
-            xml.send(:"BCAaccess-code", self.access[:access_code])
-            xml.send(:"BCAaccess-pwd", self.access[:password])
-          }
-          xml.BCAservice {
-            xml.send(:"BCAservice-client-ref", self.enquiry[:client_reference])
-            xml.send(:"BCAservice-code", self.service[:service_code])
-            xml.send(:"BCAservice-code-version", self.service[:service_code_version])   
-            xml.send(:"BCAservice-data") { 
-              xml.send(:"request", "version" => self.service[:request_version], "mode" => self.access[:request_mode]){
-                xml.send(:"subscriber-details"){
-                  xml.send(:"subscriber-identifier", self.access[:subscriber_id])
-                  xml.send(:"security", self.access[:security_code])
-                }
-                xml.send(:"product", "name" => self.enquiry[:product_name], "summary" => self.enquiry[:summary])
-                if self.bureau_reference
-                  self.to_bureau_reference(xml)
-                elsif self.entity && self.individual? 
-                  self.to_individual(xml)
-                elsif self.entity && self.business? 
-                  self.to_business(xml)
-                end
-                xml.send(:"enquiry", "type" => self.enquiry[:enquiry_type]) {
-                  xml.send(:"account-type", "code" => self.enquiry[:account_type_code])
-                  xml.send(:"enquiry-amount", self.enquiry[:enquiry_amount], "currency-code" => self.enquiry[:currency_code])
-                  xml.send(:"client-reference", self.application_id)
-                }
-              }
-            }
-          }
-        }
-      end
-      self.xml = builder.to_xml
+      
+      url = self.access[:url]
+      username = self.access[:username] 
+      password = self.access[:password]
+      
+      acn = self.entity[:acn]
+      
+      client_ref = self.enquiry[:client_reference]
+      role = self.enquiry[:role]
+      amount = self.enquiry[:enquiry_amount]
+      currency = self.enquiry[:currency_code]
+      bureau_reference = self.enquiry[:bureau_reference]
+      enquiry_id = self.enquiry[:enquiry_id]
+      request_type = self.enquiry[:request_type] #REPORT
+      enquiry_type = self.enquiry[:enquiry_type] #credit-review
+      reason_for_enquiry = self.enquiry[:reason_for_enquiry]
+      cur_and_hist = self.enquiry[:current_and_history]
+      scoring = self.enquiry[:scoring_required]
+      enrichment = self.enquiry[:enrichment_required]
+      ppsr = self.enquiry[:ppsr_required]
+      credit_type = self.enquiry[:credit_type] #COMMERCIAL
+      account_type = self.enquiry[:account_type] #HC
+      account_type_code = self.enquiry[:account_type_code] #HIREPURCHASE
+      
+      
+      soap_xml = 
+                  "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://vedaxml.com/vxml2/company-enquiry-v3-2.xsd\" xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">
+                     <soapenv:Header>
+                        <wsse:Security mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">
+                           <wsse:UsernameToken>
+                              <wsse:Username>#{username}</wsse:Username>
+                              <wsse:Password>#{password}</wsse:Password>
+                           </wsse:UsernameToken>
+                        </wsse:Security>
+                        <wsa:MessageID>urn:example.com:123456789</wsa:MessageID>
+                        <wsa:To>https://vedaxml.com/sys2/company-enquiry-v3-2</wsa:To>
+                        <wsa:Action>http://vedaxml.com/companyEnquiry/ServiceRequest</wsa:Action>
+                     </soapenv:Header>
+                     <soapenv:Body>
+                        <com:request client-reference=#{client_ref} reason-for-enquiry=#{reason_for_enquiry} enquiry-id=#{enquiry_id} request-type=#{request_type} >
+                           <!--You have a CHOICE of the next 2 items at this level-->
+                           <!--Optional:-->
+                           <com:bureau-reference>#{bureau_reference}</com:bureau-reference>
+                           <!--1 or more repetitions:-->
+                           <com:subject role=#{role}>
+                              <com:australian-company-number>#{acn}</com:australian-company-number>
+                              <!--0 to 20 repetitions:-->
+                           </com:subject>
+                           <com:current-historic-flag>#{cur_and_hist}</com:current-historic-flag>
+                           <com:enquiry type=#{enquiry_type}>
+                              <com:account-type code=#{account_type_code}>#{account_type}</com:account-type>
+                              <com:enquiry-amount currency-code=#{currency}>#{amount}</com:enquiry-amount>
+                              <!--Optional:-->
+                              <com:co-borrower/>
+                              <!--Optional:-->
+                              <com:client-reference>#{client_ref}</com:client-reference>
+                           </com:enquiry>
+
+                           <com:collateral-information>
+                              <com:credit-type>#{credit_type}</com:credit-type>
+                              <!--Optional:-->
+                              <com:link-limit>100</com:link-limit>
+                              <com:scoring-required>#{scoring}</com:scoring-required>
+                              <!--Optional:-->
+                              <com:enrichment-required>#{enrichment}</com:enrichment-required>
+                              <!--Optional:-->
+                              <com:ppsr-required>#{ppsr}</com:ppsr-required>
+                           </com:collateral-information>
+                        </com:request>
+                     </soapenv:Body>
+                  </soapenv:Envelope>"
+      self.xml = soap_xml
     else
       "Requires access, service or enquiry hash"
     end
   end
-
-  def individual?
-    true if ["vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "authorised-agent-consumer-plus-commercial-enquiry"].include? self.enquiry[:product_name] 
-  end
-
-  def business?
-    true if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry"].include? self.enquiry[:product_name] 
-  end
-
-  def to_individual(xml)
-    xml.send(:"individual", "role" => self.enquiry[:role]){
-      xml.send(:"individual-name"){
-        xml.send(:"family-name", self.entity[:family_name])
-        xml.send(:"first-given-name", self.entity[:first_given_name])
-        xml.send(:"other-given-name", self.entity[:other_given_name])
-      }
-      xml.send(:"employment") {
-        xml.send(:"employer", self.entity[:employer])
-      }
-      self.to_address(xml,:current_address) if self.entity[:current_address]
-      self.to_address(xml, :previous_address) if self.entity[:previous_address]
-      xml.send(:"drivers-licence-number", self.entity[:drivers_licence_number])
-      xml.send(:"gender", "type" => self.entity[:gender])
-      xml.send(:"date-of-birth", self.entity[:date_of_birth])
-    }
-              
-  end
-
-  def to_business(xml)
-    xml.send(:"business", "role" => self.enquiry[:role]){
-      xml.send(:"business-name", self.entity[:business_name])
-      xml.send(:"australian-business-number", self.entity[:abn]) unless self.entity[:abn].blank? || self.entity[:abn].size < 11
-      self.to_address(xml,:trading_address) if self.entity[:trading_address]
-    }
-              
-  end
-
-  def to_address(xml,type)
-    if type == :previous_address 
-      address_type = 'residential-previous'
-    elsif type == :current_address
-      address_type = 'residential-current'
-    elsif type == :trading_address
-      address_type = 'trading-address'
-    end
-    if self.entity[type][:unformatted_address]
-      xml.send(:"unformatted-address", self.entity[type][:unformatted_address], "type" => address_type)
-    else
-      xml.send(:"address", "type" => address_type) {
-        xml.send(:"unit-number", self.entity[type][:unit_number])
-        xml.send(:"street-number", self.entity[type][:street_number])
-        xml.send(:"property", self.entity[type][:property]) if self.entity[type][:property]
-        xml.send(:"street-name", self.entity[type][:street_name])
-        xml.send(:"street-type", "code" => self.entity[type][:street_type])
-        xml.send(:"suburb", self.entity[type][:suburb])
-        xml.send(:"state", self.entity[type][:state])
-        xml.send(:"postcode", self.entity[type][:postcode])
-        xml.send(:"country", "country-code" => self.entity[type][:country_code])
-      }
-    end
-  end
-
-  def to_bureau_reference(xml)
-    xml.send(:"bureau-reference", self.bureau_reference, "role" => self.enquiry[:role]) 
-  end
-
+  
 	def post
     if self.access
-			auth = {:username => self.access[:access_code], :password => self.access[:password] }
-			base_uri = self.access[:url]
-			body = self.xml
-      headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
-			HTTParty.post(base_uri, :body => body, :basic_auth => auth, :headers => headers)
+			headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
+      HTTParty.post(self.access[:url], :body => to_xml_body, :headers => headers)
 	  else
       "No access hash!"
     end
   end
 
-  def validate_xml
-    xsd = Nokogiri::XML::Schema(self.schema)
-    doc = Nokogiri::XML(self.xml)
-    xsd.validate(doc).each do |error|
-      error.message
-    end     
-  end
-
-	def schema
-		fname = File.expand_path('../../lib/assets/company-enquiry-3-2-1.xsd', File.dirname(__FILE__) )
-		File.read(fname)
-	end
-
   def to_s
     "Veda Credit Commercial Request"
   end
-	
+
+ 
 end

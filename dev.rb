@@ -25,6 +25,9 @@ dev_config = YAML.load_file('dev_config.yml')
 @subscriber_id = dev_config["subscriber_id"]
 @security_code = dev_config["security_code"]
 @request_mode = dev_config["request_mode"]
+@com_url = dev_config["com_url"]
+@com_username = dev_config["com_username"]
+@com_password = dev_config["com_password"]
 
 @access_hash = 
               {
@@ -118,11 +121,47 @@ dev_config = YAML.load_file('dev_config.yml')
                 :client_reference => '123456789'
               }              
 
+@com_enquiry_hash =
+              {
+                :role => 'principal',
+                :enquiry_id => '1223334',
+                :enquiry_type => 'credit-review',
+                :request_type => "REPORT",
+                :account_type_code => 'HC',
+                :account_type => 'HIREPURCHASE',
+                :currency_code => 'AUD',
+                :enquiry_amount => '5000',
+                :client_reference => '123456789',
+                :current_and_history => "current",
+                :bureau_reference => nil,
+                :reason_for_enquiry => "Application",
+                :current_and_history => "current",
+                :scoring_required => "no",
+                :enrichment_required => "no",
+                :ppsr_required => "no",
+                :credit_type => "COMMERCIAL"
+              }
+
+@com_access_hash = 
+              {
+                :url => @com_url,
+                :username => @com_username,
+                :password => @com_password,
+                } 
+
+@com_service_hash = 
+              {
+                :service_code => "XML2",
+              }
+
+@com_entity_hash = { :acn => "130945306" }                                     
+
+@bureau_reference = '186492371'
 
 
-@bureau_reference = '186492371'              
-
-@req = VedaCredit::Request.create(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+# @req = VedaCredit::ConsumerRequest.create(access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 # @post = @req.post
 # @res = VedaCredit::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
 # @business_req = VedaCredit::Request.create(access: @access_hash, service: @bca_service_hash, entity: @business_entity_hash, enquiry: @business_enquiry_hash)
+@req = VedaCredit::CommercialRequest.create(access: @com_access_hash, service: @com_service_hash, entity: @com_entity_hash, enquiry: @com_enquiry_hash)
+
