@@ -14,7 +14,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
   validates :entity, presence: true
   validates :enquiry, presence: true
 
-  after_initialize :to_xml_body
+  after_create :to_xml_body
 
   def to_xml_body
     if self.access && self.service && self.enquiry
@@ -41,6 +41,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
       credit_type = self.enquiry[:credit_type] #COMMERCIAL
       account_type = self.enquiry[:account_type] #HC
       account_type_code = self.enquiry[:account_type_code] #HIREPURCHASE
+      link_limit = 0 #100
       
       
       soap_xml = 
@@ -79,7 +80,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
                            <com:collateral-information>
                               <com:credit-type>#{credit_type}</com:credit-type>
                               <!--Optional:-->
-                              <com:link-limit>100</com:link-limit>
+                              <com:link-limit>#{link_limit}</com:link-limit>
                               <com:scoring-required>#{scoring}</com:scoring-required>
                               <!--Optional:-->
                               <com:enrichment-required>#{enrichment}</com:enrichment-required>

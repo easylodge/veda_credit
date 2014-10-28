@@ -14,7 +14,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   validates :entity, presence: true
   validates :enquiry, presence: true
 
-  after_initialize :to_xml_body
+  after_create :to_xml_body
 
   def to_xml_body
     if self.access && self.service && self.enquiry
