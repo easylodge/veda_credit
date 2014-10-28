@@ -57,19 +57,19 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
                         <wsa:Action>http://vedaxml.com/companyEnquiry/ServiceRequest</wsa:Action>
                      </soapenv:Header>
                      <soapenv:Body>
-                        <com:request client-reference=#{client_ref} reason-for-enquiry=#{reason_for_enquiry} enquiry-id=#{enquiry_id} request-type=#{request_type} >
+                        <com:request client-reference=\"#{client_ref}\" reason-for-enquiry=\"#{reason_for_enquiry}\" enquiry-id=\"#{enquiry_id}\" request-type=\"#{request_type} >
                            <!--You have a CHOICE of the next 2 items at this level-->
                            <!--Optional:-->
                            <com:bureau-reference>#{bureau_reference}</com:bureau-reference>
                            <!--1 or more repetitions:-->
-                           <com:subject role=#{role}>
+                           <com:subject role=\"#{role}\">
                               <com:australian-company-number>#{acn}</com:australian-company-number>
                               <!--0 to 20 repetitions:-->
                            </com:subject>
                            <com:current-historic-flag>#{cur_and_hist}</com:current-historic-flag>
-                           <com:enquiry type=#{enquiry_type}>
-                              <com:account-type code=#{account_type_code}>#{account_type}</com:account-type>
-                              <com:enquiry-amount currency-code=#{currency}>#{amount}</com:enquiry-amount>
+                           <com:enquiry type=\"#{enquiry_type}\">
+                              <com:account-type code=\"#{account_type_code}\">#{account_type}</com:account-type>
+                              <com:enquiry-amount currency-code=\"#{currency}\">#{amount}</com:enquiry-amount>
                               <!--Optional:-->
                               <com:co-borrower/>
                               <!--Optional:-->
@@ -93,6 +93,20 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
     else
       "Requires access, service or enquiry hash"
     end
+  end
+
+  def validate_xml
+    xsd = Nokogiri::XML::Schema(self.schema)
+    doc = Nokogiri::XML(self.xml)
+    # xsd.validate(doc.xpath("//com").to_s).each do |error|
+    xsd.validate(doc).each do |error|
+      error.message
+    end     
+  end
+
+  def schema
+    fname = File.expand_path('../../lib/assets/company-enquiry-3-2-1.xsd', File.dirname(__FILE__) )
+    File.read(fname)
   end
   
 	def post
