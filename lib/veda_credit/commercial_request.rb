@@ -8,7 +8,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
   serialize :entity
   serialize :enquiry
  
-  validates :application_id, presence: true 
+  validates :ref_id, presence: true 
   validates :access, presence: true
   validates :service, presence: true
   validates :entity, presence: true
@@ -25,7 +25,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
       
       acn = self.entity[:acn]
       
-      client_ref = self.enquiry[:client_reference]
+      client_ref = self.ref_id
       role = self.enquiry[:role]
       amount = self.enquiry[:enquiry_amount]
       currency = self.enquiry[:currency_code]
@@ -57,7 +57,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
                         <wsa:Action>http://vedaxml.com/companyEnquiry/ServiceRequest</wsa:Action>
                      </soapenv:Header>
                      <soapenv:Body>
-                        <com:request client-reference=\"#{client_ref}\" reason-for-enquiry=\"#{reason_for_enquiry}\" enquiry-id=\"#{enquiry_id}\" request-type=\"#{request_type} >
+                        <com:request client-reference=\"#{client_ref}\" reason-for-enquiry=\"#{reason_for_enquiry}\" enquiry-id=\"#{enquiry_id}\" request-type=\"#{request_type}\" >
                            <!--You have a CHOICE of the next 2 items at this level-->
                            <!--Optional:-->
                            <com:bureau-reference>#{bureau_reference}</com:bureau-reference>
@@ -97,7 +97,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
 
   def validate_xml
     xsd = Nokogiri::XML::Schema(self.schema)
-    doc = Nokogiri::XML(self.xml)
+    doc = Nokogiri::XML(self.xml).remove_namespaces!
     # xsd.validate(doc.xpath("//com").to_s).each do |error|
     xsd.validate(doc).each do |error|
       error.message

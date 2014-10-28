@@ -2,7 +2,7 @@ ActiveRecord::Schema.define do
 self.verbose = false
 
   create_table :veda_credit_commercial_requests do |t|
-    t.integer :application_id
+    t.integer :ref_id
     t.text :xml
     t.text :access
     t.text :service
@@ -17,12 +17,13 @@ self.verbose = false
     t.integer :code
     t.text :xml
     t.boolean :success
+    t.text :as_hash
     t.integer :commercial_request_id
     t.timestamps
   end
 
   create_table :veda_credit_consumer_requests do |t|
-    t.integer :application_id
+    t.integer :ref_id
     t.text :xml
     t.text :access
     t.text :service

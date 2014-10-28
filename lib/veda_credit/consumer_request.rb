@@ -8,7 +8,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   serialize :entity
   serialize :enquiry
  
-  validates :application_id, presence: true 
+  validates :ref_id, presence: true 
   validates :access, presence: true
   validates :service, presence: true
   validates :entity, presence: true
@@ -45,7 +45,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
                 xml.send(:"enquiry", "type" => self.enquiry[:enquiry_type]) {
                   xml.send(:"account-type", "code" => self.enquiry[:account_type_code])
                   xml.send(:"enquiry-amount", self.enquiry[:enquiry_amount], "currency-code" => self.enquiry[:currency_code])
-                  xml.send(:"client-reference", self.application_id)
+                  xml.send(:"client-reference", self.ref_id)
                 }
               }
             }
