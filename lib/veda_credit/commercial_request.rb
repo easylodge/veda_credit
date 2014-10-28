@@ -28,20 +28,20 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
       client_ref = self.ref_id
       role = self.enquiry[:role]
       amount = self.enquiry[:enquiry_amount]
-      currency = self.enquiry[:currency_code]
+      currency = self.enquiry[:currency_code] || "AUD"
       bureau_reference = self.enquiry[:bureau_reference]
-      enquiry_id = self.enquiry[:enquiry_id]
-      request_type = self.enquiry[:request_type] #REPORT
-      enquiry_type = self.enquiry[:enquiry_type] #credit-review
+      enquiry_id = self.enquiry[:enquiry_id] || ""
+      request_type = self.enquiry[:request_type] || "REPORT"
+      enquiry_type = self.enquiry[:enquiry_type] || "credit-enquiry" #credit-enquiry, credit-review
       reason_for_enquiry = self.enquiry[:reason_for_enquiry]
-      cur_and_hist = self.enquiry[:current_and_history]
-      scoring = self.enquiry[:scoring_required]
-      enrichment = self.enquiry[:enrichment_required]
-      ppsr = self.enquiry[:ppsr_required]
-      credit_type = self.enquiry[:credit_type] #COMMERCIAL
+      cur_and_hist = self.enquiry[:current_and_history] || "current"
+      scoring = self.enquiry[:scoring_required] || "no"
+      enrichment = self.enquiry[:enrichment_required] || "no"
+      ppsr = self.enquiry[:ppsr_required] || "no"
+      credit_type = self.enquiry[:credit_type] || "COMMERCIAL"
       account_type = self.enquiry[:account_type] #HC
       account_type_code = self.enquiry[:account_type_code] #HIREPURCHASE
-      link_limit = 0 #100
+      link_limit = self.enquiry[:link_limit] || 0 #100
       
       
       soap_xml = 
