@@ -24,7 +24,7 @@ module VedaCredit
         sleep 1
         migration_template "migration_veda_credit_commercial_response.rb", "db/migrate/create_veda_credit_commercial_response.rb"
         sleep 1
-        migration_template "migration_rename_table.rb", "db/migrate/rename_table.rb"
+        migration_template "migration_rename_table.rb", "db/migrate/rename_veda_table.rb"
       end
     end
   end

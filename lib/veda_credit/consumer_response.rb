@@ -3,7 +3,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   
   belongs_to :consumer_request, dependent: :destroy
 
-  # serialize :headers
+  serialize :headers
   serialize :as_hash
   
   validates :consumer_request_id, presence: true
@@ -82,6 +82,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def enquiry_report
+    to_hash unless as_hash
     as_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"] rescue {}
   end
 
