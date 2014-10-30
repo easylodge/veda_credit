@@ -12,7 +12,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   # validates :code, presence: true
   # validates :success, presence: true
 
-  after_create :to_hash
+  before_save :to_hash
   
   def to_hash
     hash = Hash.from_xml(self.xml)

@@ -153,8 +153,8 @@ dev_config = YAML.load_file('dev_config.yml')
               }
 
 @com_entity_hash = { 
-                    :acn => "000105233",
-                    :bureau_reference => "BFN 001" 
+                    :acn => "000105233" #"004 085 616" ,
+                    # :bureau_reference => "BFN 001" 
                   }                                     
 
 @bureau_reference = '186492371'
