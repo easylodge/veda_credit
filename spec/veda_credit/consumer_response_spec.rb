@@ -13,6 +13,7 @@ describe VedaCredit::ConsumerResponse do
       @success = true
       @request_id = 1
       @response = VedaCredit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
+      @response.save
     end
       
       

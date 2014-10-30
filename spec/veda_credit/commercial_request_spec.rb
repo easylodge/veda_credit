@@ -45,6 +45,7 @@ describe VedaCredit::CommercialRequest do
           :credit_type => "COMMERCIAL",
         }
       @request = VedaCredit::CommercialRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      @request.save
     end
 
     describe ".access" do

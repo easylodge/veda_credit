@@ -12,19 +12,19 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   # validates :code, presence: true
   # validates :success, presence: true
 
-  before_save :to_hash
+  # before_save :to_hash
   
-  def to_hash
-    hash = Hash.from_xml(self.xml)
-    doc = Nokogiri::XML(self.xml)
-    gender_value = (doc.xpath("//gender").first.attributes["type"].value rescue nil)
-    role_value = (doc.xpath("//role").first.attributes["type"].value rescue nil)
-    gender = (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] rescue nil)
-    role = (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] rescue nil)
-    gender = gender_value if gender
-    role = role_value if role
-    hash
-  end
+  # def to_hash
+  #   hash = Hash.from_xml(self.xml)
+  #   doc = Nokogiri::XML(self.xml)
+  #   gender_value = (doc.xpath("//gender").first.attributes["type"].value rescue nil)
+  #   role_value = (doc.xpath("//role").first.attributes["type"].value rescue nil)
+  #   gender = (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual"]["gender"] rescue nil)
+  #   role = (hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"]["individual_consumer_credit_file"]["credit_enquiry"]["role"] rescue nil)
+  #   gender = gender_value if gender
+  #   role = role_value if role
+  #   hash
+  # end
 
   # def self.nested_hash_value(obj,key)
   #   if obj.respond_to?(:key?) && obj.key?(key)
@@ -69,20 +69,20 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   #   self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["score_data"] rescue {}
   # end
 
-  def summary_data
-    doc = Nokogiri::XML(self.xml)
-    hash = {}
-    doc.xpath("//summary").each do |el|
-      if el.text.present? && (el.text =~ /^\d+$/)
-        hash[el.xpath("@name").text.underscore] = el.text.to_i
-      elsif el.text.present?
-        hash[el.xpath("@name").text.underscore] = el.text
-      else
-        "nil"
-      end
-    end
-    hash
-  end
+  # def summary_data
+  #   doc = Nokogiri::XML(self.xml)
+  #   hash = {}
+  #   doc.xpath("//summary").each do |el|
+  #     if el.text.present? && (el.text =~ /^\d+$/)
+  #       hash[el.xpath("@name").text.underscore] = el.text.to_i
+  #     elsif el.text.present?
+  #       hash[el.xpath("@name").text.underscore] = el.text
+  #     else
+  #       "nil"
+  #     end
+  #   end
+  #   hash
+  # end
 
   def to_s
     "Veda Credit Commercial Response"
@@ -133,7 +133,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     summary = {}
     if hsh["summary_data"]["summary_entry"].is_a?(Array)
       hsh["summary_data"]["summary_entry"].each do |sum|
-        key = sum["summary_name"]
+        key = sum["summary_name"].underscore
         value = sum["summary_value"]
         summary[key] = value
       end
