@@ -228,6 +228,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     hsh
   end
 
+  def error
+    hsh = get_hash("error")
+    return {} unless hsh.present?
+    hsh
+  end
+
   private
   def get_hash(search_node=nil)
     doc = Nokogiri::XML(self.xml)
