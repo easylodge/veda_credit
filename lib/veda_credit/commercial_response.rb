@@ -69,20 +69,23 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   #   self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["score_data"] rescue {}
   # end
 
-  # def summary_data
-  #   doc = Nokogiri::XML(self.xml)
-  #   hash = {}
-  #   doc.xpath("//summary").each do |el|
-  #     if el.text.present? && (el.text =~ /^\d+$/)
-  #       hash[el.xpath("@name").text.underscore] = el.text.to_i
-  #     elsif el.text.present?
-  #       hash[el.xpath("@name").text.underscore] = el.text
-  #     else
-  #       "nil"
-  #     end
-  #   end
-  #   hash
-  # end
+  def summary_data
+    doc = Nokogiri::XML(self.xml)
+    hash = {}
+      doc.remove_namespaces!
+    doc.xpath("//summary-entry").each do |el|
+      hash[el.children.children[0].text.underscore] = el.children.children[1].text.to_i 
+
+      # if node.present? && (el.text =~ /^\d+$/)
+      #   hash[el.xpath("@name").text.underscore] = el.text.to_i
+      # elsif el.text.present?
+      #   hash[el.children.children.first.text.underscore] = el.text
+      # else
+      #   "nil"
+      # end
+    end
+    hash
+  end
 
   def to_s
     "Veda Credit Commercial Response"
@@ -127,21 +130,22 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     hsh
   end
 
-  def summary_data
-    hsh = get_hash("summary-data")
-    return {} unless hsh.present?
-    summary = {}
-    if hsh["summary_data"]["summary_entry"].is_a?(Array)
-      hsh["summary_data"]["summary_entry"].each do |sum|
-        key = sum["summary_name"].underscore
-        value = sum["summary_value"]
-        summary[key] = value.to_i
-      end
-    else
-      summary[hsh["summary_name"].underscore] = hsh["summary_value"].to_i
-    end
-    Marshal.load(Marshal.dump(summary))
-  end
+  # def summary_data
+  #   hsh = get_hash("summary-data")
+  #   return {} unless hsh.present?
+  #   summary = {}
+  #   if hsh["summary_data"]["summary_entry"].is_a?(Array)
+  #     hsh["summary_data"]["summary_entry"].each do |sum|
+  #       key = sum["summary_name"].underscore
+  #       value = sum["summary_value"]
+  #       summary[key] = value.to_i
+  #     end
+  #   else
+  #     summary[hsh["summary_name"].underscore] = hsh["summary_value"].to_i
+  #   end
+  #   copied_sum = Marshal.load(Marshal.dump(summary))
+  #   copied_sum
+  # end
 
   def file_messages
     hsh = get_hash("organisation-legal")
