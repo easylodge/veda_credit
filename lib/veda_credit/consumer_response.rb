@@ -37,7 +37,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     elsif product_error
       ("#{product_error["error_type"].humanize} error: #{product_error["input_container"]}, #{product_error["error_description"]}" rescue "There was an Veda product error")
     else        
-      "No Error"
+      nil
     end
   end
 
