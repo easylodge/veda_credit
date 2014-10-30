@@ -135,12 +135,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh["summary_data"]["summary_entry"].each do |sum|
         key = sum["summary_name"].underscore
         value = sum["summary_value"]
-        summary[key] = value
+        summary[key] = value.to_i
       end
     else
-      summary[hsh["summary_name"].underscore] = hsh["summary_value"]
+      summary[hsh["summary_name"].underscore] = hsh["summary_value"].to_i
     end
-    summary
+    Marshal.load(Marshal.dump(summary))
   end
 
   def file_messages
