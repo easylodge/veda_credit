@@ -138,7 +138,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
         summary[key] = value
       end
     else
-      summary[hsh["summary_name"]] = hsh["summary_value"]
+      summary[hsh["summary_name"].underscore] = hsh["summary_value"]
     end
     summary
   end
