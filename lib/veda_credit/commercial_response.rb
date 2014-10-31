@@ -236,9 +236,15 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   end
 
   def error
-    return false unless self.xml.include?("<html>")
-    body = /<body.*?>([\s\S]*)<\/body>/.match(self.xml)[0]
-    body.gsub!(/<body.*?>/, "").gsub(/<\/body>/, '')
+    if self.xml.include?("<html>")
+      body = /<body>([\s\S]*)<\/body>/.match(self.xml)[0]
+      body.gsub!(/<body>|<h1>|<h3>/, " ").gsub!(/<\/body>|<\/h1>|<\/h3>/, '').gsub!("\n", '').strip!
+      body
+    else
+      hsh = get_hash("error")
+      return {} unless hsh.present?
+      "Error: #{hsh["error"]["code"]} - #{hsh["error"]["description"]}"
+    end
   end
 
   private

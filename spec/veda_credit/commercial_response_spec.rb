@@ -196,35 +196,19 @@ describe VedaCredit::CommercialResponse do
 
 
   context ".error" do
-    it "returns error message" do
-      #@config = YAML.load_file('dev_config.yml') dev_config.yml
-      access_hash = 
-          {
-              :url => 'https://ctaau.vedaxml.com/cta/sys1',
-              :access_code => 'xxxxxx',
-              :password => 'xxxxxx',
-              :subscriber_id => 'xxxxxx',
-              :security_code => 'xx',
-              :request_mode => 'test'
-              }
-      entity_hash = 
-              {
-                :family_name => 'Verry',
-                :first_given_name => 'Dore',
-                :employer => 'Veda',
-                :current_address => {
-                  :street_name => "Arthur",
-                  :suburb => "North Sydney",
-                  :state => ""
-                },
-                :gender_type => 'male'
-              }
-      @request = VedaCredit::CommercialRequest.new(ref_id: 1, access: access_hash, service: @service_hash, entity: entity_hash, enquiry: @enquiry_hash) 
-      @post = @request.post
-      @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, commercial_request_id: @request.id)
-      html = "\n<h1>Bad Request</h1>\n<h3>The request sent by the client was syntactically incorrect.</h3>\n\n"
-      expect(@response.error).to eq(html)
+    it "xml - returns error message" do
+      @xml = File.read('spec/veda_credit/commercial_error_response.xml')
+      @response = VedaCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
+      @response.save
+      
+      expect(@response.error).to eq("Error: 030 - ASIC Org Extract Gateway Unavailable")
+    end
+    it "html - returns error message" do
+      @xml = File.read('spec/veda_credit/commercial_html_error.html')
+      @response = VedaCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
+      @response.save
+      
+      expect(@response.error).to eq("Bad Request The request sent by the client was syntactically incorrect.")
     end
   end
 end
-

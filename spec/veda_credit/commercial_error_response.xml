@@ -1,0 +1,23 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:vh="http://vedaxml.com/soap/header/v-header-v1-9.xsd" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsa:MessageID>141029-V5S29-05MXN</wsa:MessageID>
+      <wsa:RelatesTo>urn:example.com:123456789</wsa:RelatesTo>
+      <wsa:To>http://www.w3.org/2005/08/addressing/anonymous</wsa:To>
+      <wsa:From>
+         <wsa:Address>https://ctaau.vedaxml.com:8443/cta/sys2/company-enquiry-v3-2</wsa:Address>
+      </wsa:From>
+      <wsa:Action>http://vedaxml.com/companyEnquiry/ServiceResult</wsa:Action>
+   </soapenv:Header>
+   <SOAP-ENV:Body xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+      <SOAP-ENV:Fault>
+         <faultcode>SOAP-ENV:SERVER</faultcode>
+         <faultstring>System Error</faultstring>
+         <detail>
+            <VEDA:error xmlns:VEDA="http://vedaxml.com/vxml2/veda-error-response-v1.0">
+               <VEDA:code>030</VEDA:code>
+               <VEDA:description>ASIC Org Extract Gateway Unavailable</VEDA:description>
+            </VEDA:error>
+         </detail>
+      </SOAP-ENV:Fault>
+   </SOAP-ENV:Body>
+</soapenv:Envelope>
