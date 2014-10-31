@@ -37,6 +37,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh["account_type"] = hsh["account_type"]["type"] rescue nil
       hsh["role_in_enquiry"] = hsh["role"]["type"] rescue nil
       hsh.delete("role")
+      hsh = [hsh]
     end
     hsh
   end
@@ -97,7 +98,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
         messages << mes["narrative"]
       end
     else
-      messages = hsh["narrative"]
+      messages = [hsh["narrative"]]
     end
     messages
   end
@@ -129,7 +130,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
         first_names = [(director["individual_name"]["first_given_name"] rescue nil), (director["individual_name"]["other_given_name"] rescue nil)].join(' ')
         surname = director["individual_name"]["family_name"] rescue nil
         director["director_name"] = [surname, first_names].join(', ')
-        director["place_of_birth"] = [director["birth_details"]["birth_locality"], director["birth_details"]["birth_state"]].join(' ')
+        director["place_of_birth"] = [(director["birth_details"]["birth_locality"] rescue nil), (director["birth_details"]["birth_state"] rescue nil)].join(' ')
         address_line_1 = [(director["address"]["street_number"] rescue nil), (director["address"]["street_name"] rescue nil), (director["address"]["street_type"] rescue nil)].join(' ')
         address_line_2 = [(director["address"]["suburb"] rescue nil), (director["address"]["state"] rescue nil), (director["address"]["postcode"] rescue nil)].join(' ')
         director["address"] = [address_line_1, address_line_2].join(', ')
@@ -138,10 +139,11 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       first_names = [(hsh["individual_name"]["first_given_name"] rescue nil), (hsh["individual_name"]["other_given_name"] rescue nil)].join(' ')
       surname = hsh["individual_name"]["family_name"] rescue nil
       hsh["director_name"] = [surname, first_names].join(', ')
-      hsh["place_of_birth"] = [hsh["birth_details"]["birth_locality"], hsh["birth_details"]["birth_state"]].join(' ')
+      hsh["place_of_birth"] = [(hsh["birth_details"]["birth_locality"] rescue nil), (hsh["birth_details"]["birth_state"] rescue nil)].join(' ')
       address_line_1 = [(hsh["address"]["street_number"] rescue nil), (hsh["address"]["street_name"] rescue nil), (hsh["address"]["street_type"] rescue nil)].join(' ')
       address_line_2 = [(hsh["address"]["suburb"] rescue nil), (hsh["address"]["state"] rescue nil), (hsh["address"]["postcode"] rescue nil)].join(' ')
       hsh["address"] = [address_line_1, address_line_2].join(', ')
+      hsh = [hsh]
     end
     hsh
   end
@@ -168,14 +170,21 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       address_line_1 = hsh["address_lines"]["street_details"] rescue nil
       address_line_2 = [(hsh["address_lines"]["locality_details"] rescue nil), (hsh["address_lines"]["state"] rescue nil), (hsh["address_lines"]["postcode"] rescue nil)].join(' ')
       hsh["address"] = [address_line_1, address_line_2].join(', ')
+      hsh = [hsh]
     end
     hsh
   end
 
   def error
-    hsh = get_hash("error")
-    return {} unless hsh.present?
-    hsh
+    if self.xml.include?("<html>")
+      body = /<body>([\s\S]*)<\/body>/.match(self.xml)[0]
+      body.gsub!(/<body>|<h1>|<h3>/, " ").gsub!(/<\/body>|<\/h1>|<\/h3>/, '').gsub!("\n", '').strip!
+      body
+    else
+      hsh = get_hash("error")
+      return {} unless hsh.present?
+      "Error: #{hsh["error"]["code"]} - #{hsh["error"]["description"]}"
+    end
   end
 
   private
