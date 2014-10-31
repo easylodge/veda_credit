@@ -4,9 +4,6 @@ describe VedaCredit::CommercialResponse do
   it { should belong_to(:commercial_request).dependent(:destroy) } 
   it { should validate_presence_of(:commercial_request_id) }
   it { should validate_presence_of(:xml) }
-  # it { should validate_presence_of(:headers) }
-  # it { should validate_presence_of(:code) }
-  # it { should validate_presence_of(:success) }
 
   it ".to_s" do
     expect(subject.to_s).to eq("Veda Credit Commercial Response")
@@ -119,81 +116,9 @@ describe VedaCredit::CommercialResponse do
     end
   end
 
-  # describe '.headers' do
-  #   it "returns response headers" do
-  #     expect(@response.headers.class).to eq(HTTParty::CommercialResponse::Headers)
-  #   end
-  # end
-
-  # describe ".code" do
-  #   it "returns response code" do
-  #     expect(@response.code).to eq(200)
-  #   end
-  # end
-
-  # describe '.validate_xml' do
-  #   it "returns no errors" do
-  #     expect(@response.validate_xml).to eq([])
-  #   end
-  # end
-
-  # describe ".to_hash" do
-  #   it "returns whole response as hash" do
-  #     expect(@response.to_hash.class).to eq(Hash)
-  #   end
-  #   it "accesses nested attributes" do
-  #     expect(@response.to_hash["BCAmessage"]["type"]).to eq('RESPONSE')
-  #   end
-  # end
-
-  # describe '.success?' do
-  #   it "returns true" do
-  #     expect(@response.success?).to eq(true)
-  #   end
-  # end
-		
-  # describe "with post with invalid access details" do
-  #   before do 
-  #     access_hash = 
-  #         {
-  #             :url => @config["url"],
-  #             :access_code => 'xxxxxx',
-  #             :password => 'xxxxxx',
-  #             :subscriber_id => 'xxxxxx',
-  #             :security_code => 'xx',
-  #             :request_mode => 'test'
-  #             }
-  #     @request = VedaCredit::CommercialRequest.new(application_id: 1, access: access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
-  #     @post = @request.post
-  #     @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
-  #   end
-        
-  #   it "has error response" do
-  #     expect(@response.error).to eq("The Request Manager was unable to authenticate the VedaXML access code and password supplied. Check values of: /BCAmessage/BCAaccess/BCAaccess-code and /BCAmessage/BCAaccess/BCAaccess-pwd")
-  #   end  
-  # end
-
-  # describe "with post with invalid product details" do
-         
-  #   before do 
-  #     service_hash = 
-  #             {
-  #               :service_code => "xxxxx",
-  #               :service_code_version => 'xx',
-  #               :request_version => '1.0',
-                
-  #             }
-  #     @request = VedaCredit::CommercialRequest.new(application_id: 1, access: @access_hash, service: service_hash, entity: @entity_hash, enquiry: @enquiry_hash) 
-  #     @post = @request.post
-  #     @response = VedaCredit::CommercialResponse.new(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
-  #   end
-    
-  #   it "has error response" do
-  #     expect(@response.error).to eq("The BCAservice-code-version supplied was not valid. Check value of: /BCAmessage/BCAservice/BCAservice-code-version")
-  #   end  
-  # end
-
-
+  context ".age_of_file" do
+    it "returns age of file from creation date"
+  end
 
   context ".error" do
     it "xml - returns error message" do

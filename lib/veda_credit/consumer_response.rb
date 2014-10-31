@@ -8,17 +8,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   
   validates :consumer_request_id, presence: true
   validates :xml, presence: true
-  # validates :headers, presence: true
-  # validates :code, presence: true
-  # validates :success, presence: true
 
   before_save :to_hash
   
-  def to_hash
-    hash = Hash.from_xml(self.xml)
-    self.as_hash = hash
-  end
-
   def self.nested_hash_value(obj,key)
     if obj.respond_to?(:key?) && obj.key?(key)
       obj[key]
@@ -53,29 +45,6 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     fname = File.expand_path('../../lib/assets/Vedascore-individual-enquiries-response-version-1.1.xsd', File.dirname(__FILE__) )
     File.read(fname)
   end
-
-  # def primary_match
-  #   self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["primary_match"] rescue {}
-  # end
-
-  # def score_data
-  #   self.to_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["response"]["enquiry_report"]["score_data"] rescue {}
-  # end
-
-  # def summary_data
-  #   doc = Nokogiri::XML(self.xml)
-  #   hash = {}
-  #   doc.xpath("//summary").each do |el|
-  #     if el.text.present? && (el.text =~ /^\d+$/)
-  #       hash[el.xpath("@name").text.underscore] = el.text.to_i
-  #     elsif el.text.present?
-  #       hash[el.xpath("@name").text.underscore] = el.text
-  #     else
-  #       "nil"
-  #     end
-  #   end
-  #   hash
-  # end
 
   def to_s
     "Veda Credit Consumer Response"

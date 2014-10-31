@@ -12,7 +12,6 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     "Veda Credit Commercial Response"
   end
 
-  ##NEW COMMERCIAL HELPERS##
   def credit_enquiries
     hsh = get_hash("credit-enquiry-list")
     return {} unless hsh.present?
@@ -71,23 +70,6 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     hash
   end
   
-  # def summary_data
-  #   hsh = get_hash("summary-data")
-  #   return {} unless hsh.present?
-  #   summary = {}
-  #   if hsh["summary_data"]["summary_entry"].is_a?(Array)
-  #     hsh["summary_data"]["summary_entry"].each do |sum|
-  #       key = sum["summary_name"].underscore
-  #       value = sum["summary_value"]
-  #       summary[key] = value.to_i
-  #     end
-  #   else
-  #     summary[hsh["summary_name"].underscore] = hsh["summary_value"].to_i
-  #   end
-  #   copied_sum = Marshal.load(Marshal.dump(summary))
-  #   copied_sum
-  # end
-
   def file_messages
     hsh = get_hash("organisation-legal")
     return {} unless hsh.present?
