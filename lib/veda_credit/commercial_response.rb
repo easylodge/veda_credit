@@ -62,11 +62,11 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   def summary_data
     doc = Nokogiri::XML(self.xml)
     hash = {}
-      doc.remove_namespaces!
+    doc.remove_namespaces!
     doc.xpath("//summary-entry").each do |el|
       hash[el.children.children[0].text.underscore] = el.children.children[1].text.to_i 
     end
-    hash["age_of_file"] = age_of_file
+    hash["age_of_file"] = age_of_file if hash.present?
     hash
   end
   
