@@ -162,10 +162,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       body = /<body>([\s\S]*)<\/body>/.match(self.xml)[0]
       body.gsub!(/<body>|<h1>|<h3>/, " ").gsub!(/<\/body>|<\/h1>|<\/h3>/, '').gsub!("\n", '').strip!
       body
-    else
+    elsif get_hash("error").present?
       hsh = get_hash("error")
-      return {} unless hsh.present?
       "Error: #{hsh["error"]["code"]} - #{hsh["error"]["description"]}"
+    elsif get_hash("Fault").present?
+      hsh = get_hash("Fault")
+      "Error: #{hsh["Fault"]["faultcode"]} - #{hsh["Fault"]["detail"]["policyResult"]["status"]}"
     end
   end
 
