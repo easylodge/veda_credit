@@ -13,9 +13,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   end
 
   def credit_enquiries
-    hsh = get_hash("credit-enquiry-list")
-    return {} unless hsh.present?
-    hsh = hsh["credit_enquiry_list"].delete("credit_enquiry")
+    hsh = get_hash("credit-enquiry-list")["credit_enquiry_list"]["credit_enquiry"] rescue nil
+    return [] unless hsh.present?
     if hsh.is_a?(Array)
       hsh.each do |cred|
         cred["enquiry_date"] = cred["enquiry_date"].to_date rescue nil
@@ -27,7 +26,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
         cred["role_in_enquiry"] = cred["role"]["type"] rescue nil
         cred.delete("role")
       end
-    else
+    elsif hsh.is_a?(Hash)
       hsh["enquiry_date"] = hsh["enquiry_date"].to_date rescue nil
       hsh["credit_enquirer"] = hsh.delete("enquirer") rescue nil
       hsh["reference_number"] = hsh.delete("ref_number") rescue nil
@@ -38,13 +37,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh.delete("role")
       hsh = [hsh]
     end
-    hsh
+    hsh.present? ? hsh : []
   end
 
   def company_enquiry_header
-    hsh = get_hash("organisation-report-header")
+    hsh = get_hash("organisation-report-header")["organisation_report_header"] rescue nil
     return {} unless hsh.present?
-    hsh = hsh.delete("organisation_report_header")
     hsh["asic_extract_date"] = hsh["extract_date"]["asic_extract_date"] rescue nil
     hsh.delete("extract_date")
     hsh["report_created"] = hsh.delete("report_create_date")
@@ -62,7 +60,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   def summary_data
     doc = Nokogiri::XML(self.xml)
     hash = {}
-      doc.remove_namespaces!
+    doc.remove_namespaces!
     doc.xpath("//summary-entry").each do |el|
       hash[el.children.children[0].text.underscore] = el.children.children[1].text.to_i 
     end
@@ -71,9 +69,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   end
   
   def file_messages
-    hsh = get_hash("organisation-legal")
-    return {} unless hsh.present?
-    hsh = hsh["organisation_legal"]["file_message_list"]["file_message"] rescue {}
+    hsh = get_hash("organisation-legal")["organisation_legal"]["file_message_list"]["file_message"] rescue nil
+    return [] unless hsh.present?
     if hsh.is_a?(Array)
       messages = []
       hsh.each do |mes|
@@ -86,9 +83,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   end
 
   def company_identity
-    hsh = get_hash("company-identity")
+    hsh = get_hash("company-identity")["company_identity"] rescue nil
     return {} unless hsh.present?
-    hsh = hsh["company_identity"]
     hsh.delete("previous_name")
     if hsh["registered_office"]
       address_line_1 = hsh["registered_office"]["address_lines"]["street_details"] rescue nil
@@ -100,13 +96,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       address_line_2 = [(hsh["principal_place_of_business"]["address_lines"]["locality_details"] rescue nil), (hsh["principal_place_of_business"]["address_lines"]["state"] rescue nil), (hsh["principal_place_of_business"]["address_lines"]["postcode"] rescue nil)].join(' ')
       hsh["principal_place_of_business"]["address"] = [address_line_1, address_line_2].join(', ')
     end
-    hsh
+    hsh.present? ? hsh : {}
   end
 
   def directors
-    hsh = get_hash("directors-list")
-    return {} unless hsh.present?
-    hsh = hsh["directors_list"]["directors"]
+    hsh = get_hash("directors-list")["directors_list"]["directors"] rescue nil
+    return [] unless hsh.present?
     if hsh.is_a?(Array)
       hsh.each do |director|
         first_names = [(director["individual_name"]["first_given_name"] rescue nil), (director["individual_name"]["other_given_name"] rescue nil)].join(' ')
@@ -117,7 +112,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
         address_line_2 = [(director["address"]["suburb"] rescue nil), (director["address"]["state"] rescue nil), (director["address"]["postcode"] rescue nil)].join(' ')
         director["address"] = [address_line_1, address_line_2].join(', ')
       end
-    else
+    elsif hsh.is_a?(Hash)
       first_names = [(hsh["individual_name"]["first_given_name"] rescue nil), (hsh["individual_name"]["other_given_name"] rescue nil)].join(' ')
       surname = hsh["individual_name"]["family_name"] rescue nil
       hsh["director_name"] = [surname, first_names].join(', ')
@@ -127,13 +122,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh["address"] = [address_line_1, address_line_2].join(', ')
       hsh = [hsh]
     end
-    hsh
+    hsh.present? ? hsh : []
   end
 
   def secretaries
-    hsh = get_hash("secretary-list")
-    return {} unless hsh.present?
-    hsh = hsh["secretary_list"]["secretaries"] rescue nil
+    hsh = get_hash("secretary-list")["secretary_list"]["secretaries"] rescue nil
+    return [] unless hsh.present?
     if hsh.is_a?(Array)
       hsh.each do |secretary|
         first_names = [(secretary["individual_officer"]["individual_name"]["first_given_name"] rescue nil), (secretary["individual_officer"]["individual_name"]["other_given_name"] rescue nil)].join(' ')
@@ -144,7 +138,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
         address_line_2 = [(secretary["address_lines"]["locality_details"] rescue nil), (secretary["address_lines"]["state"] rescue nil), (secretary["address_lines"]["postcode"] rescue nil)].join(' ')
         secretary["address"] = [address_line_1, address_line_2].join(', ')
       end
-    else
+    elsif hsh.is_a?(Hash)
       first_names = [(hsh["individual_officer"]["individual_name"]["first_given_name"] rescue nil), (hsh["individual_officer"]["individual_name"]["other_given_name"] rescue nil)].join(' ')
       surname = hsh["individual_officer"]["individual_name"]["family_name"] rescue nil
       hsh["secretary_name"] = [surname, first_names].join(', ')
@@ -154,11 +148,11 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh["address"] = [address_line_1, address_line_2].join(', ')
       hsh = [hsh]
     end
-    hsh
+    hsh.present? ? hsh : []
   end
 
   def error
-    if self.xml.include?("<html>")
+    if (self.xml && self.xml.include?("<html>"))
       body = /<body>([\s\S]*)<\/body>/.match(self.xml)[0]
       body.gsub!(/<body>|<h1>|<h3>/, " ").gsub!(/<\/body>|<\/h1>|<\/h3>/, '').gsub!("\n", '').strip!
       body
