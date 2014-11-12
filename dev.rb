@@ -161,8 +161,8 @@ dev_config = YAML.load_file('dev_config.yml')
 
 
 @con_req = VedaCredit::ConsumerRequest.create(:ref_id => 123, :access => @access_hash, :service => @service_hash, :entity => @entity_hash, :enquiry => @enquiry_hash)
-@con_post = @con_req.post
-@con_res = VedaCredit::ConsumerResponse.create(:xml => @con_post.body, :consumer_request_id => @con_req.id)
+# @con_post = @con_req.post
+# @con_res = VedaCredit::ConsumerResponse.create(:xml => @con_post.body, :consumer_request_id => @con_req.id)
 @com_req = VedaCredit::CommercialRequest.create(:ref_id => 123, :access => @com_access_hash, :service => @com_service_hash, :entity => @com_entity_hash, :enquiry => @com_enquiry_hash)
-@com_post = @com_req.post
-@com_res = VedaCredit::CommercialResponse.create(:xml => @com_post.body, :commercial_request_id => @com_req.id)
+# @com_post = @com_req.post
+# @com_res = VedaCredit::CommercialResponse.create(:xml => @com_post.body, :commercial_request_id => @com_req.id)

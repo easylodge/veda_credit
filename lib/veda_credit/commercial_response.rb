@@ -64,7 +64,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     doc.xpath("//summary-entry").each do |el|
       hash[el.children.children[0].text.underscore] = el.children.children[1].text.to_i 
     end
-    hash["age_of_file"] = age_of_file
+    hash["age_of_file"] = age_of_file if hash.present?
     hash
   end
   
@@ -156,10 +156,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       body = /<body>([\s\S]*)<\/body>/.match(self.xml)[0]
       body.gsub!(/<body>|<h1>|<h3>/, " ").gsub!(/<\/body>|<\/h1>|<\/h3>/, '').gsub!("\n", '').strip!
       body
-    else
+    elsif get_hash("error").present?
       hsh = get_hash("error")
-      return {} unless hsh.present?
       "Error: #{hsh["error"]["code"]} - #{hsh["error"]["description"]}"
+    elsif get_hash("Fault").present?
+      hsh = get_hash("Fault")
+      "Error: #{hsh["Fault"]["faultcode"]} - #{hsh["Fault"]["detail"]["policyResult"]["status"]}"
     end
   end
 
