@@ -116,6 +116,71 @@ describe VedaCredit::CommercialResponse do
     end
   end
 
+  context "with error xml/html" do
+    ['commercial_error_response.xml', 'commercial_html_error.html'].each do |file|
+      context "#{file} error response" do
+        before(:each) do
+          @xml = File.read("spec/veda_credit/#{file}")
+          @resp = VedaCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
+          @resp.save
+        end
+        it ".get_hash for error" do
+          expect(@resp.send(:get_hash, "error")).to be_a(Hash)
+
+          if (file == 'commercial_error_response.xml')
+            expect(@resp.send(:get_hash, "error")).not_to be_blank
+          end
+        end
+        it ".company_identity returns a hash" do
+          expect(@resp.company_identity).to be_a(Hash)
+        end
+        it ".summary_data returns a hash" do
+          expect(@resp.summary_data).to be_a(Hash)
+        end
+        it ".credit_enquiries returns a array" do
+          expect(@resp.credit_enquiries).to be_a(Array)
+        end
+        it ".file_messages returns a array" do
+          expect(@resp.file_messages).to be_a(Array)
+        end
+        it ".directors returns a array" do
+          expect(@resp.directors).to be_a(Array)
+        end
+        it ".secretaries returns a array" do
+          expect(@resp.secretaries).to be_a(Array)
+        end
+      end
+    end
+  end
+
+  context "with empty xml" do
+    before(:each) do
+      @resp = VedaCredit::CommercialResponse.new(xml: nil, commercial_request_id: 1)
+      @resp.save
+    end
+    it ".error returns blank" do
+      expect(@resp.error).to be_blank
+    end
+    it ".company_identity returns a hash" do
+      expect(@resp.company_identity).to be_a(Hash)
+    end
+    it ".summary_data returns a hash" do
+      expect(@resp.summary_data).to be_a(Hash)
+    end
+    it ".credit_enquiries returns a array" do
+      expect(@resp.credit_enquiries).to be_a(Array)
+    end
+    it ".file_messages returns a array" do
+      expect(@resp.file_messages).to be_a(Array)
+    end
+    it ".directors returns a array" do
+      expect(@resp.directors).to be_a(Array)
+    end
+    it ".secretaries returns a array" do
+      expect(@resp.secretaries).to be_a(Array)
+    end
+  end
+
   context ".age_of_file" do
     it "returns age of file from creation date"
   end
