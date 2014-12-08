@@ -59,7 +59,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   end
 
   def individual?
-    true if ["vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "authorised-agent-consumer-plus-commercial-enquiry"].include? self.enquiry[:product_name] 
+    true if ["vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "authorised-agent-consumer-plus-commercial-enquiry", "vedascore-authorized-agent-financial-consumer-1.1"].include? self.enquiry[:product_name] 
   end
 
   def business?
