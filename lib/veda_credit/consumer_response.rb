@@ -78,6 +78,32 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     hsh
   end
 
+  def number_of_cross_references
+    primary_match["individual_consumer_credit_file"]["individual_cross_reference"].count rescue 0
+  end
+
+  def number_of_bankruptcies
+    primary_match["individual_public_data_file"]["bankruptcy"].select{|x| x["discharged_status"].blank? }.count rescue 0
+  end
+
+  def number_of_discharged_bankruptcies
+    primary_match["individual_public_data_file"]["bankruptcy"].select{|x| !x["discharged_status"].blank? }.count rescue 0
+  end
+
+  def number_of_discharged_bankruptcies_last_12_months
+    return 0 unless primary_match["individual_public_data_file"]["bankruptcy"].select{|x| !x["discharged_status"].blank? }.count > 0 rescue false
+    total =  primary_match["individual_public_data_file"]["bankruptcy"].select{|x| !x["discharged_status"].blank? } rescue {}
+    total = total.select{|x| (x["discharged_status"]["date"].to_date >= 12.months.ago rescue false) }.count rescue 0
+  end
+
+  def number_of_part_x_bankruptcies
+    primary_match["individual_public_data_file"]["bankruptcy"].select{|x| x["bankruptcy_type"] == "Personal Insolvency Agreement (Part 10 Deed)" }.count rescue 0
+  end
+
+  def number_of_part_ix_bankruptcies
+    primary_match["individual_public_data_file"]["bankruptcy"].select{|x| x["bankruptcy_type"] == "Debt Agreement (Part 9)" }.count rescue 0
+  end
+
   def file_message
     primary_match["individual_consumer_credit_file"]["file_message"] rescue nil
   end
