@@ -63,7 +63,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   end
 
   def business?
-    true if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1"].include? self.enquiry[:product_name] 
+    true if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry"].include? self.enquiry[:product_name] 
   end
 
   def to_individual(xml)
