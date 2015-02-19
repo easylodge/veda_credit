@@ -104,6 +104,26 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     primary_match["individual_public_data_file"]["bankruptcy"].select{|x| x["bankruptcy_type"] == "Debt Agreement (Part 9)" }.count rescue 0
   end
 
+
+  def number_of_clearout
+    return 0 unless primary_match["individual_consumer_credit_file"]["default"].count > 0 rescue false
+    primary_match["individual_consumer_credit_file"]["default"].select{ |key,val| key != "account_details" && val["reason_to_report"] == "Clearout" }.count rescue 0
+  end
+
+  def last_36_months_paid_defaults_amount
+    return 0 unless primary_match["individual_consumer_credit_file"]["default"].count > 0 rescue false
+    paid_defaults = primary_match["individual_consumer_credit_file"]["default"].select{ |key,val| key != "account_details" && (val["date_recorded"].to_date >= 36.months.ago rescue false ) && val["reason_to_report"] == "Payment Default" }
+    paid_defaults = paid_defaults.collect{|key, val| val["default_amount"]}
+    paid_defaults.sum
+  end
+
+  def last_36_months_unpaid_defaults_amount
+    return 0 unless primary_match["individual_consumer_credit_file"]["default"].count > 0 rescue false
+    unpaid_defaults = primary_match["individual_consumer_credit_file"]["default"].select{ |key,val| key != "account_details" && (val["date_recorded"].to_date >= 36.months.ago rescue false ) && val["reason_to_report"] != "Payment Default" }
+    unpaid_defaults = unpaid_defaults.collect{|key, val| val["default_amount"]}
+    unpaid_defaults.sum
+  end
+
   def file_message
     primary_match["individual_consumer_credit_file"]["file_message"] rescue nil
   end
