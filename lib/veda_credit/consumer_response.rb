@@ -92,11 +92,11 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   #Discharged status: 'not-discharged-not-completed', 'completed', 'discharged'
   def number_of_bankruptcies
-    [primary_match["individual_public_data_file"]["bankruptcy"].select{|x| x["discharge_status"]["code"] == "not-discharged-not-completed" }].flatten.count rescue 0
+    [primary_match["individual_public_data_file"]["bankruptcy"]].flatten.select{|x| x["discharge_status"]["code"] == "not-discharged-not-completed" }.count rescue 0
   end
 
   def discharged_bankruptcies
-    [primary_match["individual_public_data_file"]["bankruptcy"].select{|x| !x["discharge_status"]["code"] == "discharged" }].flatten rescue []
+    [primary_match["individual_public_data_file"]["bankruptcy"]].flatten.select{|x| !x["discharge_status"]["code"] == "discharged" } rescue []
   end
 
   def number_of_discharged_bankruptcies
@@ -174,22 +174,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults_hash = []
     [hsh].flatten.each do |default|
       tmp_hash = {"section" => "Default",
-<<<<<<< HEAD
                   "type" => [(default["account_details"]["account_type"] rescue nil),
-=======
-                  "type" => [(default["account_details"]["account_type"] rescue nil),
->>>>>>> 4b498e177f4926dcfe498d0230216d81cba14eaf
                              (default["account_details"]["default_status"] rescue nil),
                              (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
                   "date" => (default["original_default"]["date_recorded"] rescue nil),
                   "creditor" => (default["original_default"]["credit_provider"] rescue nil),
                   "current_amount" => (default["current_default"]["default_amount"] rescue nil),
                   "original_amount" => (default["original_default"]["default_amount"] rescue nil),
-<<<<<<< HEAD
                   "role" => (default["account_details"]["role"]["code"] rescue nil),
-=======
-                  "role" => (default["account_details"]["role"]["code"] rescue nil),
->>>>>>> 4b498e177f4926dcfe498d0230216d81cba14eaf
                   "reference" => (default["account_details"]["client_reference"] rescue nil)}
       defaults_hash << tmp_hash
     end
