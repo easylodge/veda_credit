@@ -1,20 +1,20 @@
-class VedaCredit::Request < ActiveRecord::Base
-  self.table_name = "veda_credit_requests"
+class VedaCredit::ConsumerRequest < ActiveRecord::Base
+  self.table_name = "veda_credit_consumer_requests"
   
-  has_one :response, dependent: :destroy
+  has_one :consumer_response, dependent: :destroy
 
   serialize :access
   serialize :service
   serialize :entity
   serialize :enquiry
  
-  validates :application_id, presence: true 
+  validates :ref_id, presence: true 
   validates :access, presence: true
   validates :service, presence: true
   validates :entity, presence: true
   validates :enquiry, presence: true
 
-  after_initialize :to_xml_body
+  before_save :to_xml_body
 
   def to_xml_body
     if self.access && self.service && self.enquiry
@@ -45,7 +45,7 @@ class VedaCredit::Request < ActiveRecord::Base
                 xml.send(:"enquiry", "type" => self.enquiry[:enquiry_type]) {
                   xml.send(:"account-type", "code" => self.enquiry[:account_type_code])
                   xml.send(:"enquiry-amount", self.enquiry[:enquiry_amount], "currency-code" => self.enquiry[:currency_code])
-                  xml.send(:"client-reference", self.application_id)
+                  xml.send(:"client-reference", self.ref_id)
                 }
               }
             }
@@ -59,7 +59,7 @@ class VedaCredit::Request < ActiveRecord::Base
   end
 
   def individual?
-    true if ["vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "authorised-agent-consumer-plus-commercial-enquiry"].include? self.enquiry[:product_name] 
+    true if ["vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "authorised-agent-consumer-plus-commercial-enquiry", "vedascore-authorized-agent-financial-consumer-1.1"].include? self.enquiry[:product_name] 
   end
 
   def business?
@@ -119,14 +119,9 @@ class VedaCredit::Request < ActiveRecord::Base
     end
   end
 
-  
-
   def to_bureau_reference(xml)
     xml.send(:"bureau-reference", self.bureau_reference, "role" => self.enquiry[:role]) 
   end
-
-
-  
 
 	def post
     if self.access
@@ -153,5 +148,8 @@ class VedaCredit::Request < ActiveRecord::Base
 		File.read(fname)
 	end
 
+  def to_s
+    "Veda Credit Consumer Request"
+  end
 	
 end
