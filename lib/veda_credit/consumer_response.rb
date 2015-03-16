@@ -87,16 +87,16 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_cross_references
-    [primary_match["individual_consumer_credit_file"]["individual_cross_reference"]].flatten.count
+    self.cross_references.count
   end
 
   #Discharged status: 'not-discharged-not-completed', 'completed', 'discharged'
   def number_of_bankruptcies
-    [primary_match["individual_public_data_file"]["bankruptcy"]].flatten.select{|x| x["discharge_status"]["code"] == "not-discharged-not-completed" }.count
+    self.bankruptcies.select{|x| "not-discharged-not-completed" == x["discharge_status"] }.count
   end
 
   def discharged_bankruptcies
-    [primary_match["individual_public_data_file"]["bankruptcy"]].flatten.select{|x| !x["discharge_status"]["code"] == "discharged" } rescue []
+    self.bankruptcies.select{|x| "discharged" == x["discharge_status"] } rescue []
   end
 
   def number_of_discharged_bankruptcies
@@ -104,7 +104,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_discharged_bankruptcies_last_12_months
-    discharged_bankruptcies.select{|x| (x["discharge_status"]["date"].to_date >= 12.months.ago rescue false) }.count
+    discharged_bankruptcies.select{|x| (x["discharge_date"].to_date >= 12.months.ago rescue false) }.count
   end
 
   def number_of_part_x_bankruptcies
@@ -230,6 +230,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                              (bnkr["proceedings"]["proceedings_status"]["code"] rescue nil)].reject(&:blank?).join(','),
                   "date" => (bnkr["date_declared"] rescue nil),
                   "role" => (bnkr["role"]["code"] rescue nil),
+                  "discharge_date" => (bnkr["discharge_status"]["date"] rescue nil),
                   "discharge_status" => (bnkr["discharge_status"]["code"] rescue nil)}
       bankrupt_array << tmp_hash
     end
