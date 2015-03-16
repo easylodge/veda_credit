@@ -87,12 +87,12 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_cross_references
-    [primary_match["individual_consumer_credit_file"]["individual_cross_reference"]].flatten.count rescue 0
+    [primary_match["individual_consumer_credit_file"]["individual_cross_reference"]].flatten.count
   end
 
   #Discharged status: 'not-discharged-not-completed', 'completed', 'discharged'
   def number_of_bankruptcies
-    [primary_match["individual_public_data_file"]["bankruptcy"]].flatten.select{|x| x["discharge_status"]["code"] == "not-discharged-not-completed" }.count rescue 0
+    [primary_match["individual_public_data_file"]["bankruptcy"]].flatten.select{|x| x["discharge_status"]["code"] == "not-discharged-not-completed" }.count
   end
 
   def discharged_bankruptcies
@@ -100,38 +100,32 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_discharged_bankruptcies
-    self.discharged_bankruptcies.count rescue 0
+    self.discharged_bankruptcies.count
   end
 
   def number_of_discharged_bankruptcies_last_12_months
-    return 0 unless self.discharged_bankruptcies.count > 0 rescue false
-    discharged_bankruptcies.select{|x| (x["discharge_status"]["date"].to_date >= 12.months.ago rescue false) }.count rescue 0
+    discharged_bankruptcies.select{|x| (x["discharge_status"]["date"].to_date >= 12.months.ago rescue false) }.count
   end
 
   def number_of_part_x_bankruptcies
-    return 0 unless self.bankruptcies.count > 0
-    self.bankruptcies.select{|x| x["type"] == "Personal Insolvency Agreement (Part 10 Deed)" }.count rescue 0
+    self.bankruptcies.select{|x| x["type"] == "Personal Insolvency Agreement (Part 10 Deed)" }.count
   end
 
   def number_of_part_ix_bankruptcies
-    return 0 unless self.bankruptcies.count > 0
-    self.bankruptcies.select{|x| x["type"] == "Debt Agreement (Part 9)" }.count rescue 0
+    self.bankruptcies.select{|x| x["type"] == "Debt Agreement (Part 9)" }.count
   end
 
   def number_of_clearout
-    return 0 unless self.defaults.count > 0
-    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] == "Clearout" }.count rescue 0
+    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] == "Clearout" }.count
   end
 
   def last_36_months_paid_defaults_amount
-    return 0 unless self.defaults.count > 0
     paid_defaults = defaults.select{ |key,val| key != "account_details" && (val["date_recorded"].to_date >= 36.months.ago rescue false ) && val["reason_to_report"] == "Payment Default" }
     paid_defaults = paid_defaults.collect{|key, val| val["default_amount"]}
     paid_defaults.sum
   end
 
   def last_36_months_unpaid_defaults_amount
-    return 0 unless self.defaults.count > 0
     unpaid_defaults = defaults.select{ |key,val| key != "account_details" && (val["date_recorded"].to_date >= 36.months.ago rescue false ) && val["reason_to_report"] != "Payment Default" }
     unpaid_defaults = unpaid_defaults.collect{|key, val| val["default_amount"]}
     unpaid_defaults.sum
@@ -146,7 +140,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def individual
-    return [] unless (primary_match["individual"] rescue false)
+    return {} unless (primary_match["individual"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual"]))
     hsh["full_name"] = [(hsh["individual_name"]["first_given_name"] rescue nil), (hsh["individual_name"]["other_given_name"] rescue nil), (hsh["individual_name"]["family_name"] rescue nil)].join(' ')
     hsh["gender"] = hsh["gender"]["code"] rescue nil
@@ -171,7 +165,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   def defaults
     return [] unless (primary_match["individual_consumer_credit_file"]["default"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["default"]))
-    defaults_hash = []
+    defaults_array = []
     [hsh].flatten.each do |default|
       tmp_hash = {"section" => "Default",
                   "type" => [(default["account_details"]["account_type"] rescue nil),
@@ -183,9 +177,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "original_amount" => (default["original_default"]["default_amount"] rescue nil),
                   "role" => (default["account_details"]["role"]["code"] rescue nil),
                   "reference" => (default["account_details"]["client_reference"] rescue nil)}
-      defaults_hash << tmp_hash
+      defaults_array << tmp_hash
     end
-    defaults_hash
+    defaults_array
   end
 
   def credit_enquiries
@@ -200,7 +194,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   def court_actions
     return [] unless (primary_match["individual_public_data_file"]["court_action"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_public_data_file"]["court_action"]))
-    court_action_hash = []
+    court_action_array = []
     [hsh].flatten.each do |ca|
       tmp_hash = {"section" => "Court Action",
                   "type" => [(ca["type"].gsub('-', ' ').humanize rescue nil),
@@ -210,9 +204,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "court_action_amount" => (ca["court_action_amount"].to_i rescue nil),
                   "role" => (ca["role"]["code"] rescue nil),
                   "reference" => (ca["plaint_number"] rescue nil)}
-      court_action_hash << tmp_hash
+      court_action_array << tmp_hash
     end
-    court_action_hash
+    court_action_array
   end
 
   def directorships
@@ -229,7 +223,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   def bankruptcies
     return [] unless (primary_match["individual_public_data_file"]["bankruptcy"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_public_data_file"]["bankruptcy"]))
-    bankrupt_hash = []
+    bankrupt_array = []
     [hsh].flatten.each do |bnkr|
       tmp_hash = {"section" => "Bankruptcy",
                   "type" => [(bnkr["bankruptcy_type"] rescue nil),
@@ -237,16 +231,16 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "date" => (bnkr["date_declared"] rescue nil),
                   "role" => (bnkr["role"]["code"] rescue nil),
                   "discharge_status" => (bnkr["discharge_status"]["code"] rescue nil)}
-      bankrupt_hash << tmp_hash
+      bankrupt_array << tmp_hash
     end
-    bankrupt_hash
+    bankrupt_array
   end
 
   def cross_references
     return [] unless (primary_match["individual_consumer_credit_file"]["individual_cross_reference"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["individual_cross_reference"]))
     [hsh].flatten.each do |el|
-      el["individual"] = [(el["individual_name"]["first_given_name"] rescue nil), (el["individual_name"]["other_given_name"] rescue nil), (el["individual_name"]["family_name"] rescue nil)].join(' ')
+      el["individual"] = [(el["individual_name"]["first_given_name"] rescue nil), (el["individual_name"]["other_given_name"] rescue nil), (el["individual_name"]["family_name"] rescue nil)].reject(&:blank?).join(' ')
       el.delete("individual_name")
     end
     [hsh].flatten
