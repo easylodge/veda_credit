@@ -21,6 +21,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  def consumer_plus_commercial?
+    self.consumer_request.enquiry[:product_name] == "vedascore-financial-consumer-plus-commercial-1.1" rescue false
+  end
+
   def error
     bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
     product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
@@ -190,6 +194,16 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
     [hsh].flatten
   end
+
+  def commercial_credit_enquiries
+    return [] unless (primary_match["individual_commercial_credit_file"]["credit_enquiry"] rescue false)
+    hsh = Marshal.load(Marshal.dump(primary_match["individual_commercial_credit_file"]["credit_enquiry"]))
+    [hsh].flatten.each do |cred|
+      cred["role"] = cred["role"]["code"] rescue nil
+    end
+    [hsh].flatten
+  end
+
 
   def court_actions
     return [] unless (primary_match["individual_public_data_file"]["court_action"] rescue false)
