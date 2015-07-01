@@ -21,6 +21,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  def consumer_plus_commercial?
+    self.consumer_request.enquiry[:product_name] == "vedascore-financial-consumer-plus-commercial-1.1" rescue false
+  end
+
   def error
     bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
     product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
@@ -76,7 +80,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
         val = el.text if (el.xpath("@type").text =~ /count/)
         hsh[el.xpath("@name").text.underscore] = val
       elsif el.text.present?
-        val = (el.xpath("@type").text =~ /amount/) ? el.text : "#{el.text} #{el.xpath("@type").text}"
+        val = (el.xpath("@type").text =~ /amount/) ? el.text : "#{el.text + (el.xpath("@type").text.blank? ? "" : el.xpath("@type").text )}"
         val = el.text if (el.xpath("@type").text =~ /count/)
         hsh[el.xpath("@name").text.underscore] = val
       else
@@ -191,6 +195,16 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     [hsh].flatten
   end
 
+  def commercial_credit_enquiries
+    return [] unless (primary_match["individual_commercial_credit_file"]["credit_enquiry"] rescue false)
+    hsh = Marshal.load(Marshal.dump(primary_match["individual_commercial_credit_file"]["credit_enquiry"]))
+    [hsh].flatten.each do |cred|
+      cred["role"] = cred["role"]["code"] rescue nil
+    end
+    [hsh].flatten
+  end
+
+
   def court_actions
     return [] unless (primary_match["individual_public_data_file"]["court_action"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_public_data_file"]["court_action"]))
@@ -216,6 +230,19 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
       el["organisation_bureau_reference"] = el["organisation"]["bureau_reference"] rescue nil
       el["organisation_name"] = "#{el["organisation"]["organisation_name"]} #{el["organisation"]["organisation_type"]["code"]}" rescue nil
       el.delete("organisation")
+    end
+    [hsh].flatten
+  end
+
+  def proprietorships
+    return [] unless (primary_match["individual_public_data_file"]["proprietorship"] rescue false)
+    hsh = Marshal.load(Marshal.dump(primary_match["individual_public_data_file"]["proprietorship"]))
+    [hsh].flatten.each do |el|
+      el["business_bureau_reference"] = el["business"]["bureau_reference"] rescue nil
+      el["business_name"] = el["business"]["business_name"] rescue nil
+      el["business_registration_state"] = el["business"]["business_registration"]["state"] rescue nil
+      el["business_registration_number"] = el["business"]["business_registration"]["number"] rescue nil
+      el.delete("business")
     end
     [hsh].flatten
   end
