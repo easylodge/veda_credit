@@ -127,6 +127,10 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     end
   end
 
+  def commercial_service_version
+    "New"
+  end
+
   private
   def get_hash(search_node=nil)
     doc = Nokogiri::XML(self.xml)
