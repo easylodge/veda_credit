@@ -12,10 +12,6 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     "Veda Credit Commercial Response"
   end
 
-  def primary_match
-    get_hash("primary_match")
-  end
-
   def credit_enquiries
     hsh = (get_hash("credit-enquiry-list")["credit_enquiry_list"]["credit_enquiry"] rescue nil)
     hsh = [hsh].flatten.compact
@@ -129,6 +125,10 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh = get_hash("Fault")
       "Error: #{hsh["Fault"]["faultcode"]} - #{hsh["Fault"]["detail"]["policyResult"]["status"]}"
     end
+  end
+
+  def commercial_service_version
+    "New"
   end
 
   private

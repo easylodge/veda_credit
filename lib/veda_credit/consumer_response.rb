@@ -29,6 +29,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     self.consumer_request.enquiry[:product_name] == "vedascore-financial-commercial-plus-consumer-1.1" rescue false
   end
 
+  def commercial_service_version
+    if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-financial-commercial-plus-consumer-1.1"].include? self.enquiry[:product_name]
+      "Old"
+    else
+      "Consumer"
+    end
+  end
+
   def error
     bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
     product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
