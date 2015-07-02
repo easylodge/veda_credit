@@ -30,7 +30,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def commercial_service_version
-    if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-financial-commercial-plus-consumer-1.1"].include? self.enquiry[:product_name]
+    if ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-financial-commercial-plus-consumer-1.1"].include? self.consumer_request.enquiry[:product_name]
       "Old"
     else
       "Consumer"
