@@ -37,6 +37,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  def service_version
+    self.consumer_request.enquiry[:product_name] rescue nil
+  end
+
   def error
     bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
     product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
