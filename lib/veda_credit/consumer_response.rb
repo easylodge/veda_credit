@@ -202,6 +202,26 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults_array
   end
 
+  def commercial_defaults
+    return [] unless (primary_match["individual_commercial_credit_file"]["default"] rescue false)
+    hsh = Marshal.load(Marshal.dump(primary_match["individual_commercial_credit_file"]["default"]))
+    defaults_array = []
+    [hsh].flatten.each do |default|
+      tmp_hash = {"section" => "Default",
+                  "type" => [(default["account_details"]["account_type"] rescue nil),
+                             (default["account_details"]["default_status"] rescue nil),
+                             (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
+                  "date" => (default["original_default"]["date_recorded"] rescue nil),
+                  "creditor" => (default["original_default"]["credit_provider"] rescue nil),
+                  "current_amount" => (default["current_default"]["default_amount"] rescue nil),
+                  "original_amount" => (default["original_default"]["default_amount"] rescue nil),
+                  "role" => (default["account_details"]["role"]["code"] rescue nil),
+                  "reference" => (default["account_details"]["client_reference"] rescue nil)}
+      defaults_array << tmp_hash
+    end
+    defaults_array
+  end
+
   def credit_enquiries
     return [] unless (primary_match["individual_consumer_credit_file"]["credit_enquiry"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["credit_enquiry"]))
