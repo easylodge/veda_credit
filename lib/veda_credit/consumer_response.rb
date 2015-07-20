@@ -53,6 +53,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  def success?
+    error.nil? ? true : false
+  end
+
   def validate_xml
     xsd = Nokogiri::XML::Schema(self.schema)
     doc = Nokogiri::XML(self.xml)
