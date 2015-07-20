@@ -68,7 +68,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
 
   def writs
     hsh = (get_hash("organisation-legal")["organisation_legal"]["court_writ_list"]["writs"] rescue nil)
-    return nil unless hsh.present?
+    return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |writ|
       writ["amount"] = writ["amount"].to_f rescue nil 
@@ -79,7 +79,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
 
   def judgements
     hsh = (get_hash("organisation-legal")["organisation_legal"]["court_judgement_list"]["judgements"] rescue nil)
-    return nil unless hsh.present?
+    return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |judgement|
       judgement["amount"] = judgement["amount"].to_f rescue nil 
@@ -89,7 +89,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
 
   def petitions
     hsh = (get_hash("organisation-legal")["organisation_legal"]["court_petition_list"]["petitions"] rescue nil)
-    return nil unless hsh.present?
+    return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |petition|
       #
@@ -99,6 +99,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
 
   def defaults
     hsh = (get_hash("payment-default-list")["payment_default_list"]["payment_defaults"] rescue nil)
+    return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |default|
       default["amount"] = default["amount"].to_f rescue nil 
@@ -130,6 +131,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   def directors
     hsh = (get_hash("directors-list")["directors_list"]["directors"] rescue nil)
     hsh = [hsh].flatten.compact
+    return [] unless hsh.present?
     hsh.each do |director|
       first_names = [(director["individual_name"]["first_given_name"] rescue nil), (director["individual_name"]["other_given_name"] rescue nil)].join(' ')
       surname = director["individual_name"]["family_name"] rescue nil
@@ -145,6 +147,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   def secretaries
     hsh = (get_hash("secretary-list")["secretary_list"]["secretaries"] rescue nil)
     hsh = [hsh].flatten.compact
+    return [] unless hsh.present?
     hsh.each do |secretary|
       first_names = [(secretary["individual_officer"]["individual_name"]["first_given_name"] rescue nil), (secretary["individual_officer"]["individual_name"]["other_given_name"] rescue nil)].join(' ')
       surname = secretary["individual_officer"]["individual_name"]["family_name"] rescue nil
