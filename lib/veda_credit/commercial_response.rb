@@ -66,6 +66,50 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     messages
   end
 
+  def writs
+    hsh = (get_hash("organisation-legal")["organisation_legal"]["court_writ_list"]["writs"] rescue nil)
+    return nil unless hsh.present?
+    hsh = [hsh].flatten.compact
+    hsh.each do |writ|
+      writ["amount"] = writ["amount"].to_f rescue nil 
+      writ["action_date"] = writ["action_date"].to_date rescue nil 
+    end
+    hsh
+  end
+
+  def judgements
+    hsh = (get_hash("organisation-legal")["organisation_legal"]["court_judgement_list"]["judgements"] rescue nil)
+    return nil unless hsh.present?
+    hsh = [hsh].flatten.compact
+    hsh.each do |judgement|
+      judgement["amount"] = judgement["amount"].to_f rescue nil 
+      judgement["action_date"] = judgement["action_date"].to_date rescue nil 
+    end
+  end
+
+  def petitions
+    hsh = (get_hash("organisation-legal")["organisation_legal"]["court_petition_list"]["petitions"] rescue nil)
+    return nil unless hsh.present?
+    hsh = [hsh].flatten.compact
+    hsh.each do |petition|
+      #
+    end
+    hsh
+  end
+
+  def defaults
+    hsh = (get_hash("payment-default-list")["payment_default_list"]["payment_defaults"] rescue nil)
+    hsh = [hsh].flatten.compact
+    hsh.each do |default|
+      default["amount"] = default["amount"].to_f rescue nil 
+      default["default_date"] = default["default_date"].to_date rescue nil 
+      default["original_default_date"] = default["original_default_date"].to_date rescue nil 
+      default["original_amount"] = default["original_amount"].to_f rescue nil 
+      default["status_date"] = default["status_date"].to_date rescue nil 
+    end
+    hsh
+  end
+
   def company_identity
     hsh = (get_hash("company-identity")["company_identity"] rescue nil)
     return {} unless hsh.present?
@@ -125,6 +169,10 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh = get_hash("Fault")
       "Error: #{hsh["Fault"]["faultcode"]} - #{hsh["Fault"]["detail"]["policyResult"]["status"]}"
     end
+  end
+
+  def success?
+    error.nil? ? true : false
   end
 
   def commercial_service_version
