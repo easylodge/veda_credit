@@ -298,7 +298,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "date" => (bnkr["date_declared"] rescue nil),
                   "role" => (bnkr["role"]["code"] rescue nil),
                   "discharge_date" => (bnkr["discharge_status"]["date"] rescue nil),
-                  "discharge_status" => (bnkr["discharge_status"]["code"] rescue nil)}
+                  "discharge_status" => (bnkr["discharge_status"]["type"] rescue nil)}
       bankrupt_array << tmp_hash
     end
     bankrupt_array
@@ -318,6 +318,34 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     return [] unless (primary_match["individual"]["employment"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual"]["employment"]))
     [hsh].flatten
+  end
+
+  def number_of_paid_defaults
+    summary_data["defaults_36_paid"].to_i
+  end
+
+  def number_of_unpaid_defaults
+    summary_data["defaults_36_unpaid"].to_i
+  end
+
+  def age_of_latest_default_in_months
+    summary_data["time_since_last_default"].to_i
+  end
+
+  def age_of_latest_discharded_bankruptcy_in_months
+    
+  end
+
+  def number_of_veda_enquiries_in_last_3_months
+    summary_data["credit_enquiries_3"].to_i
+  end
+
+  def number_of_veda_enquiries_in_last_24_months
+    count = 0
+    credit_enquiries.each do |enquiry|
+      count += 1 if ((Date.today - enquiry["enquiry_date"].to_date) < 2.years)
+    end
+    count
   end
 
   private
