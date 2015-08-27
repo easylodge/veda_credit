@@ -298,7 +298,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "date" => (bnkr["date_declared"] rescue nil),
                   "role" => (bnkr["role"]["code"] rescue nil),
                   "discharge_date" => (bnkr["discharge_status"]["date"] rescue nil),
-                  "discharge_status" => (bnkr["discharge_status"]["type"] rescue nil)}
+                  "discharge_status" => (( bnkr["discharge_status"]["type"] || bnkr["discharge_status"]["code"] ) rescue nil)}
       bankrupt_array << tmp_hash
     end
     bankrupt_array
@@ -321,31 +321,38 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_paid_defaults
-    summary_data["defaults_36_paid"].to_i
+    summary_data["defaults_paid"].to_i
   end
 
   def number_of_unpaid_defaults
-    summary_data["defaults_36_unpaid"].to_i
+    summary_data["defaults"].to_i - summary_data["defaults_paid"].to_i 
   end
 
   def age_of_latest_default_in_months
-    summary_data["time_since_last_default"].to_i
+    defaults.any? ? summary_data["time_since_last_default"].to_i : "no_defaults"
   end
 
-  def age_of_latest_discharded_bankruptcy_in_months
-    
+  def age_of_latest_discharged_bankruptcy_in_months
+    discharges = bankruptcies.map do |bankruptcy|
+      bankruptcy if (bankruptcy["discharge_status"] == "discharged")
+    end.compact
+    discharges.any? ? number_of_months(discharges.first["discharge_date"]) : "no_bankruptcies"
   end
 
-  def number_of_veda_enquiries_in_last_3_months
+  def number_of_enquiries_in_last_3_months
     summary_data["credit_enquiries_3"].to_i
   end
 
-  def number_of_veda_enquiries_in_last_24_months
+  def number_of_enquiries_in_last_24_months
     count = 0
     credit_enquiries.each do |enquiry|
-      count += 1 if ((Date.today - enquiry["enquiry_date"].to_date) < 2.years)
+      count += 1 if ((Date.today.year - enquiry["enquiry_date"].to_date.year) < 2)
     end
     count
+  end
+
+  def bankrupt?
+    (bankruptcies.first["discharge_status"] != "discharged") rescue false
   end
 
   private
@@ -356,6 +363,12 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                       .gsub('proceedings-status type','proceedings-status code')\
                       .gsub('discharge-status type','discharge-status code')
     self.as_hash = Hash.from_xml(new_xml)
+  end
+
+  def number_of_months(from_date)
+    from_date = from_date.to_date
+    now = Date.today
+    (now.year * 12 + now.month)  - (from_date.year * 12 + from_date.month)
   end
 
 end

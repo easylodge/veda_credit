@@ -37,67 +37,46 @@ describe VedaCredit::ConsumerResponse do
         expect(@response.as_hash["BCAmessage"]["type"]).to eq('RESPONSE')
       end
     end
-  end
-
-  describe "with valid response xml with defaults" do
-    before(:all) do
-      @xml = File.read('spec/veda_credit/valid_consumer_response.xml')
-      @headers = {"date"=>["Tue, 21 Oct 2014 13:16:48 GMT"], "server"=>["Apache-Coyote/1.1"], "http"=>[""], "content-type"=>["text/xml"], "content-length"=>["4888"], "connection"=>["close"]}
-      @code = 200
-      @success = true
-      @request_id = 1
-      @response = VedaCredit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
-      @response.save
-    end
-
+  
     describe ".number_of_paid_defaults" do
       it "returns a integer" do
+        expect(@response.number_of_paid_defaults).to eq(nil)
         expect(@response.number_of_paid_defaults.class).to eq(Fixnum)
       end
     end
 
     describe ".number_of_unpaid_defaults" do
       it "returns a integer" do
+        expect(@response.number_of_unpaid_defaults).to eq(nil)
         expect(@response.number_of_unpaid_defaults.class).to eq(Fixnum)
       end
     end
 
     describe ".age_of_latest_default_in_months" do
       it "returns a integer" do
+        expect(@response.age_of_latest_default_in_months).to eq(nil)
         expect(@response.age_of_latest_default_in_months.class).to eq(Fixnum)
       end
     end
 
-    describe ".number_of_veda_enquiries_in_last_3_months" do
+    describe ".number_of_enquiries_in_last_3_months" do
       it "returns a integer" do
+        expect(@response.number_of_veda_enquiries_in_last_3_months.class).to eq(Fixnum)
         expect(@response.number_of_veda_enquiries_in_last_3_months.class).to eq(Fixnum)
       end
     end
 
-    describe ".number_of_veda_enquiries_in_last_24_months" do
+    describe ".number_of_enquiries_in_last_24_months" do
       it "returns a integer" do
         expect(@response.number_of_veda_enquiries_in_last_24_months.class).to eq(Fixnum)
       end
     end
-  end
 
-  describe "with valid response xml with discharged bankruptcies" do
-    before(:all) do
-      @xml = File.read('spec/veda_credit/consumer_response_discharged.xml')
-      @headers = {"date"=>["Tue, 21 Oct 2014 13:16:48 GMT"], "server"=>["Apache-Coyote/1.1"], "http"=>[""], "content-type"=>["text/xml"], "content-length"=>["4888"], "connection"=>["close"]}
-      @code = 200
-      @success = true
-      @request_id = 1
-      @response = VedaCredit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
-      @response.save
-    end
-
-    describe ".age_of_latest_discharded_bankruptcy_in_months" do
+    describe ".age_of_latest_discharged_bankruptcy_in_months" do
       it "returns a integer" do
-        expect(@response.age_of_latest_discharded_bankruptcy_in_months.class).to eq(Fixnum)
+        expect(@response.age_of_latest_discharged_bankruptcy_in_months.class).to eq(Fixnum)
       end
     end
   end
-  
   
 end
