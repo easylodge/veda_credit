@@ -38,19 +38,19 @@ describe VedaCredit::ConsumerResponse do
       end
     end
   
-    describe ".number_of_paid_defaults", :focus do
+    describe ".number_of_paid_defaults" do
       it "returns a integer" do
         expect(@response.number_of_paid_defaults.class).to eq(Fixnum)
       end
     end
 
-    describe ".number_of_unpaid_defaults", :focus do
+    describe ".number_of_unpaid_defaults" do
       it "returns a integer" do
         expect(@response.number_of_unpaid_defaults.class).to eq(Fixnum)
       end
     end
 
-    describe ".age_of_latest_default_in_months", :focus do
+    describe ".age_of_latest_default_in_months" do
       it "returns a integer if default" do
         @response.stub(:defaults).and_return([{"section"=>"Default", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}])
         expect(@response.age_of_latest_default_in_months.class).to eq(Fixnum)
@@ -60,19 +60,19 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".number_of_enquiries_in_last_3_months", :focus do
+    describe ".number_of_enquiries_in_last_3_months" do
       it "returns a integer" do
         expect(@response.number_of_enquiries_in_last_3_months.class).to eq(Fixnum)
       end
     end
 
-    describe ".number_of_enquiries_in_last_24_months", :focus do
+    describe ".number_of_enquiries_in_last_24_months" do
       it "returns a integer" do
         expect(@response.number_of_enquiries_in_last_24_months.class).to eq(Fixnum)
       end
     end
 
-    describe ".age_of_latest_discharged_bankruptcy_in_months", :focus do
+    describe ".age_of_latest_discharged_bankruptcy_in_months" do
       it "returns a integer if discharded bankruptcy" do
         @response.stub(:bankruptcies).and_return([{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2012-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"}])
         expect(@response.age_of_latest_discharged_bankruptcy_in_months.class).to eq(Fixnum)
@@ -82,7 +82,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".bankrupt?", :focus do
+    describe ".bankrupt?" do
       it "returns boolean" do
         expect(!!@response.bankrupt? == @response.bankrupt?).to be true #hack to check if boolean
       end
