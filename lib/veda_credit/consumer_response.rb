@@ -26,7 +26,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def commercial_plus_consumer?
-    self.consumer_request.enquiry[:product_name] == "vedascore-financial-commercial-plus-consumer-1.1" rescue false
+    #added commercial to give backward compatibility for reports
+    (["vedascore-financial-commercial-1.1", "vedascore-financial-commercial-plus-consumer-1.1"].include? self.consumer_request.enquiry[:product_name]) rescue false
   end
 
   def commercial_service_version
