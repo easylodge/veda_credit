@@ -191,8 +191,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     return [] unless (primary_match["individual_consumer_credit_file"]["default"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["default"]))
     defaults_array = []
+    # binding.pry
     [hsh].flatten.each do |default|
-      tmp_hash = {"section" => "Default",
+      tmp_hash = {"section" => "Default", 
+                  "account_type" => default["account_details"]["account_type"],
                   "type" => [(default["account_details"]["account_type"] rescue nil),
                              (default["account_details"]["default_status"] rescue nil),
                              (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
@@ -354,6 +356,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def bankrupt?
     (bankruptcies.first["discharge_status"] != "discharged") rescue false
+  end
+
+  def non_credit_defaults
+    defaults.select { |d| ["Telecommunication Service", "Utilities"].include?(d["account_type"]) }
+  end
+
+  def earliest_bankruptcy_date
+    bankruptcies.last["date"].to_date rescue nil
   end
 
   private
