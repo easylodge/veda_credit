@@ -87,6 +87,35 @@ describe VedaCredit::ConsumerResponse do
         expect(!!@response.bankrupt? == @response.bankrupt?).to be true #hack to check if boolean
       end
     end
+
+    describe ".non_credit_defaults", :focus do
+      it "returns empty array if no default" do
+        expect(@response.non_credit_defaults).to eq([])        
+      end
+      it "returns array of defaults if default" do
+         @response.stub(:defaults).and_return(
+            [{"section"=>"Default", "account_type" => "Utilities", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
+            {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
+            {"section"=>"Default", "account_type" => "Loan Contract", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}]
+            )
+        expect(@response.non_credit_defaults.count).to eq(2)
+        expect(@response.non_credit_defaults.class).to eq(Array)        
+      end
+    end
+
+    describe ".earliest_bankruptcy_date", :focus do
+      it "returns a date if bankruptcy" do
+        @response.stub(:bankruptcies).and_return(
+          [{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2015-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"},
+          {"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2012-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"}]
+          )
+        expect(@response.earliest_bankruptcy_date.class).to eq(Date)
+        expect(@response.earliest_bankruptcy_date).to eq("2012-01-04".to_date)      
+      end
+      it "returns nil if no bankruptcy" do
+        expect(@response.earliest_bankruptcy_date).to eq(nil)  
+      end
+    end
   end
   
 end
