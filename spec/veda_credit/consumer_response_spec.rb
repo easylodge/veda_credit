@@ -116,6 +116,45 @@ describe VedaCredit::ConsumerResponse do
         expect(@response.earliest_bankruptcy_date).to eq(nil)  
       end
     end
+
+    describe ".latest_discharged_bankruptcy_date", :focus do
+      it "returns a date if discharded bankruptcy" do
+        @response.stub(:bankruptcies).and_return([{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2012-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"}])
+        expect(@response.latest_discharged_bankruptcy_date.class).to eq(Date)
+        expect(@response.latest_discharged_bankruptcy_date).to eq("2015-01-05".to_date)
+      end
+      it "returns nil if no discharded bankruptcy" do
+        expect(@response.latest_discharged_bankruptcy_date).to eq(nil)
+      end
+    end
+
+    describe ".subsequent_defaults?", :focus do
+      it "returns false no subsquent default" do
+        expect(@response.subsequent_defaults?).to eq(false)        
+      end
+      it "returns true if subsequent default" do
+        @response.stub(:bankruptcies).and_return([{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2012-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"}])
+        @response.stub(:defaults).and_return(
+            [{"section"=>"Default", "account_type" => "Utilities", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
+            {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
+            {"section"=>"Default", "account_type" => "Loan Contract", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2015-02-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}]
+            )
+        expect(@response.subsequent_defaults?).to eq(true)        
+      end
+    end
+
+    describe ".subsequent_part_ix_or_part_x_bankruptcies?", :focus do
+      it "returns false no subsquent part ix or x bankruptcies" do
+        expect(@response.subsequent_part_ix_or_part_x_bankruptcies?).to eq(false)        
+      end
+      it "returns true if subsequent part ix or x bankruptcies" do
+         @response.stub(:bankruptcies).and_return(
+          [{"section"=>"Bankruptcy", "account_type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2010-01-04", "role"=>"principal", "discharge_date"=>"2010-01-05", "discharge_status"=>"discharged"},
+          {"section"=>"Bankruptcy", "account_type"=>"Personal Insolvency Agreement (Part 10 Deed)", "date"=>"2012-01-04", "role"=>"principal"}]
+          )
+        expect(@response.subsequent_part_ix_or_part_x_bankruptcies?).to eq(true)        
+      end
+    end
   end
   
 end

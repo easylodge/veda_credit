@@ -191,10 +191,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     return [] unless (primary_match["individual_consumer_credit_file"]["default"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["default"]))
     defaults_array = []
-    # binding.pry
     [hsh].flatten.each do |default|
       tmp_hash = {"section" => "Default", 
-                  "account_type" => default["account_details"]["account_type"],
+                  "account_type" => (default["account_details"]["account_type"] rescue nil),
                   "type" => [(default["account_details"]["account_type"] rescue nil),
                              (default["account_details"]["default_status"] rescue nil),
                              (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
@@ -215,6 +214,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults_array = []
     [hsh].flatten.each do |default|
       tmp_hash = {"section" => "Default",
+                  "account_type" => (default["account_details"]["account_type"] rescue nil),
                   "type" => [(default["account_details"]["account_type"] rescue nil),
                              (default["account_details"]["default_status"] rescue nil),
                              (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
@@ -296,6 +296,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     bankrupt_array = []
     [hsh].flatten.each do |bnkr|
       tmp_hash = {"section" => "Bankruptcy",
+                  "account_type" => (default["account_details"]["account_type"] rescue nil),
                   "type" => [(bnkr["bankruptcy_type"] rescue nil),
                              (bnkr["proceedings"]["proceedings_status"]["code"] rescue nil)].reject(&:blank?).join(','),
                   "date" => (bnkr["date_declared"] rescue nil),
@@ -364,6 +365,37 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def earliest_bankruptcy_date
     bankruptcies.last["date"].to_date rescue nil
+  end
+
+  def latest_discharged_bankruptcy_date
+    discharges = bankruptcies.map do |bankruptcy|
+      bankruptcy if (bankruptcy["discharge_status"] == "discharged")
+    end.compact
+    discharges.any? ? discharges.first["discharge_date"].to_date : nil
+  end
+
+  def latest_default_date
+    defaults.map{|d| d["date"].to_date}.compact.max rescue nil
+  end
+
+  def subsequent_defaults?
+    bankruptcies.any? && !bankrupt? && ((latest_default_date > latest_discharged_bankruptcy_date) rescue false)
+  end
+
+  def subsequent_part_ix_or_part_x_bankruptcies?
+    bs = part_x_bankruptcies + part_ix_bankruptcies
+    ret = bs.map do |bankruptcy|
+      true if ((bankruptcy["date"].to_date > latest_discharged_bankruptcy_date) rescue false)
+    end
+    ret.include?(true)
+  end
+
+  def part_x_bankruptcies
+    self.bankruptcies.select{|x| x["account_type"] == "Personal Insolvency Agreement (Part 10 Deed)" }.compact
+  end
+
+  def part_ix_bankruptcies
+    self.bankruptcies.select{|x| x["account_type"] == "Debt Agreement (Part 9)" }.compact
   end
 
   private
