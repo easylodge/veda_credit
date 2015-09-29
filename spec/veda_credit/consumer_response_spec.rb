@@ -128,31 +128,33 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".subsequent_defaults?", :focus do
-      it "returns false no subsquent default" do
-        expect(@response.subsequent_defaults?).to eq(false)        
+    describe ".subsequent_defaults", :focus do
+      it "returns nil for no subsquent default" do
+        expect(@response.subsequent_defaults).to eq(nil)        
       end
-      it "returns true if subsequent default" do
+      it "returns date if subsequent default" do
         @response.stub(:bankruptcies).and_return([{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2012-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"}])
         @response.stub(:defaults).and_return(
             [{"section"=>"Default", "account_type" => "Utilities", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
-            {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
+            {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2011-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
             {"section"=>"Default", "account_type" => "Loan Contract", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2015-02-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}]
             )
-        expect(@response.subsequent_defaults?).to eq(true)        
+        expect(@response.subsequent_defaults).to eq("2015-02-05".to_date)
+        expect(@response.subsequent_defaults.class).to eq(Date)         
       end
     end
 
-    describe ".subsequent_part_ix_or_part_x_bankruptcies?", :focus do
+    describe ".subsequent_part_ix_or_part_x_bankruptcies", :focus do
       it "returns false no subsquent part ix or x bankruptcies" do
-        expect(@response.subsequent_part_ix_or_part_x_bankruptcies?).to eq(false)        
+        expect(@response.subsequent_part_ix_or_part_x_bankruptcies).to eq(nil)        
       end
-      it "returns true if subsequent part ix or x bankruptcies" do
+      it "returns date if subsequent part ix or x bankruptcies" do
          @response.stub(:bankruptcies).and_return(
           [{"section"=>"Bankruptcy", "account_type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2010-01-04", "role"=>"principal", "discharge_date"=>"2010-01-05", "discharge_status"=>"discharged"},
           {"section"=>"Bankruptcy", "account_type"=>"Personal Insolvency Agreement (Part 10 Deed)", "date"=>"2012-01-04", "role"=>"principal"}]
           )
-        expect(@response.subsequent_part_ix_or_part_x_bankruptcies?).to eq(true)        
+        expect(@response.subsequent_part_ix_or_part_x_bankruptcies).to eq("2012-01-04".to_date)
+        expect(@response.subsequent_part_ix_or_part_x_bankruptcies.class).to eq(Date)        
       end
     end
   end

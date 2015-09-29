@@ -378,16 +378,20 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.map{|d| d["date"].to_date}.compact.max rescue nil
   end
 
-  def subsequent_defaults?
-    bankruptcies.any? && !bankrupt? && ((latest_default_date > latest_discharged_bankruptcy_date) rescue false)
+  def subsequent_defaults
+    if bankruptcies.any? && !bankrupt? && ((latest_default_date > latest_discharged_bankruptcy_date) rescue nil)
+      latest_default_date
+    else
+      nil
+    end
   end
 
-  def subsequent_part_ix_or_part_x_bankruptcies?
+  def subsequent_part_ix_or_part_x_bankruptcies
     bs = part_x_bankruptcies + part_ix_bankruptcies
     ret = bs.map do |bankruptcy|
-      true if ((bankruptcy["date"].to_date > latest_discharged_bankruptcy_date) rescue false)
+      bankruptcy["date"].to_date if ((bankruptcy["date"].to_date > latest_discharged_bankruptcy_date) rescue nil)
     end
-    ret.include?(true)
+    ret.any? ? ret.max : nil
   end
 
   def part_x_bankruptcies
