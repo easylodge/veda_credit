@@ -150,8 +150,8 @@ describe VedaCredit::ConsumerResponse do
       end
       it "returns date if subsequent part ix or x bankruptcies" do
          @response.stub(:bankruptcies).and_return(
-          [{"section"=>"Bankruptcy", "account_type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2010-01-04", "role"=>"principal", "discharge_date"=>"2010-01-05", "discharge_status"=>"discharged"},
-          {"section"=>"Bankruptcy", "account_type"=>"Personal Insolvency Agreement (Part 10 Deed)", "date"=>"2012-01-04", "role"=>"principal"}]
+          [{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2010-01-04", "role"=>"principal", "discharge_date"=>"2010-01-05", "discharge_status"=>"discharged"},
+          {"section"=>"Bankruptcy", "type"=>"Personal Insolvency Agreement (Part 10 Deed)", "date"=>"2012-01-04", "role"=>"principal"}]
           )
         expect(@response.subsequent_part_ix_or_part_x_bankruptcies).to eq("2012-01-04".to_date)
         expect(@response.subsequent_part_ix_or_part_x_bankruptcies.class).to eq(Date)        
