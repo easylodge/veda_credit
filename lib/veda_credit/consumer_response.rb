@@ -133,11 +133,11 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_part_x_bankruptcies
-    self.bankruptcies.select{|x| x["type"] == "Personal Insolvency Agreement (Part 10 Deed)" }.count
+    self.bankruptcies.select{|x| x["type"] =~ /Personal Insolvency Agreement (Part 10 Deed)/ || x["type"] =~ /Part 10/ || x["type"] =~ /part 10/ }.count
   end
 
   def number_of_part_ix_bankruptcies
-    self.bankruptcies.select{|x| x["type"] == "Debt Agreement (Part 9)" }.count
+    self.bankruptcies.select{|x| x["type"] =~ /Debt Agreement (Part 9)/ || x["type"] =~ /Part 9/ || x["type"] =~ /part 9/ }.count
   end
 
   def number_of_clearout
@@ -191,10 +191,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     return [] unless (primary_match["individual_consumer_credit_file"]["default"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["default"]))
     defaults_array = []
-    # binding.pry
     [hsh].flatten.each do |default|
       tmp_hash = {"section" => "Default", 
-                  "account_type" => default["account_details"]["account_type"],
                   "type" => [(default["account_details"]["account_type"] rescue nil),
                              (default["account_details"]["default_status"] rescue nil),
                              (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
@@ -331,6 +329,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     summary_data["defaults"].to_i - summary_data["defaults_paid"].to_i 
   end
 
+  def paid_credit_provider_defaults
+    summary_data["defaults"].to_i - summary_data["telco_and_utility_defaults"].to_i
+  end
+
   def age_of_latest_default_in_months
     defaults.any? ? summary_data["time_since_last_default"].to_i : "no_defaults"
   end
@@ -363,8 +365,49 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def earliest_bankruptcy_date
-    bankruptcies.last["date"].to_date rescue nil
+    bankruptcies.map{|d| d["date"].to_date}.compact.min rescue nil
   end
+
+  def latest_discharged_bankruptcy_date
+    discharges = bankruptcies.map do |bankruptcy|
+      bankruptcy if (bankruptcy["discharge_status"] == "discharged")
+    end.compact
+    discharges.any? ? (discharges.first["discharge_date"].to_date rescue nil) : nil
+  end
+
+  def latest_default_date
+    defaults.map{|d| d["date"].to_date}.compact.max rescue nil
+  end
+
+  def subsequent_defaults
+    if bankruptcies.any? && !bankrupt? && ((latest_default_date > latest_discharged_bankruptcy_date) rescue nil)
+      latest_default_date
+    else
+      nil
+    end
+  end
+
+  def subsequent_part_ix_or_part_x_bankruptcies
+    bs = part_x_bankruptcies + part_ix_bankruptcies
+    ret = bs.map do |bankruptcy|
+      bankruptcy["date"].to_date if ((bankruptcy["date"].to_date > earliest_bankruptcy_date) rescue nil)
+    end
+    ret.any? ? ret.max : nil
+  end
+
+  def part_x_bankruptcies
+    self.bankruptcies.select{|x| x["type"] =~ /Personal Insolvency Agreement (Part 10 Deed)/ || x["type"] =~ /Part 10/ || x["type"] =~ /part 10/}.compact
+  end
+
+  def part_ix_bankruptcies
+    self.bankruptcies.select{|x| x["type"] =~ /Debt Agreement (Part 9)/ || x["type"] =~ /Part 9/ || x["type"] =~ /part 9/ }.compact
+  end
+
+  def external_administration
+    #TODO
+    false
+  end
+
 
   private
   def to_hash
