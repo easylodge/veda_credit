@@ -88,7 +88,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".non_credit_defaults", :focus do
+    describe ".non_credit_defaults" do
       it "returns empty array if no default" do
         expect(@response.non_credit_defaults).to eq([])        
       end
@@ -103,7 +103,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".earliest_bankruptcy_date", :focus do
+    describe ".earliest_bankruptcy_date" do
       it "returns a date if bankruptcy" do
         @response.stub(:bankruptcies).and_return(
           [{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2015-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"},
@@ -117,7 +117,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".latest_discharged_bankruptcy_date", :focus do
+    describe ".latest_discharged_bankruptcy_date" do
       it "returns a date if discharded bankruptcy" do
         @response.stub(:bankruptcies).and_return([{"section"=>"Bankruptcy", "type"=>"Bankruptcy (Debtor's Petition)", "date"=>"2012-01-04", "role"=>"principal", "discharge_date"=>"2015-01-05", "discharge_status"=>"discharged"}])
         expect(@response.latest_discharged_bankruptcy_date.class).to eq(Date)
@@ -128,7 +128,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".subsequent_defaults", :focus do
+    describe ".subsequent_defaults" do
       it "returns nil for no subsquent default" do
         expect(@response.subsequent_defaults).to eq(nil)        
       end
@@ -144,7 +144,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe ".subsequent_part_ix_or_part_x_bankruptcies", :focus do
+    describe ".subsequent_part_ix_or_part_x_bankruptcies" do
       it "returns false no subsquent part ix or x bankruptcies" do
         expect(@response.subsequent_part_ix_or_part_x_bankruptcies).to eq(nil)        
       end

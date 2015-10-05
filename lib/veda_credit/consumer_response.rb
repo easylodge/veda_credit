@@ -365,7 +365,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def earliest_bankruptcy_date
-    bankruptcies.last["date"].to_date rescue nil
+    bankruptcies.map{|d| d["date"].to_date}.compact.min rescue nil
   end
 
   def latest_discharged_bankruptcy_date
