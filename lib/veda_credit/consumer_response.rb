@@ -404,8 +404,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def external_administration
-    #TODO
-    false
+    self.summary_data["external_administration_director"].to_i > 0 rescue false
   end
 
 
