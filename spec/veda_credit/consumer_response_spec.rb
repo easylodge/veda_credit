@@ -157,6 +157,16 @@ describe VedaCredit::ConsumerResponse do
         expect(@response.subsequent_part_ix_or_part_x_bankruptcies.class).to eq(Date)        
       end
     end
+
+    describe ".external_administration" do
+      it "returns false if not under external administration director" do
+        expect(@response.external_administration).to eq(false)        
+      end
+      it "returns true if not under external administration director" do
+        @response.stub(:summary_data).and_return({"external_administration_director"=>"1"})
+        expect(@response.external_administration).to eq(true)        
+      end
+    end
   end
   
 end
