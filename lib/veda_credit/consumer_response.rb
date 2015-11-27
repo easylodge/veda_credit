@@ -46,7 +46,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
     product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
     if bca_error
-      self.as_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]
+      service_request = self.as_hash["BCAmessage"]["service_request_id"]
+      error = self.as_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]
+      "Service Request: #{service_request} - #{error}"
     elsif product_error
       ("#{product_error["error_type"].humanize} error: #{product_error["input_container"]}, #{product_error["error_description"]}" rescue "There was an Veda product error")
     else

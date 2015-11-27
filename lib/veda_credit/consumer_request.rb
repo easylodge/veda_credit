@@ -60,12 +60,12 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
 
   def individual?
     ["vedascore-financial-commercial-1.1", "vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1", "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1", 
-      "vedascore-authorized-agent-financial-consumer-1.1", "vedascore-financial-consumer-plus-commercial-1.1", "vedascore-financial-commercial-plus-consumer-1.1"].include? self.enquiry[:product_name] 
+      "vedascore-authorized-agent-financial-consumer-1.1", "vedascore-financial-consumer-plus-commercial-1.1", "vedascore-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-commercial-1.1"].include? self.enquiry[:product_name] 
   end
 
   def business?
     ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1", 
-      "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1"].include? self.enquiry[:product_name] 
+      "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-commercial-1.1"].include? self.enquiry[:product_name] 
   end
 
   def to_individual(xml)
