@@ -143,7 +143,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_clearout
-    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] == "Clearout" }.count
+    defaults.select{ |key,val| key != "account_details" && (val["reason_to_report"] == "Clearout" rescue false) }.count
   end
 
   def last_36_months_paid_defaults_amount
@@ -194,7 +194,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     hsh = Marshal.load(Marshal.dump(primary_match["individual_consumer_credit_file"]["default"]))
     defaults_array = []
     [hsh].flatten.each do |default|
-      tmp_hash = {"section" => "Default", 
+      tmp_hash = {"section" => "Default",
                   "type" => [(default["account_details"]["account_type"] rescue nil),
                              (default["account_details"]["default_status"] rescue nil),
                              (default["original_default"]["reason_to_report"] rescue nil)].reject(&:blank?).join(','),
@@ -328,7 +328,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_unpaid_defaults
-    summary_data["defaults"].to_i - summary_data["defaults_paid"].to_i 
+    summary_data["defaults"].to_i - summary_data["defaults_paid"].to_i
   end
 
   def paid_credit_provider_defaults
