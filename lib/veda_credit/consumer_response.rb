@@ -172,11 +172,11 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     self.bankruptcies.select{|x| x["type"] =~ /Debt Agreement (Part 9)/ || x["type"] =~ /Part 9/ || x["type"] =~ /part 9/ }.count
   end
 
-  def number_of_clearout
+  def number_of_clearouts
     defaults.select{ |key,val| key != "account_details" && (val["reason_to_report"] == "Clearout" rescue false) }.count
   end
+  alias_method :number_of_clearout, :number_of_clearouts
 
-  # Paid and Unpaid defaults
   def paid_defaults
     defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] == "Payment Default" }
   end
@@ -190,7 +190,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def credit_clearouts
-    credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C"}
+    defaults.select{|ncd| d["current_reason_to_report_code"] == "C"}
   end
 
   [12, 24, 36, 48, 60, 72].each do |term|
@@ -203,9 +203,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
 
     #support the old names for backwards compatibility
-    alias "last_#{term}_months_paid_defaults_amount".to_sym, "paid_defaults_#{term}_amount".to_sym
-    alias "last_#{term}_months_unpaid_defaults_amount".to_sym, "unpaid_defaults_#{term}_amount".to_sym
-
+    alias_method "last_#{term}_months_paid_defaults_amount".to_sym, "paid_defaults_#{term}_amount".to_sym
+    alias_method "last_#{term}_months_unpaid_defaults_amount".to_sym, "unpaid_defaults_#{term}_amount".to_sym
 
     define_method("non_credit_clearouts_#{term}".to_sym) do
       non_credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C" && d["date"] >= term.months.ago.to_date}
@@ -216,7 +215,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
 
     define_method("credit_clearouts_#{term}".to_sym) do
-      credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C" && d["date"] >= term.months.ago.to_date}
+      credit_clearouts.select{|ncd| d["date"] >= term.months.ago.to_date}
     end
 
     define_method("credit_clearouts_#{term}_amount".to_sym) do
@@ -224,18 +223,22 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
-  def unpaid_defaults_total_amount
-    unpaid_defaults.collect{|key, val| val["default_amount"]}.sum
-  end
-  alias :unpaid_defaults_total, :unpaid_defaults_total_amount
-
-  def paid_defaults_total_amount
+  def paid_defaults_total
     paid_defaults.collect{|key, val| val["default_amount"]}.sum
   end
-  alias :paid_defaults_total, :paid_defaults_total_amount
+  alias_method :paid_defaults_total_amount, :paid_defaults_total
 
-  def credit_clearout_total
+  def unpaid_defaults_total
+    unpaid_defaults.collect{|key, val| val["default_amount"]}.sum
+  end
+  alias_method :unpaid_defaults_total_amount, :unpaid_defaults_total
+
+  def credit_clearouts_total
     credit_clearouts.map(&:current_amount).compact.sum
+  end
+
+  def non_credit_clearouts_total
+    non_credit_clearouts.map(&:current_amount).compact.sum
   end
 
   def file_message
@@ -288,7 +291,6 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
     defaults_array
   end
-  alias :credit_defaults, :defaults
 
   def commercial_defaults
     return [] unless (primary_match["individual_commercial_credit_file"]["default"] rescue false)
@@ -327,7 +329,6 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
     [hsh].flatten
   end
-
 
   def court_actions
     return [] unless (primary_match["individual_public_data_file"]["court_action"] rescue false)
