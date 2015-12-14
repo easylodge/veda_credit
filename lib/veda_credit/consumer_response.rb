@@ -11,6 +11,36 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   before_save :to_hash
 
+  #NOTE:
+  # The current free-for-all naming convention used in this file leaves much to be desired.
+  # When adding a new method, try to name it like this:
+  # thing_term_amount, thing_total_amount, thing_term_count, thing_total_count
+  # where "thing" is something like credit_clearouts or unpaid defaults
+  # and where "term" is typically 12, 36 etc months. Feel free to use some meta code to organise all the terms together.
+
+
+  # [:total, :count, 3, 6, 9, 12, 24, 36, 48, 60, 72].each do |term|
+  #   case term
+  #   when :total
+  #     define_method("example_#{term}".to_sym) do
+  #       # total regardless of term range
+  #     end
+  #   when :count
+  #   else
+  #     define_method("example_#{term}".to_sym) do
+  #       # return only entries for the term range
+  #     end
+  #     define_method("example_#{term}_amount".to_sym) do
+  #       # sum only relevant entries
+  #       # self.send("example_#{term}".to_sym).sum(:something)
+  #     end
+  #     define_method("example_#{term}_count".to_sym) do
+  #       # count only relevant entries
+  #       # self.send("example_#{term}".to_sym).count
+  #     end
+  #   end
+  # end
+
   def self.nested_hash_value(obj,key)
     if obj.respond_to?(:key?) && obj.key?(key)
       obj[key]
@@ -146,16 +176,66 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.select{ |key,val| key != "account_details" && (val["reason_to_report"] == "Clearout" rescue false) }.count
   end
 
-  def last_36_months_paid_defaults_amount
-    paid_defaults = defaults.select{ |key,val| key != "account_details" && (val["date_recorded"].to_date >= 36.months.ago rescue false ) && val["reason_to_report"] == "Payment Default" }
-    paid_defaults = paid_defaults.collect{|key, val| val["default_amount"]}
-    paid_defaults.sum
+  # Paid and Unpaid defaults
+  def paid_defaults
+    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] == "Payment Default" }
   end
 
-  def last_36_months_unpaid_defaults_amount
-    unpaid_defaults = defaults.select{ |key,val| key != "account_details" && (val["date_recorded"].to_date >= 36.months.ago rescue false ) && val["reason_to_report"] != "Payment Default" }
-    unpaid_defaults = unpaid_defaults.collect{|key, val| val["default_amount"]}
-    unpaid_defaults.sum
+  def unpaid_defaults
+    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] != "Payment Default" }
+  end
+
+  def non_credit_defaults
+    defaults.select { |d| ["Telecommunication Service", "Utilities"].include?(d["account_type"]) }
+  end
+
+  def credit_clearouts
+    credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C"}
+  end
+
+  [12, 24, 36, 48, 60, 72].each do |term|
+    define_method("paid_defaults_#{term}_amount".to_sym) do
+      paid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}.collect{|key, val| val["default_amount"]}.sum
+    end
+
+    define_method("unpaid_defaults_#{term}_amount".to_sym) do
+      unpaid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}.collect{|key, val| val["default_amount"]}.sum
+    end
+
+    #support the old names for backwards compatibility
+    alias "last_#{term}_months_paid_defaults_amount".to_sym, "paid_defaults_#{term}_amount".to_sym
+    alias "last_#{term}_months_unpaid_defaults_amount".to_sym, "unpaid_defaults_#{term}_amount".to_sym
+
+
+    define_method("non_credit_clearouts_#{term}".to_sym) do
+      non_credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C" && d["date"] >= term.months.ago.to_date}
+    end
+
+    define_method("non_credit_clearouts_#{term}_amount".to_sym) do
+      self.send("non_credit_clearouts_#{term}".to_sym).map(&:current_amount).compact.sum
+    end
+
+    define_method("credit_clearouts_#{term}".to_sym) do
+      credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C" && d["date"] >= term.months.ago.to_date}
+    end
+
+    define_method("credit_clearouts_#{term}_amount".to_sym) do
+      self.send("credit_clearouts_#{term}".to_sym).map(&:current_amount).compact.sum
+    end
+  end
+
+  def unpaid_defaults_total_amount
+    unpaid_defaults.collect{|key, val| val["default_amount"]}.sum
+  end
+  alias :unpaid_defaults_total, :unpaid_defaults_total_amount
+
+  def paid_defaults_total_amount
+    paid_defaults.collect{|key, val| val["default_amount"]}.sum
+  end
+  alias :paid_defaults_total, :paid_defaults_total_amount
+
+  def credit_clearout_total
+    credit_clearouts.map(&:current_amount).compact.sum
   end
 
   def file_message
@@ -208,6 +288,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
     defaults_array
   end
+  alias :credit_defaults, :defaults
 
   def commercial_defaults
     return [] unless (primary_match["individual_commercial_credit_file"]["default"] rescue false)
@@ -360,10 +441,6 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def bankrupt?
     (bankruptcies.first["discharge_status"] != "discharged") rescue false
-  end
-
-  def non_credit_defaults
-    defaults.select { |d| ["Telecommunication Service", "Utilities"].include?(d["account_type"]) }
   end
 
   def earliest_bankruptcy_date
