@@ -194,12 +194,20 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   [12, 24, 36, 48, 60, 72].each do |term|
+    define_method("paid_defaults_#{term}".to_sym) do
+      paid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}
+    end
+
     define_method("paid_defaults_#{term}_amount".to_sym) do
-      paid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}.collect{|key, val| val["default_amount"]}.sum
+      self.send("paid_defaults_#{term}".to_sym).collect{|key, val| val["default_amount"]}.sum
+    end
+
+    define_method("unpaid_defaults_#{term}".to_sym) do
+      unpaid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}
     end
 
     define_method("unpaid_defaults_#{term}_amount".to_sym) do
-      unpaid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}.collect{|key, val| val["default_amount"]}.sum
+      self.send("unpaid_defaults_#{term}".to_sym).collect{|key, val| val["default_amount"]}.sum
     end
 
     #support the old names for backwards compatibility

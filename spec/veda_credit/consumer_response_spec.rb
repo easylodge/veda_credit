@@ -36,7 +36,9 @@ describe VedaCredit::ConsumerResponse do
   it {expect(subject).to respond_to(:credit_clearouts)}
 
   [12, 24, 36, 48, 60, 72].each do |term|
+    it {expect(subject).to respond_to("paid_defaults_#{term}".to_sym)}
     it {expect(subject).to respond_to("paid_defaults_#{term}_amount".to_sym)}
+    it {expect(subject).to respond_to("unpaid_defaults_#{term}".to_sym)}
     it {expect(subject).to respond_to("unpaid_defaults_#{term}_amount".to_sym)}
     it {expect(subject).to respond_to("last_#{term}_months_paid_defaults_amount".to_sym)}
     it {expect(subject).to respond_to("last_#{term}_months_unpaid_defaults_amount".to_sym)}
