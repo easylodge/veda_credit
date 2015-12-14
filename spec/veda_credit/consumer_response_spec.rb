@@ -247,13 +247,77 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe "paid_defaults" do
-      it ".paid_defaults"
-      it ".paid_defaults_total"
-
-      [12, 24, 36, 48, 60, 72].each do |term|
-        it ".paid_defaults_#{term}_amount"
+    describe "paid_defaults", :focus do
+      before(:each) do
+        @response.stub(:defaults).and_return([{
+            "section"=>"Default",
+            "account_type" => "Utilities",
+            "type"=>"Loan Contract,Settled,Clearout",
+            "date"=>"2010-10-05",
+            "creditor"=>"ACME GROUP LTD",
+            "current_amount"=>"6910",
+            "original_amount"=>"6910",
+            "role"=>"principal",
+            "reference"=>"12345"
+          }.with_indifferent_access, {
+            "section"=>"Default",
+            "account_type" => "Telecommunication Service",
+            "type"=>"Loan Contract,Settled,Clearout",
+            "date"=>"2011-10-05",
+            "creditor"=>"ACME GROUP LTD",
+            "current_amount"=>"6910",
+            "original_amount"=>"6910",
+            "role"=>"principal",
+            "reference"=>"12345"
+          }.with_indifferent_access, {
+            "section"=>"Default",
+            "account_type" => "Loan Contract",
+            "type"=>"Loan Contract,Settled,Clearout",
+            "date"=>"2015-02-05",
+            "creditor"=>"ACME GROUP LTD",
+            "current_amount"=>"6910",
+            "original_amount"=>"6910",
+            "role"=>"principal",
+            "reference"=>"12345"
+          }.with_indifferent_access, {
+            "section"=>"Default",
+            "account_type" => "Loan Contract",
+            "type"=>"Loan Contract,Settled",
+            "date"=>"2015-02-05",
+            "creditor"=>"ACME GROUP LTD",
+            "current_amount"=>"1234",
+            "default_amount"=>"1234",
+            "original_amount"=>"1234",
+            "role"=>"principal",
+            "reference"=>"12346",
+            "reason_to_report"=>"Payment Default"
+          }.with_indifferent_access, {
+            "section"=>"Default",
+            "account_type" => "Loan Contract",
+            "type"=>"Loan Contract,Settled",
+            "date"=>"2013-02-05",
+            "creditor"=>"ACME GROUP LTD",
+            "current_amount"=>"2345",
+            "default_amount"=>"2345",
+            "original_amount"=>"2345",
+            "role"=>"principal",
+            "reference"=>"12347",
+            "reason_to_report"=>"Payment Default"
+          }.with_indifferent_access
+        ])
       end
+
+      it ".paid_defaults" do
+        expect(@response.paid_defaults.any?).to eq(true)
+      end
+
+      it ".paid_defaults_total" do
+        expect(@response.paid_defaults_total).to eq(3579)
+      end
+
+      # [12, 24, 36, 48, 60, 72].each do |term|
+      #   it ".paid_defaults_#{term}_amount"
+      # end
     end
 
     describe "unpaid_defaults" do

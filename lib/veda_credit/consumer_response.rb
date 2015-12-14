@@ -173,41 +173,43 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def number_of_clearouts
-    defaults.select{ |key,val| key != "account_details" && (val["reason_to_report"] == "Clearout" rescue false) }.count
+    defaults.select{|d| d[:reason_to_report] == "Clearout"}.count
   end
   alias_method :number_of_clearout, :number_of_clearouts
 
   def paid_defaults
-    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] == "Payment Default" }
+    # defaults.select{|key,val| key != "account_details" && val["reason_to_report"] == "Payment Default" }
+    defaults.select{|d| d[:reason_to_report] == "Payment Default" }
   end
 
   def unpaid_defaults
-    defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] != "Payment Default" }
+    # defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] != "Payment Default" }
+    defaults.select{|d| d[:reason_to_report] != "Payment Default" }
   end
 
   def non_credit_defaults
-    defaults.select { |d| ["Telecommunication Service", "Utilities"].include?(d["account_type"]) }
+    defaults.select {|d| ["Telecommunication Service", "Utilities"].include?(d[:account_type]) }
   end
 
   def credit_clearouts
-    defaults.select{|ncd| d["current_reason_to_report_code"] == "C"}
+    defaults.select{|d| d[:current_reason_to_report_code] == "C"}
   end
 
   [12, 24, 36, 48, 60, 72].each do |term|
     define_method("paid_defaults_#{term}".to_sym) do
-      paid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}
+      paid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
     end
 
     define_method("paid_defaults_#{term}_amount".to_sym) do
-      self.send("paid_defaults_#{term}".to_sym).collect{|key, val| val["default_amount"]}.sum
+      self.send("paid_defaults_#{term}".to_sym).collect{|d| d[:default_amount].to_f}.sum
     end
 
     define_method("unpaid_defaults_#{term}".to_sym) do
-      unpaid_defaults.select{|key,val| (val["date_recorded"].to_date >= term.months.ago rescue false )}
+      unpaid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
     end
 
     define_method("unpaid_defaults_#{term}_amount".to_sym) do
-      self.send("unpaid_defaults_#{term}".to_sym).collect{|key, val| val["default_amount"]}.sum
+      self.send("unpaid_defaults_#{term}".to_sym).collect{|d| d[:default_amount].to_f}.sum
     end
 
     #support the old names for backwards compatibility
@@ -215,38 +217,38 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     alias_method "last_#{term}_months_unpaid_defaults_amount".to_sym, "unpaid_defaults_#{term}_amount".to_sym
 
     define_method("non_credit_clearouts_#{term}".to_sym) do
-      non_credit_defaults.select{|ncd| d["current_reason_to_report_code"] == "C" && d["date"] >= term.months.ago.to_date}
+      non_credit_defaults.select{|ncd| d[:current_reason_to_report_code] == "C" && d[:date].to_date >= term.months.ago}
     end
 
     define_method("non_credit_clearouts_#{term}_amount".to_sym) do
-      self.send("non_credit_clearouts_#{term}".to_sym).map(&:current_amount).compact.sum
+      self.send("non_credit_clearouts_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
     end
 
     define_method("credit_clearouts_#{term}".to_sym) do
-      credit_clearouts.select{|ncd| d["date"] >= term.months.ago.to_date}
+      credit_clearouts.select{|d| d[:date].to_date >= term.months.ago.to_date}
     end
 
     define_method("credit_clearouts_#{term}_amount".to_sym) do
-      self.send("credit_clearouts_#{term}".to_sym).map(&:current_amount).compact.sum
+      self.send("credit_clearouts_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
     end
   end
 
   def paid_defaults_total
-    paid_defaults.collect{|key, val| val["default_amount"]}.sum
+    paid_defaults.collect{|default| default[:default_amount].to_f}.sum
   end
   alias_method :paid_defaults_total_amount, :paid_defaults_total
 
   def unpaid_defaults_total
-    unpaid_defaults.collect{|key, val| val["default_amount"]}.sum
+    unpaid_defaults.collect{|d| d[:default_amount].to_f}.sum
   end
   alias_method :unpaid_defaults_total_amount, :unpaid_defaults_total
 
   def credit_clearouts_total
-    credit_clearouts.map(&:current_amount).compact.sum
+    credit_clearouts.collect{|d| d[:current_amount].to_f}.sum
   end
 
   def non_credit_clearouts_total
-    non_credit_clearouts.map(&:current_amount).compact.sum
+    non_credit_clearouts.collect{|d| d[:current_amount].to_f}.sum
   end
 
   def file_message
@@ -295,7 +297,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "original_amount" => (default["original_default"]["default_amount"] rescue nil),
                   "role" => (default["account_details"]["role"]["code"] rescue nil),
                   "reference" => (default["account_details"]["client_reference"] rescue nil)}
-      defaults_array << tmp_hash
+      defaults_array << tmp_hash.with_indifferent_access
     end
     defaults_array
   end
