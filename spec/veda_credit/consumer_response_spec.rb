@@ -247,7 +247,7 @@ describe VedaCredit::ConsumerResponse do
       end
     end
 
-    describe "paid_defaults", :focus do
+    describe "paid_defaults" do
       before(:each) do
         @response.stub(:defaults).and_return([{
             "section"=>"Default",
