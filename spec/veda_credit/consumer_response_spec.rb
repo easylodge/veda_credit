@@ -131,7 +131,9 @@ describe VedaCredit::ConsumerResponse do
 
     describe ".age_of_latest_default_in_months" do
       it "returns a integer if default" do
-        @response.stub(:defaults).and_return([{"section"=>"Default", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}])
+        @response.stub(:defaults).and_return([
+          {"section"=>"Default", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access
+        ])
         expect(@response.age_of_latest_default_in_months.class).to eq(Fixnum)
       end
       it "returns a string if no default" do
@@ -173,9 +175,10 @@ describe VedaCredit::ConsumerResponse do
       end
       it "returns array of defaults if default" do
          @response.stub(:defaults).and_return(
-            [{"section"=>"Default", "account_type" => "Utilities", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
-            {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"},
-            {"section"=>"Default", "account_type" => "Loan Contract", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}]
+            [
+              {"section"=>"Default", "account_type" => "Utilities", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access,
+              {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access,
+              {"section"=>"Default", "account_type" => "Loan Contract", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access]
             )
         expect(@response.non_credit_defaults.count).to eq(2)
         expect(@response.non_credit_defaults.class).to eq(Array)
