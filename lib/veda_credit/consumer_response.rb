@@ -481,6 +481,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     discharges.any? ? (discharges.first["discharge_date"].to_date rescue nil) : nil
   end
 
+  # All defaults
   def latest_default_date
     defaults.map{|d| d["date"].to_date}.compact.max rescue nil
   end
@@ -488,6 +489,32 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   def subsequent_defaults
     if bankruptcies.any? && !bankrupt? && ((latest_default_date > latest_discharged_bankruptcy_date) rescue nil)
       latest_default_date
+    else
+      nil
+    end
+  end
+
+  # Credit defaults
+  def latest_credit_default_date
+    defaults.reject {|d| ["Telecommunication Service", "Utilities"].include?(d[:account_type]) }.map{|d| d["date"].to_date}.compact.max rescue nil
+  end
+
+  def subsequent_credit_defaults
+    if bankruptcies.any? && !bankrupt? && ((latest_credit_default_date > latest_discharged_bankruptcy_date) rescue nil)
+      latest_credit_default_date
+    else
+      nil
+    end
+  end
+
+  # Non-credit defaults
+  def latest_non_credit_default_date
+    defaults.select {|d| ["Telecommunication Service", "Utilities"].include?(d[:account_type]) }.map{|d| d["date"].to_date}.compact.max rescue nil
+  end
+
+  def subsequent_non_credit_defaults
+    if bankruptcies.any? && !bankrupt? && ((latest_non_credit_default_date > latest_discharged_bankruptcy_date) rescue nil)
+      latest_non_credit_default_date
     else
       nil
     end

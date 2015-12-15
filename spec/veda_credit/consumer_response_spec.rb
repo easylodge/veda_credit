@@ -80,6 +80,10 @@ describe VedaCredit::ConsumerResponse do
   it {expect(subject).to respond_to(:latest_discharged_bankruptcy_date)}
   it {expect(subject).to respond_to(:latest_default_date)}
   it {expect(subject).to respond_to(:subsequent_defaults)}
+  it {expect(subject).to respond_to(:latest_credit_default_date)}
+  it {expect(subject).to respond_to(:subsequent_credit_defaults)}
+  it {expect(subject).to respond_to(:latest_non_credit_default_date)}
+  it {expect(subject).to respond_to(:subsequent_non_credit_defaults)}
   it {expect(subject).to respond_to(:subsequent_part_ix_or_part_x_bankruptcies)}
   it {expect(subject).to respond_to(:part_x_bankruptcies)}
   it {expect(subject).to respond_to(:part_ix_bankruptcies)}
