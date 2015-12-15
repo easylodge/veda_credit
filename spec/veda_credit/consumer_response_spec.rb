@@ -334,6 +334,9 @@ describe VedaCredit::ConsumerResponse do
       [12, 24, 36, 48, 60, 72].each do |term|
         it ".unpaid_defaults_#{term}_amount"
       end
+      [12, 24, 36, 48, 60, 72].each do |term|
+        it ".unpaid_defaults_#{term}_count"
+      end
     end
 
     describe "non_credit_defaults" do
@@ -343,6 +346,9 @@ describe VedaCredit::ConsumerResponse do
       [12, 24, 36, 48, 60, 72].each do |term|
         it ".non_credit_clearouts_#{term}_amount"
       end
+      [12, 24, 36, 48, 60, 72].each do |term|
+        it ".non_credit_clearouts_#{term}_count"
+      end
     end
 
     describe "credit_clearouts" do
@@ -351,6 +357,9 @@ describe VedaCredit::ConsumerResponse do
 
       [12, 24, 36, 48, 60, 72].each do |term|
         it ".credit_clearouts_#{term}_amount"
+      end
+      [12, 24, 36, 48, 60, 72].each do |term|
+        it ".credit_clearouts_#{term}_count"
       end
     end
   end
