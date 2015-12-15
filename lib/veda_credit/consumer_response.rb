@@ -204,12 +204,20 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
       self.send("paid_defaults_#{term}".to_sym).collect{|d| d[:default_amount].to_f}.sum
     end
 
+    define_method("paid_defaults_#{term}_count".to_sym) do
+      self.send("paid_defaults_#{term}".to_sym).count
+    end
+
     define_method("unpaid_defaults_#{term}".to_sym) do
       unpaid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
     end
 
     define_method("unpaid_defaults_#{term}_amount".to_sym) do
       self.send("unpaid_defaults_#{term}".to_sym).collect{|d| d[:default_amount].to_f}.sum
+    end
+
+    define_method("unpaid_defaults_#{term}_count".to_sym) do
+      self.send("unpaid_defaults_#{term}".to_sym).count
     end
 
     #support the old names for backwards compatibility
@@ -224,12 +232,20 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
       self.send("non_credit_clearouts_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
     end
 
+    define_method("non_credit_clearouts_#{term}_count".to_sym) do
+      self.send("non_credit_clearouts_#{term}".to_sym).count
+    end
+
     define_method("credit_clearouts_#{term}".to_sym) do
       credit_clearouts.select{|d| d[:date].to_date >= term.months.ago.to_date}
     end
 
     define_method("credit_clearouts_#{term}_amount".to_sym) do
       self.send("credit_clearouts_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
+    end
+
+    define_method("credit_clearouts_#{term}_count".to_sym) do
+      self.send("credit_clearouts_#{term}".to_sym).count
     end
   end
 
