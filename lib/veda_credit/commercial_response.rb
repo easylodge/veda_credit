@@ -85,16 +85,21 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       judgement["amount"] = judgement["amount"].to_f rescue nil 
       judgement["action_date"] = judgement["action_date"].to_date rescue nil 
     end
+    hsh
   end
 
   def petitions
-    hsh = (get_hash("organisation-legal")["organisation_legal"]["court_petition_list"]["petitions"] rescue nil)
+    hsh = (get_hash("organisation-legal")["petition_list"] rescue nil)
     return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |petition|
       #
     end
     hsh
+  end
+
+  def number_of_petitions
+    petitions.count rescue 0
   end
 
   def defaults
