@@ -209,11 +209,11 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
 
     define_method("unpaid_defaults_#{term}".to_sym) do
-      unpaid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
+      unpaid_defaults.select{|d| d[:date].to_date >= term.months.ago}
     end
 
     define_method("unpaid_defaults_#{term}_amount".to_sym) do
-      self.send("unpaid_defaults_#{term}".to_sym).collect{|d| d[:default_amount].to_f}.sum
+      self.send("unpaid_defaults_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
     end
 
     define_method("unpaid_defaults_#{term}_count".to_sym) do
