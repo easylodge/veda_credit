@@ -187,8 +187,12 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.select{|d| d[:reason_to_report] != "Payment Default" }
   end
 
+  def credit_defaults
+    defaults.select {|d| ["Telecommunication Service", "Utilities"].exclude?(d["type"].split(",").first) rescue nil }
+  end
+
   def non_credit_defaults
-    defaults.select {|d| ["Telecommunication Service", "Utilities"].include?(d[:account_type]) }
+    defaults.select {|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }
   end
 
   def credit_clearouts
@@ -258,6 +262,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     unpaid_defaults.collect{|d| d[:default_amount].to_f}.sum
   end
   alias_method :unpaid_defaults_total_amount, :unpaid_defaults_total
+
+  def credit_defaults_total
+    credit_defaults.collect{|d| d[:current_amount].to_f}.sum
+  end
 
   def credit_clearouts_total
     credit_clearouts.collect{|d| d[:current_amount].to_f}.sum
@@ -447,6 +455,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.any? ? summary_data["time_since_last_default"].to_i : "no_defaults"
   end
 
+  def age_of_latest_unpaid_default_in_months
+    unpaid_defaults.any? ? number_of_months(unpaid_defaults.first["date"]) : "no_defaults"
+  end
+
+  def age_of_latest_credit_default_in_months
+    credit_defaults.any? ? number_of_months(credit_defaults.first["date"]) : "no_defaults"
+  end
+
   def age_of_latest_discharged_bankruptcy_in_months
     discharges = bankruptcies.map do |bankruptcy|
       bankruptcy if (bankruptcy["discharge_status"] == "discharged")
@@ -468,6 +484,11 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def bankrupt?
     (bankruptcies.first["discharge_status"] != "discharged") rescue false
+  end
+
+  def part_ix_or_x_bankrupt?
+    bs = part_ix_bankruptcies + part_x_bankruptcies
+    (bs.first["discharge_status"] != "discharged") rescue false
   end
 
   def earliest_bankruptcy_date
