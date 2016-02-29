@@ -362,6 +362,26 @@ describe VedaCredit::ConsumerResponse do
         it ".credit_clearouts_#{term}_count"
       end
     end
+
+    describe "credit_defaults" do
+      xit
+    end
+
+    describe "credit_defaults_total" do
+      xit
+    end
+
+    describe "age_of_latest_unpaid_default_in_months" do
+      xit
+    end
+
+    describe "age_of_latest_credit_default_in_months" do
+      xit
+    end
+
+    describe "part_ix_or_x_bankrupt?" do
+      xit
+    end
   end
 
 end

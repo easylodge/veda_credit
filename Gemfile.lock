@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    veda_credit (0.0.28)
+    veda_credit (0.0.30)
       activesupport
       httparty
       nokogiri
@@ -126,3 +126,6 @@ DEPENDENCIES
   shoulda-matchers
   sqlite3
   veda_credit!
+
+BUNDLED WITH
+   1.10.5
