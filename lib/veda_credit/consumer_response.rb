@@ -253,6 +253,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  def defaults_total
+    defaults.collect{|default| default[:default_amount].to_f}.sum
+  end
+
   def paid_defaults_total
     paid_defaults.collect{|default| default[:default_amount].to_f}.sum
   end
