@@ -179,12 +179,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def paid_defaults
     # defaults.select{|key,val| key != "account_details" && val["reason_to_report"] == "Payment Default" }
-    defaults.select{|d| d[:reason_to_report] == "Payment Default" }
+    # defaults.select{|d| d[:reason_to_report] == "Payment Default" }
+    defaults.select {|d| (d["type"].split(",")[1] == "Paid") rescue nil }
   end
 
   def unpaid_defaults
     # defaults.select{ |key,val| key != "account_details" && val["reason_to_report"] != "Payment Default" }
-    defaults.select{|d| d[:reason_to_report] != "Payment Default" }
+    # defaults.select{|d| d[:reason_to_report] != "Payment Default" }
+    defaults.select {|d| (d["type"].split(",")[1] == "Outstanding") rescue nil }
   end
 
   def credit_defaults
@@ -254,16 +256,16 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def defaults_total
-    defaults.collect{|default| default[:default_amount].to_f}.sum
+    defaults.collect{|default| default[:current_amount].to_f}.sum
   end
 
   def paid_defaults_total
-    paid_defaults.collect{|default| default[:default_amount].to_f}.sum
+    paid_defaults.collect{|default| default[:original_amount].to_f}.sum
   end
   alias_method :paid_defaults_total_amount, :paid_defaults_total
 
   def unpaid_defaults_total
-    unpaid_defaults.collect{|d| d[:default_amount].to_f}.sum
+    unpaid_defaults.collect{|d| d[:current_amount].to_f}.sum
   end
   alias_method :unpaid_defaults_total_amount, :unpaid_defaults_total
 
@@ -456,7 +458,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def age_of_latest_default_in_months
-    defaults.any? ? summary_data["time_since_last_default"].to_i : "no_defaults"
+    # defaults.any? ? summary_data["time_since_last_default"].to_i : "no_defaults"
+    defaults.any? ? number_of_months(unpaid_defaults.first["date"]) : "no_defaults"
   end
 
   def age_of_latest_unpaid_default_in_months
