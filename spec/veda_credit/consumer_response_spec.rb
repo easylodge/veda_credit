@@ -180,9 +180,9 @@ describe VedaCredit::ConsumerResponse do
       it "returns array of defaults if default" do
          @response.stub(:defaults).and_return(
             [
-              {"section"=>"Default", "account_type" => "Utilities", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access,
-              {"section"=>"Default", "account_type" => "Telecommunication Service", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access,
-              {"section"=>"Default", "account_type" => "Loan Contract", "type"=>"Loan Contract,Settled,Clearout", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access]
+              {"section"=>"Default", "type"=>"Utilities,Outstanding,Payment Default", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access,
+              {"section"=>"Default", "type"=>"Telecommunication Service,Outstanding,Payment Default", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access,
+              {"section"=>"Default", "type"=>"Loan Contract,Outstanding,Payment Default", "date"=>"2010-10-05", "creditor"=>"ACME GROUP LTD", "current_amount"=>"6910", "original_amount"=>"6910", "role"=>"principal", "reference"=>"12345"}.with_indifferent_access]
             )
         expect(@response.non_credit_defaults.count).to eq(2)
         expect(@response.non_credit_defaults.class).to eq(Array)
@@ -310,6 +310,24 @@ describe VedaCredit::ConsumerResponse do
             "role"=>"principal",
             "reference"=>"12347",
             "reason_to_report"=>"Payment Default"
+          }.with_indifferent_access, {
+            "section"=>"Default",
+            "type"=>"Telecommunication Service,Paid,Payment Default",
+            "date"=>"2011-10-21",
+            "creditor"=>"VODAFONE COLLECTIONS",
+            "current_amount"=>"747",
+            "original_amount"=>"747",
+            "role"=>"principal",
+            "reference"=>"12349"
+          }.with_indifferent_access, {
+            "section"=>"Default",
+            "type"=>"Telecommunication Service,Outstanding,Payment Default",
+            "date"=>"2012-10-10",
+            "creditor"=>"TELSTRA CREDIT MANAGEMENT",
+            "current_amount"=>"1622",
+            "original_amount"=>"1622",
+            "role"=>"principal",
+            "reference"=>"123455"
           }.with_indifferent_access
         ])
       end
@@ -319,7 +337,7 @@ describe VedaCredit::ConsumerResponse do
       end
 
       it ".paid_defaults_total" do
-        expect(@response.paid_defaults_total).to eq(3579)
+        expect(@response.paid_defaults_total).to eq(747)
       end
 
       # [12, 24, 36, 48, 60, 72].each do |term|
