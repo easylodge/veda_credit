@@ -459,7 +459,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def age_of_latest_default_in_months
     # defaults.any? ? summary_data["time_since_last_default"].to_i : "no_defaults"
-    defaults.any? ? number_of_months(unpaid_defaults.first["date"]) : "no_defaults"
+    defaults.any? ? number_of_months(defaults.first["date"]) : "no_defaults"
   end
 
   def age_of_latest_unpaid_default_in_months
