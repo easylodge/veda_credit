@@ -231,7 +231,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     alias_method "last_#{term}_months_unpaid_defaults_amount".to_sym, "unpaid_defaults_#{term}_amount".to_sym
 
     define_method("non_credit_clearouts_#{term}".to_sym) do
-      non_credit_defaults.select{|ncd| d[:current_reason_to_report_code] == "C" && d[:date].to_date >= term.months.ago}
+      non_credit_defaults.select{|d| d[:current_reason_to_report_code] == "C" && d[:date].to_date >= term.months.ago}
     end
 
     define_method("non_credit_clearouts_#{term}_amount".to_sym) do
