@@ -269,7 +269,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     alias_method "last_#{term}_months_unpaid_defaults_amount".to_sym, "unpaid_defaults_#{term}_amount".to_sym
 
     define_method("non_credit_clearouts_#{term}".to_sym) do
-      non_credit_defaults.select{|ncd| d[:current_reason_to_report_code] == "C" && d[:date].to_date >= term.months.ago}
+      non_credit_defaults.select{|d| d[:current_reason_to_report_code] == "C" && d[:date].to_date >= term.months.ago}
     end
 
     define_method("non_credit_clearouts_#{term}_amount".to_sym) do
@@ -291,6 +291,22 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     define_method("credit_clearouts_#{term}_count".to_sym) do
       self.send("credit_clearouts_#{term}".to_sym).count
     end
+
+    define_method("unpaid_non_credit_defaults_#{term}".to_sym) do
+      unpaid_non_credit_defaults.select{|d| d[:date].to_date >= term.months.ago}
+    end
+
+    define_method("unpaid_non_credit_defaults_#{term}_amount".to_sym) do
+      self.send("unpaid_non_credit_defaults_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
+    end
+
+    define_method("unpaid_credit_defaults_#{term}".to_sym) do
+      unpaid_credit_defaults.select{|d| d[:date].to_date >= term.months.ago}
+    end
+
+    define_method("unpaid_credit_defaults_#{term}_amount".to_sym) do
+      self.send("unpaid_credit_defaults_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
+    end
   end
 
   def defaults_total
@@ -309,6 +325,26 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def credit_defaults_total
     credit_defaults.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def non_credit_defaults_total
+    non_credit_defaults.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def unpaid_non_credit_defaults
+    unpaid_defaults.select{|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }
+  end
+
+  def unpaid_credit_defaults
+    unpaid_defaults.select{|d| ["Telecommunication Service", "Utilities"].exclude?(d["type"].split(",").first) rescue nil }
+  end
+
+  def unpaid_non_credit_defaults_total
+    unpaid_defaults.select{|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def unpaid_credit_defaults_total
+    unpaid_defaults.select{|d| ["Telecommunication Service", "Utilities"].exclude?(d["type"].split(",").first) rescue nil }.collect{|d| d[:current_amount].to_f}.sum
   end
 
   def credit_clearouts_total
