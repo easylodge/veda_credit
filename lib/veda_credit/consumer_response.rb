@@ -120,6 +120,44 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     enquiry_report["primary_match"]
   end
 
+  def possible_matches
+    return [] unless (enquiry_report["possible_match"] rescue false)
+    hsh = Marshal.load(Marshal.dump(enquiry_report["possible_match"]))
+    possible_matches_array = []
+    [hsh].flatten.each do |match|
+      type = (match["individual"].present? && "individual") || (match["organisation"].present? && "organisation") || (match["business"].present? && "business")
+      if (match[type]["address"] rescue nil) && (match[type]["address"].present? rescue nil)
+        addr_hash = []
+        [match[type]["address"]].flatten.each do |addr|
+          address_type = addr["type"].gsub('-', ' ').humanize rescue nil
+          address_line_1 = [(addr["street_number"] rescue nil), (addr["street_name"] rescue nil), (addr["street_type"]["code"] rescue nil)].join(' ')
+          address_line_2 = [(addr["suburb"] rescue nil), (addr["state"] rescue nil), (addr["postcode"] rescue nil)].join(' ')
+          complete_address = [address_line_1, address_line_2, (addr["country"]["country_code"] rescue nil)].join(', ')
+          addr_hash << {"address_type" => address_type, "address" => complete_address, "create_date" => (addr["create_date"] rescue nil)}
+        end
+        match[type]["address"] = addr_hash
+      end
+      name = ( [(match["individual"]["individual_name"]["first_given_name"] rescue nil), (match["individual"]["individual_name"]["other_given_name"] rescue nil), (match["individual"]["individual_name"]["family_name"] rescue nil)].compact.join(' ') rescue nil )
+      name = name.present? ? name : ( [(match["organisation"]["organisation_name"] rescue nil ), (match["organisation"]["organisation_type"]["code"] rescue nil )].compact.join(' ') rescue nil )
+      name = name.present? ? name : (match["business"]["business_name"] rescue nil )
+      tmp_hash = {
+        "type" => type,
+        "bureau_reference" => (match["bureau_reference"] rescue nil),
+        "name" => name,
+        "organisation_number" => (match["organisation"]["organisation_number"] rescue nil ),
+        "abn_number" => (match["organisation"]["australian_business_number"] rescue nil) || (match["business"]["australian_business_number"] rescue nil),
+        "gender" => (match["individual"]["gender"]["code"] rescue nil),
+        "date_of_birth" => (match["individual"]["date_of_birth"] rescue nil),
+        "drivers_licence_number" => (match["individual"]["drivers_licence_number"] rescue nil),
+        "file_create_date" => (match["individual"]["individual_name"]["create_date"] rescue nil) || (match["organisation"]["file_create_date"] rescue nil) || (match["business"]["file_create_date"] rescue nil),
+        "employment" => (match["individual"]["employment"] rescue nil),
+        "addresses" => ((match["individual"]["address"] rescue nil) || (match["organisation"]["address"] rescue nil) || (match["business"]["address"] rescue nil))
+      }
+      possible_matches_array << tmp_hash.with_indifferent_access
+    end
+    possible_matches_array
+  end
+
   def score_data
     enquiry_report["score_data"]
   end
@@ -567,7 +605,6 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   def external_administration
     self.summary_data["external_administration_director"].to_i > 0 rescue false
   end
-
 
   private
   def to_hash
