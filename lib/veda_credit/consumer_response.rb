@@ -235,11 +235,19 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.select {|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }
   end
 
+  def current_credit_defaults
+    credit_defaults.select {|d| "C" == d["status_code"] rescue nil }
+  end
+
+  def current_non_credit_defaults
+    non_credit_defaults.select {|d| "C" == d["status_code"] rescue nil }
+  end
+
   def credit_clearouts
     defaults.select{|d| d[:current_reason_to_report_code] == "C"}
   end
 
-  [12, 24, 36, 48, 60, 72].each do |term|
+  [11, 12, 24, 35, 36, 48, 60, 72].each do |term|
     define_method("paid_defaults_#{term}".to_sym) do
       paid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
     end
@@ -331,6 +339,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     non_credit_defaults.collect{|d| d[:current_amount].to_f}.sum
   end
 
+  def current_credit_defaults_total
+    current_credit_defaults.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def current_non_credit_defaults_total
+    current_non_credit_defaults.collect{|d| d[:current_amount].to_f}.sum
+  end
+
   def unpaid_non_credit_defaults
     unpaid_defaults.select{|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }
   end
@@ -353,6 +369,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def non_credit_clearouts_total
     non_credit_clearouts.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def paid_court_actions
+    court_actions.select{|ca| "P" == ca["status_code"] rescue nil }
+  end
+
+  def not_paid_court_actions
+    court_actions.select{|ca| "P" != ca["status_code"] rescue nil }
   end
 
   def file_message
@@ -400,7 +424,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "current_amount" => (default["current_default"]["default_amount"] rescue nil),
                   "original_amount" => (default["original_default"]["default_amount"] rescue nil),
                   "role" => (default["account_details"]["role"]["code"] rescue nil),
-                  "reference" => (default["account_details"]["client_reference"] rescue nil)}
+                  "reference" => (default["account_details"]["client_reference"] rescue nil),
+                  "status_date" => (default["default_status"]["date"].rescue nil),
+                  "status_code" => (default["default_status"]["code"].rescue nil)}
       defaults_array << tmp_hash.with_indifferent_access
     end
     defaults_array
@@ -456,7 +482,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "creditor" => (ca["creditor"] rescue nil),
                   "court_action_amount" => (ca["court_action_amount"].to_i rescue nil),
                   "role" => (ca["role"]["code"] rescue nil),
-                  "reference" => (ca["plaint_number"] rescue nil)}
+                  "reference" => (ca["plaint_number"] rescue nil),
+                  "status_date" => (ca["court_action_status"]["date"].rescue nil),
+                  "status_code" => (ca["court_action_status"]["code"].rescue nil)}
       court_action_array << tmp_hash
     end
     court_action_array
