@@ -355,6 +355,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     non_credit_clearouts.collect{|d| d[:current_amount].to_f}.sum
   end
 
+  def paid_court_actions
+    court_actions.select{|ca| "P" == ca["status_code"] rescue nil }
+  end
+
+  def not_paid_court_actions
+    court_actions.select{|ca| "P" != ca["status_code"] rescue nil }
+  end
+
   def file_message
     primary_match["individual_consumer_credit_file"]["file_message"] rescue nil
   end
@@ -456,7 +464,9 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "creditor" => (ca["creditor"] rescue nil),
                   "court_action_amount" => (ca["court_action_amount"].to_i rescue nil),
                   "role" => (ca["role"]["code"] rescue nil),
-                  "reference" => (ca["plaint_number"] rescue nil)}
+                  "reference" => (ca["plaint_number"] rescue nil),
+                  "status_date" => (ca["court_action_status"]["date"].rescue nil),
+                  "status_code" => (ca["court_action_status"]["code"].rescue nil)}
       court_action_array << tmp_hash
     end
     court_action_array
