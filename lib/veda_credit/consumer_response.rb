@@ -247,7 +247,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.select{|d| d[:current_reason_to_report_code] == "C"}
   end
 
-  [11, 12, 24, 35, 36, 48, 60, 72].each do |term|
+  [11, 12, 18, 24, 35, 36, 48, 60, 72].each do |term|
     define_method("paid_defaults_#{term}".to_sym) do
       paid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
     end
