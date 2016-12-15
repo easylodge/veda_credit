@@ -11,7 +11,7 @@ class CreateVedaCreditResponse < ActiveRecord::Migration
       end
     end
   end
-  
+
   def self.down
     drop_table :veda_credit_responses if ActiveRecord::Base.connection.table_exists? 'veda_credit_responses'
   end

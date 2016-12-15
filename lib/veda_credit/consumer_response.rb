@@ -11,7 +11,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   before_save :to_hash
 
-  #NOTE:
+  # NOTE:
   # The current free-for-all naming convention used in this file leaves much to be desired.
   # When adding a new method, try to name it like this:
   # thing_term_amount, thing_total_amount, thing_term_count, thing_total_count
