@@ -247,7 +247,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults.select{|d| d[:current_reason_to_report_code] == "C"}
   end
 
-  [11, 12, 24, 35, 36, 48, 60, 72].each do |term|
+  [11, 12, 18, 24, 35, 36, 48, 60, 72].each do |term|
     define_method("paid_defaults_#{term}".to_sym) do
       paid_defaults.select{|d| d[:date_recorded].to_date >= term.months.ago}
     end
@@ -425,8 +425,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "original_amount" => (default["original_default"]["default_amount"] rescue nil),
                   "role" => (default["account_details"]["role"]["code"] rescue nil),
                   "reference" => (default["account_details"]["client_reference"] rescue nil),
-                  "status_date" => (default["default_status"]["date"].rescue nil),
-                  "status_code" => (default["default_status"]["code"].rescue nil)}
+                  "status_date" => (default["account_details"]["default_status"]["date"] rescue nil),
+                  "status_code" => (default["account_details"]["default_status"]["code"] rescue nil)}
       defaults_array << tmp_hash.with_indifferent_access
     end
     defaults_array
@@ -483,8 +483,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
                   "court_action_amount" => (ca["court_action_amount"].to_i rescue nil),
                   "role" => (ca["role"]["code"] rescue nil),
                   "reference" => (ca["plaint_number"] rescue nil),
-                  "status_date" => (ca["court_action_status"]["date"].rescue nil),
-                  "status_code" => (ca["court_action_status"]["code"].rescue nil)}
+                  "status_date" => (ca["court_action_status"]["date"] rescue nil),
+                  "status_code" => (ca["court_action_status"]["code"] rescue nil)}
       court_action_array << tmp_hash
     end
     court_action_array
