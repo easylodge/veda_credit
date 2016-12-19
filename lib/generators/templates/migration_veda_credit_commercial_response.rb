@@ -12,7 +12,7 @@ class CreateVedaCreditCommercialResponse < ActiveRecord::Migration
       end
     end
   end
-  
+
   def self.down
     drop_table :veda_credit_commercial_responses if ActiveRecord::Base.connection.table_exists? 'veda_credit_commercial_responses'
   end

@@ -1,0 +1,87 @@
+AllCops:
+  TargetRubyVersion: 2.2
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'db/**/*'
+
+Metrics:
+  Enabled: false
+
+Style:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Lint:
+  Enabled: true
+
+Documentation:
+  Enabled: true
+
+Performance:
+  Enabled: true
+
+Rails:
+  Enabled: true
+
+Rails/ActionFilter:
+  Enabled: true
+
+Rails/Date:
+  EnforcedStyle: flexible
+
+Rails/DynamicFindBy:
+  Enabled: true
+
+Rails/Exit:
+  Enabled: true
+
+Rails/FindBy:
+  Enabled: true
+
+Rails/FindEach:
+  Enabled: true
+
+Rails/HasAndBelongsToMany:
+  Enabled: true
+
+Rails/NotNullColumn:
+  Enabled: true
+
+Rails/Output:
+  Enabled: true
+
+Rails/ReadWriteAttribute:
+  Enabled: true
+
+Rails/RequestReferer:
+  Enabled: true
+
+Rails/SafeNavigation:
+  Enabled: true
+
+Rails/ScopeArgs:
+  Enabled: true
+
+Rails/TimeZone:
+  EnforcedStyle: flexible
+
+Rails/UniqBeforePluck:
+  Enabled: true
+
+Rails/Validation:
+  Enabled: true
+
+Rails/OutputSafety:
+  Enabled: true
+
+Rails/Delegate:
+  Enabled: true
+
+Rails/PluralizationGrammar:
+  Enabled: true
+
+Rails/HttpPositionalArguments:
+  Enabled: true

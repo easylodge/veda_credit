@@ -1,0 +1,3988 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:idth="http://vedaxml.com/vxml2/indepth-company-trading-history-v3-2.xsd" targetNamespace="http://vedaxml.com/vxml2/indepth-company-trading-history-v3-2.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="familyNameType">
+		<xs:annotation>
+			<xs:documentation>simpleType for the elements of an individuals family name
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="firstGivenNameType">
+		<xs:annotation>
+			<xs:documentation>simpleType for the elements of an individuals first given name
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="otherGivenNameType">
+		<xs:annotation>
+			<xs:documentation>simpleType for the elements of an individuals other given name(s)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="genderType">
+		<xs:annotation>
+			<xs:documentation>Enumerated simpleType for an individuals gender
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="unknown"/>
+			<xs:enumeration value="female"/>
+			<xs:enumeration value="male"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AustralianStateType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of Australian states</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AAT">
+				<xs:annotation>
+					<xs:documentation>Australian Antarctic Territory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ACT">
+				<xs:annotation>
+					<xs:documentation>Australian Capital Territory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NSW">
+				<xs:annotation>
+					<xs:documentation>New South Wales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NT">
+				<xs:annotation>
+					<xs:documentation>Northern Territory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NZ">
+				<xs:annotation>
+					<xs:documentation>New Zealand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OS">
+				<xs:annotation>
+					<xs:documentation>Overseas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="QLD">
+				<xs:annotation>
+					<xs:documentation>Queensland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SA">
+				<xs:annotation>
+					<xs:documentation>South Australia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TAS">
+				<xs:annotation>
+					<xs:documentation>Tasmania</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VIC">
+				<xs:annotation>
+					<xs:documentation>Victoria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WA">
+				<xs:annotation>
+					<xs:documentation>Western Australia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="countryCodeEnumType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of ISO 3166-1 alpha-3 country codes
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="ABW">
+				<xs:annotation>
+					<xs:documentation>Aruba</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AFG">
+				<xs:annotation>
+					<xs:documentation>Afghanistan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AGO">
+				<xs:annotation>
+					<xs:documentation>Angola</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AIA">
+				<xs:annotation>
+					<xs:documentation>Anguilla</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ALA">
+				<xs:annotation>
+					<xs:documentation>?land Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ALB">
+				<xs:annotation>
+					<xs:documentation>Albania</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AND">
+				<xs:annotation>
+					<xs:documentation>Andorra</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ANT">
+				<xs:annotation>
+					<xs:documentation>Netherlands Antilles</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARE">
+				<xs:annotation>
+					<xs:documentation>United Arab Emirates</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARG">
+				<xs:annotation>
+					<xs:documentation>Argentina</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARM">
+				<xs:annotation>
+					<xs:documentation>Armenia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ASM">
+				<xs:annotation>
+					<xs:documentation>American Samoa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATA">
+				<xs:annotation>
+					<xs:documentation>Antarctica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATF">
+				<xs:annotation>
+					<xs:documentation>French Southern Territories</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATG">
+				<xs:annotation>
+					<xs:documentation>Antigua and Barbuda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AUS">
+				<xs:annotation>
+					<xs:documentation>Australia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AUT">
+				<xs:annotation>
+					<xs:documentation>Austria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AZE">
+				<xs:annotation>
+					<xs:documentation>Azerbaijan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BDI">
+				<xs:annotation>
+					<xs:documentation>Burundi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BEL">
+				<xs:annotation>
+					<xs:documentation>Belgium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BEN">
+				<xs:annotation>
+					<xs:documentation>Benin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BFA">
+				<xs:annotation>
+					<xs:documentation>Burkina Faso</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BGD">
+				<xs:annotation>
+					<xs:documentation>Bangladesh</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BGR">
+				<xs:annotation>
+					<xs:documentation>Bulgaria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BHR">
+				<xs:annotation>
+					<xs:documentation>Bahrain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BHS">
+				<xs:annotation>
+					<xs:documentation>Bahamas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BIH">
+				<xs:annotation>
+					<xs:documentation>Bosnia and Herzegovina</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BLM">
+				<xs:annotation>
+					<xs:documentation>Saint Barth?lemy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BLR">
+				<xs:annotation>
+					<xs:documentation>Belarus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BLZ">
+				<xs:annotation>
+					<xs:documentation>Belize</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BMU">
+				<xs:annotation>
+					<xs:documentation>Bermuda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BOL">
+				<xs:annotation>
+					<xs:documentation>Bolivia, Plurinational State of
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRA">
+				<xs:annotation>
+					<xs:documentation>Brazil</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRB">
+				<xs:annotation>
+					<xs:documentation>Barbados</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRN">
+				<xs:annotation>
+					<xs:documentation>Brunei Darussalam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BTN">
+				<xs:annotation>
+					<xs:documentation>Bhutan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BVT">
+				<xs:annotation>
+					<xs:documentation>Bouvet Island</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BWA">
+				<xs:annotation>
+					<xs:documentation>Botswana</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CAF">
+				<xs:annotation>
+					<xs:documentation>Central African Republic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CAN">
+				<xs:annotation>
+					<xs:documentation>Canada</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CCK">
+				<xs:annotation>
+					<xs:documentation>Cocos (Keeling) Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHE">
+				<xs:annotation>
+					<xs:documentation>Switzerland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHL">
+				<xs:annotation>
+					<xs:documentation>Chile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHN">
+				<xs:annotation>
+					<xs:documentation>China</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CIV">
+				<xs:annotation>
+					<xs:documentation>C?te d'Ivoire</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CMR">
+				<xs:annotation>
+					<xs:documentation>Cameroon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COD">
+				<xs:annotation>
+					<xs:documentation>Congo, the Democratic Republic of the
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COG">
+				<xs:annotation>
+					<xs:documentation>Congo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COK">
+				<xs:annotation>
+					<xs:documentation>Cook Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COL">
+				<xs:annotation>
+					<xs:documentation>Colombia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COM">
+				<xs:annotation>
+					<xs:documentation>Comoros</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPV">
+				<xs:annotation>
+					<xs:documentation>Cape Verde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CRI">
+				<xs:annotation>
+					<xs:documentation>Costa Rica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CUB">
+				<xs:annotation>
+					<xs:documentation>Cuba</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CXR">
+				<xs:annotation>
+					<xs:documentation>Christmas Island</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CYM">
+				<xs:annotation>
+					<xs:documentation>Cayman Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CYP">
+				<xs:annotation>
+					<xs:documentation>Cyprus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CZE">
+				<xs:annotation>
+					<xs:documentation>Czech Republic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DEU">
+				<xs:annotation>
+					<xs:documentation>Germany</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DJI">
+				<xs:annotation>
+					<xs:documentation>Djibouti</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DMA">
+				<xs:annotation>
+					<xs:documentation>Dominica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DNK">
+				<xs:annotation>
+					<xs:documentation>Denmark</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DOM">
+				<xs:annotation>
+					<xs:documentation>Dominican Republic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DZA">
+				<xs:annotation>
+					<xs:documentation>Algeria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ECU">
+				<xs:annotation>
+					<xs:documentation>Ecuador</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EGY">
+				<xs:annotation>
+					<xs:documentation>Egypt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ERI">
+				<xs:annotation>
+					<xs:documentation>Eritrea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ESH">
+				<xs:annotation>
+					<xs:documentation>Western Sahara</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ESP">
+				<xs:annotation>
+					<xs:documentation>Spain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EST">
+				<xs:annotation>
+					<xs:documentation>Estonia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ETH">
+				<xs:annotation>
+					<xs:documentation>Ethiopia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FIN">
+				<xs:annotation>
+					<xs:documentation>Finland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FJI">
+				<xs:annotation>
+					<xs:documentation>Fiji</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FLK">
+				<xs:annotation>
+					<xs:documentation>Falkland Islands (Malvinas)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FRA">
+				<xs:annotation>
+					<xs:documentation>France</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FRO">
+				<xs:annotation>
+					<xs:documentation>Faroe Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FSM">
+				<xs:annotation>
+					<xs:documentation>Micronesia, Federated States of
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GAB">
+				<xs:annotation>
+					<xs:documentation>Gabon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GBR">
+				<xs:annotation>
+					<xs:documentation>United Kingdom</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GEO">
+				<xs:annotation>
+					<xs:documentation>Georgia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GGY">
+				<xs:annotation>
+					<xs:documentation>Guernsey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GHA">
+				<xs:annotation>
+					<xs:documentation>Ghana</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GIB">
+				<xs:annotation>
+					<xs:documentation>Gibraltar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GIN">
+				<xs:annotation>
+					<xs:documentation>Guinea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GLP">
+				<xs:annotation>
+					<xs:documentation>Guadeloupe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GMB">
+				<xs:annotation>
+					<xs:documentation>Gambia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GNB">
+				<xs:annotation>
+					<xs:documentation>Guinea-Bissau</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GNQ">
+				<xs:annotation>
+					<xs:documentation>Equatorial Guinea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRC">
+				<xs:annotation>
+					<xs:documentation>Greece</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRD">
+				<xs:annotation>
+					<xs:documentation>Grenada</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRL">
+				<xs:annotation>
+					<xs:documentation>Greenland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GTM">
+				<xs:annotation>
+					<xs:documentation>Guatemala</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GUF">
+				<xs:annotation>
+					<xs:documentation>French Guiana</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GUM">
+				<xs:annotation>
+					<xs:documentation>Guam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GUY">
+				<xs:annotation>
+					<xs:documentation>Guyana</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HKG">
+				<xs:annotation>
+					<xs:documentation>Hong Kong</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HMD">
+				<xs:annotation>
+					<xs:documentation>Heard Island and McDonald Islands
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HND">
+				<xs:annotation>
+					<xs:documentation>Honduras</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HRV">
+				<xs:annotation>
+					<xs:documentation>Croatia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HTI">
+				<xs:annotation>
+					<xs:documentation>Haiti</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HUN">
+				<xs:annotation>
+					<xs:documentation>Hungary</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IDN">
+				<xs:annotation>
+					<xs:documentation>Indonesia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IMN">
+				<xs:annotation>
+					<xs:documentation>Isle of Man</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IND">
+				<xs:annotation>
+					<xs:documentation>India</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IOT">
+				<xs:annotation>
+					<xs:documentation>British Indian Ocean Territory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRL">
+				<xs:annotation>
+					<xs:documentation>Ireland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRN">
+				<xs:annotation>
+					<xs:documentation>Iran, Islamic Republic of</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRQ">
+				<xs:annotation>
+					<xs:documentation>Iraq</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ISL">
+				<xs:annotation>
+					<xs:documentation>Iceland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ISR">
+				<xs:annotation>
+					<xs:documentation>Israel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ITA">
+				<xs:annotation>
+					<xs:documentation>Italy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="JAM">
+				<xs:annotation>
+					<xs:documentation>Jamaica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="JEY">
+				<xs:annotation>
+					<xs:documentation>Jersey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="JOR">
+				<xs:annotation>
+					<xs:documentation>Jordan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="JPN">
+				<xs:annotation>
+					<xs:documentation>Japan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KAZ">
+				<xs:annotation>
+					<xs:documentation>Kazakhstan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KEN">
+				<xs:annotation>
+					<xs:documentation>Kenya</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KGZ">
+				<xs:annotation>
+					<xs:documentation>Kyrgyzstan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KHM">
+				<xs:annotation>
+					<xs:documentation>Cambodia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KIR">
+				<xs:annotation>
+					<xs:documentation>Kiribati</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KNA">
+				<xs:annotation>
+					<xs:documentation>Saint Kitts and Nevis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KOR">
+				<xs:annotation>
+					<xs:documentation>Korea, Republic of</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KWT">
+				<xs:annotation>
+					<xs:documentation>Kuwait</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LAO">
+				<xs:annotation>
+					<xs:documentation>Lao People's Democratic Republic
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBN">
+				<xs:annotation>
+					<xs:documentation>Lebanon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBR">
+				<xs:annotation>
+					<xs:documentation>Liberia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBY">
+				<xs:annotation>
+					<xs:documentation>Libyan Arab Jamahiriya</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LCA">
+				<xs:annotation>
+					<xs:documentation>Saint Lucia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LIE">
+				<xs:annotation>
+					<xs:documentation>Liechtenstein</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LKA">
+				<xs:annotation>
+					<xs:documentation>Sri Lanka</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LSO">
+				<xs:annotation>
+					<xs:documentation>Lesotho</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LTU">
+				<xs:annotation>
+					<xs:documentation>Lithuania</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LUX">
+				<xs:annotation>
+					<xs:documentation>Luxembourg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LVA">
+				<xs:annotation>
+					<xs:documentation>Latvia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MAC">
+				<xs:annotation>
+					<xs:documentation>Macao</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MAF">
+				<xs:annotation>
+					<xs:documentation>Saint Martin (French part)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MAR">
+				<xs:annotation>
+					<xs:documentation>Morocco</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MCO">
+				<xs:annotation>
+					<xs:documentation>Monaco</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MDA">
+				<xs:annotation>
+					<xs:documentation>Moldova, Republic of</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MDG">
+				<xs:annotation>
+					<xs:documentation>Madagascar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MDV">
+				<xs:annotation>
+					<xs:documentation>Maldives</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MEX">
+				<xs:annotation>
+					<xs:documentation>Mexico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MHL">
+				<xs:annotation>
+					<xs:documentation>Marshall Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MKD">
+				<xs:annotation>
+					<xs:documentation>Macedonia, the former Yugoslav Republic of
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MLI">
+				<xs:annotation>
+					<xs:documentation>Mali</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MLT">
+				<xs:annotation>
+					<xs:documentation>Malta</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MMR">
+				<xs:annotation>
+					<xs:documentation>Myanmar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MNE">
+				<xs:annotation>
+					<xs:documentation>Montenegro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MNG">
+				<xs:annotation>
+					<xs:documentation>Mongolia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MNP">
+				<xs:annotation>
+					<xs:documentation>Northern Mariana Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MOZ">
+				<xs:annotation>
+					<xs:documentation>Mozambique</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MRT">
+				<xs:annotation>
+					<xs:documentation>Mauritania</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MSR">
+				<xs:annotation>
+					<xs:documentation>Montserrat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MTQ">
+				<xs:annotation>
+					<xs:documentation>Martinique</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MUS">
+				<xs:annotation>
+					<xs:documentation>Mauritius</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MWI">
+				<xs:annotation>
+					<xs:documentation>Malawi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MYS">
+				<xs:annotation>
+					<xs:documentation>Malaysia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MYT">
+				<xs:annotation>
+					<xs:documentation>Mayotte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NAM">
+				<xs:annotation>
+					<xs:documentation>Namibia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NCL">
+				<xs:annotation>
+					<xs:documentation>New Caledonia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NER">
+				<xs:annotation>
+					<xs:documentation>Niger</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NFK">
+				<xs:annotation>
+					<xs:documentation>Norfolk Island</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NGA">
+				<xs:annotation>
+					<xs:documentation>Nigeria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIC">
+				<xs:annotation>
+					<xs:documentation>Nicaragua</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIU">
+				<xs:annotation>
+					<xs:documentation>Niue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NLD">
+				<xs:annotation>
+					<xs:documentation>Netherlands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOR">
+				<xs:annotation>
+					<xs:documentation>Norway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NPL">
+				<xs:annotation>
+					<xs:documentation>Nepal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NRU">
+				<xs:annotation>
+					<xs:documentation>Nauru</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NZL">
+				<xs:annotation>
+					<xs:documentation>New Zealand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OMN">
+				<xs:annotation>
+					<xs:documentation>Oman</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PAK">
+				<xs:annotation>
+					<xs:documentation>Pakistan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PAN">
+				<xs:annotation>
+					<xs:documentation>Panama</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PCN">
+				<xs:annotation>
+					<xs:documentation>Pitcairn</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PER">
+				<xs:annotation>
+					<xs:documentation>Peru</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PHL">
+				<xs:annotation>
+					<xs:documentation>Philippines</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PLW">
+				<xs:annotation>
+					<xs:documentation>Palau</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PNG">
+				<xs:annotation>
+					<xs:documentation>Papua New Guinea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="POL">
+				<xs:annotation>
+					<xs:documentation>Poland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRI">
+				<xs:annotation>
+					<xs:documentation>Puerto Rico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRK">
+				<xs:annotation>
+					<xs:documentation>Korea, Democratic People's Republic of
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRT">
+				<xs:annotation>
+					<xs:documentation>Portugal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRY">
+				<xs:annotation>
+					<xs:documentation>Paraguay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PSE">
+				<xs:annotation>
+					<xs:documentation>Palestinian Territory, Occupied
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PYF">
+				<xs:annotation>
+					<xs:documentation>French Polynesia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="QAT">
+				<xs:annotation>
+					<xs:documentation>Qatar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REU">
+				<xs:annotation>
+					<xs:documentation>R?union</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ROU">
+				<xs:annotation>
+					<xs:documentation>Romania</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RUS">
+				<xs:annotation>
+					<xs:documentation>Russian Federation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RWA">
+				<xs:annotation>
+					<xs:documentation>Rwanda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SAU">
+				<xs:annotation>
+					<xs:documentation>Saudi Arabia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SDN">
+				<xs:annotation>
+					<xs:documentation>Sudan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SEN">
+				<xs:annotation>
+					<xs:documentation>Senegal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SGP">
+				<xs:annotation>
+					<xs:documentation>Singapore</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SGS">
+				<xs:annotation>
+					<xs:documentation>South Georgia and the South Sandwich Islands
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SHN">
+				<xs:annotation>
+					<xs:documentation>Saint Helena</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SJM">
+				<xs:annotation>
+					<xs:documentation>Svalbard and Jan Mayen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SLB">
+				<xs:annotation>
+					<xs:documentation>Solomon Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SLE">
+				<xs:annotation>
+					<xs:documentation>Sierra Leone</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SLV">
+				<xs:annotation>
+					<xs:documentation>El Salvador</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SMR">
+				<xs:annotation>
+					<xs:documentation>San Marino</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SOM">
+				<xs:annotation>
+					<xs:documentation>Somalia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SPM">
+				<xs:annotation>
+					<xs:documentation>Saint Pierre and Miquelon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SRB">
+				<xs:annotation>
+					<xs:documentation>Serbia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STP">
+				<xs:annotation>
+					<xs:documentation>Sao Tome and Principe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SUR">
+				<xs:annotation>
+					<xs:documentation>Suriname</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SVK">
+				<xs:annotation>
+					<xs:documentation>Slovakia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SVN">
+				<xs:annotation>
+					<xs:documentation>Slovenia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SWE">
+				<xs:annotation>
+					<xs:documentation>Sweden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SWZ">
+				<xs:annotation>
+					<xs:documentation>Swaziland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SYC">
+				<xs:annotation>
+					<xs:documentation>Seychelles</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SYR">
+				<xs:annotation>
+					<xs:documentation>Syrian Arab Republic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TCA">
+				<xs:annotation>
+					<xs:documentation>Turks and Caicos Islands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TCD">
+				<xs:annotation>
+					<xs:documentation>Chad</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TGO">
+				<xs:annotation>
+					<xs:documentation>Togo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="THA">
+				<xs:annotation>
+					<xs:documentation>Thailand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TJK">
+				<xs:annotation>
+					<xs:documentation>Tajikistan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TKL">
+				<xs:annotation>
+					<xs:documentation>Tokelau</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TKM">
+				<xs:annotation>
+					<xs:documentation>Turkmenistan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TLS">
+				<xs:annotation>
+					<xs:documentation>Timor-Leste</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TON">
+				<xs:annotation>
+					<xs:documentation>Tonga</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TTO">
+				<xs:annotation>
+					<xs:documentation>Trinidad and Tobago</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TUN">
+				<xs:annotation>
+					<xs:documentation>Tunisia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TUR">
+				<xs:annotation>
+					<xs:documentation>Turkey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TUV">
+				<xs:annotation>
+					<xs:documentation>Tuvalu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TWN">
+				<xs:annotation>
+					<xs:documentation>Taiwan, Province of China</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TZA">
+				<xs:annotation>
+					<xs:documentation>Tanzania, United Republic of</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UGA">
+				<xs:annotation>
+					<xs:documentation>Uganda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UKR">
+				<xs:annotation>
+					<xs:documentation>Ukraine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UMI">
+				<xs:annotation>
+					<xs:documentation>United States Minor Outlying Islands
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="URY">
+				<xs:annotation>
+					<xs:documentation>Uruguay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="USA">
+				<xs:annotation>
+					<xs:documentation>United States</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UZB">
+				<xs:annotation>
+					<xs:documentation>Uzbekistan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VAT">
+				<xs:annotation>
+					<xs:documentation>Holy See (Vatican City State)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VCT">
+				<xs:annotation>
+					<xs:documentation>Saint Vincent and the Grenadines
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VEN">
+				<xs:annotation>
+					<xs:documentation>Venezuela, Bolivarian Republic of
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VGB">
+				<xs:annotation>
+					<xs:documentation>Virgin Islands, British</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VIR">
+				<xs:annotation>
+					<xs:documentation>Virgin Islands, U.S.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VNM">
+				<xs:annotation>
+					<xs:documentation>Viet Nam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VUT">
+				<xs:annotation>
+					<xs:documentation>Vanuatu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WLF">
+				<xs:annotation>
+					<xs:documentation>Wallis and Futuna</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WSM">
+				<xs:annotation>
+					<xs:documentation>Samoa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="YEM">
+				<xs:annotation>
+					<xs:documentation>Yemen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZAF">
+				<xs:annotation>
+					<xs:documentation>South Africa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZMB">
+				<xs:annotation>
+					<xs:documentation>Zambia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZWE">
+				<xs:annotation>
+					<xs:documentation>Zimbabwe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="requestTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="REPORT"/>
+			<xs:enumeration value="CONSENTADVICE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="yes-noType">
+		<xs:annotation>
+			<xs:documentation>simpleType for yes or no</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="yes"/>
+			<xs:enumeration value="no"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="currencyCodeType">
+		<xs:attribute name="currency-code">
+			<xs:annotation>
+				<xs:documentation>Australian or New Zealand dollars. Australian dollars is defaulted in the absence of an indicated value.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AUD"/>
+					<xs:enumeration value="NZD"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="commercialAccountTypeCodes">
+		<xs:annotation>
+			<xs:documentation>Pegasus codes for commercial accounts</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BF">
+						<xs:annotation>
+							<xs:documentation>Bridging Finance</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BS">
+						<xs:annotation>
+							<xs:documentation>Bill of Sale</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CD">
+						<xs:annotation>
+							<xs:documentation>Cash on Delivery</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH">
+						<xs:annotation>
+							<xs:documentation>Cheque</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CP">
+						<xs:annotation>
+							<xs:documentation>Credit Card</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CR">
+						<xs:annotation>
+							<xs:documentation>Commercial Rental</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="D">
+						<xs:annotation>
+							<xs:documentation>Dealership</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DB">
+						<xs:annotation>
+							<xs:documentation>Deferred Payment Debit Card</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="F">
+						<xs:annotation>
+							<xs:documentation>Factored Account</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HC">
+						<xs:annotation>
+							<xs:documentation>Hire Purchase</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="L">
+						<xs:annotation>
+							<xs:documentation>Leasing</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="LP">
+						<xs:annotation>
+							<xs:documentation>Lending Proposal</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="OD">
+						<xs:annotation>
+							<xs:documentation>Bank Overdraft</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PF">
+						<xs:annotation>
+							<xs:documentation>Premium Finance</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL">
+						<xs:annotation>
+							<xs:documentation>Personal Loan</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="RM">
+						<xs:annotation>
+							<xs:documentation>Real Estate Mortgage</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SR">
+						<xs:annotation>
+							<xs:documentation>Search Request</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TC">
+						<xs:annotation>
+							<xs:documentation>Telecommunication Services</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TF">
+						<xs:annotation>
+							<xs:documentation>Trade Finance</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UA">
+						<xs:annotation>
+							<xs:documentation>Utilities</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="WF">
+						<xs:annotation>
+							<xs:documentation>Wholesale Finance</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="7">
+						<xs:annotation>
+							<xs:documentation>7 Day Account</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="30">
+						<xs:annotation>
+							<xs:documentation>30 Day Account</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="60">
+						<xs:annotation>
+							<xs:documentation>60 Day Account</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="90">
+						<xs:annotation>
+							<xs:documentation>90 Day Account</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DA">
+						<xs:annotation>
+							<xs:documentation>Director's Access</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="addressType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for address details
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="property" type="xs:token" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Property Name or Lot Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit-number" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unit or Flat Number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street-number" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>House Number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street-name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Street Name</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street-type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Street Type</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="suburb" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Suburb</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="state" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>State</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="idth:stateType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="postcode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postcode</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:length value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DPID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Australia Post Delivery Point Identifier
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:length value="8"/>
+						<xs:pattern value="[0-9]*"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="country" type="idth:countryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unformatted-address" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unformatted address information
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="date-current-from" type="xs:gYearMonth" use="optional">
+			<xs:annotation>
+				<xs:documentation>Date (year/month) this address became the
+					individuals current address
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="residential-current"/>
+					<xs:enumeration value="residential-previous"/>
+					<xs:enumeration value="postal"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="addressLinesType">
+		<xs:sequence>
+			<xs:element name="careof" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-details" type="xs:string" minOccurs="0"/>
+			<xs:element name="locality-details" type="xs:string" minOccurs="0"/>
+			<xs:element name="state" type="xs:string" minOccurs="0"/>
+			<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+			<xs:element name="country" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="addressPlusType">
+		<xs:sequence>
+			<xs:element name="careof" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-details" type="xs:string" minOccurs="0"/>
+			<xs:element name="locality-details" type="xs:string" minOccurs="0"/>
+			<xs:element name="state" type="xs:string" minOccurs="0"/>
+			<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+			<xs:element name="country" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-flag" type="xs:string"/>
+			<xs:element name="address-start-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="address-end-date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="addressResultType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for address details
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="property" type="xs:token" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Property Name or Lot Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit-number" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unit or Flat Number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street-number" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>House Number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street-name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Street Name</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street-type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Street Type</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="suburb" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Suburb</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="state" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>State</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="idth:stateType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="postcode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postcode</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:length value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DPID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Australia Post Delivery Point Identifier
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:length value="8"/>
+						<xs:pattern value="[0-9]*"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="country" type="idth:countryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unformatted-address" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unformatted address information
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="seq" minOccurs="0"/>
+			<xs:element name="first-reported-date" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="date-current-from" type="xs:gYearMonth" use="optional">
+			<xs:annotation>
+				<xs:documentation>Date (year/month) this address became the
+					individuals current address
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="residential-current"/>
+					<xs:enumeration value="residential-previous"/>
+					<xs:enumeration value="postal"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="allCreditEnquiryListType">
+		<xs:annotation>
+				<xs:documentation>Container for list of all types of credit enquiries  for this organisation recorded in the Veda credit bureau</xs:documentation>
+			</xs:annotation>
+		<xs:sequence>
+			<xs:element name="credit-enquiry-list" type="idth:creditEnquiryListType" minOccurs="0">
+					<xs:annotation>
+					<xs:documentation>Container for list of the organisations credit enquiries recorded in the Veda credit bureau </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="broker-agent-enquiry-list" type="idth:brokerAgentEnquiryListType" minOccurs="0">
+				<xs:annotation>
+				<xs:documentation>Container for list of the organisation&apos;s credit enquiries recorded by brokers and other dealers recorded in the Veda credit bureau </xs:documentation>
+			</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="asicExtractDateType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for the atomic date and time elements of ASIC extract. Where asic-extract-time is not available it will NOT be populated
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="asic-extract-date" type="xs:date">
+				<xs:annotation>
+						<xs:documentation>Date of the Business Names extract used for this report</xs:documentation>
+					</xs:annotation>
+			</xs:element>
+			<xs:element name="asic-extract-time" type="xs:time" minOccurs="0">
+				<xs:annotation>
+						<xs:documentation>Time of the Business Names extract used for this report</xs:documentation>
+					</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="bankruptcyType">
+		<xs:sequence>
+			<xs:element name="bankruptcy-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="bankruptcy-status" type="idth:typeCodeType"/>
+			<xs:element name="bankruptcy-narrative" type="xs:string"/>
+			<xs:element name="proceedings-number" type="xs:string"/>
+			<xs:element name="proceedings-year" type="xs:string"/>
+			<xs:element name="proceedings-state" type="xs:string"/>
+			<xs:element name="proceedings-status" type="xs:string" minOccurs="0"/>
+			<xs:element name="discharge-flag" type="idth:typeCodeType" minOccurs="0"/>
+			<xs:element name="discharge-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="role" type="idth:typeCodeType"/>
+			<xs:element name="co-borrower" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="bankruptcyListType">
+		<xs:sequence>
+			<xs:element name="bankruptcy" type="idth:bankruptcyType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="baseCreditEnquiryType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="account-type" type="idth:typeCodeType"/>
+			<xs:element name="role" type="idth:typeCodeType"/>
+			<xs:element name="co-borrower" type="xs:string" minOccurs="0"/>
+			<xs:element name="amount" type="xs:decimal"/>
+			<xs:element name="enquiry-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="enquirer"/>
+			<xs:element name="ref-number" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="birthDetailsType">
+		<xs:sequence>
+			<xs:element name="birth-locality" minOccurs="0"/>
+			<xs:element name="birth-state" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="brokerAgentEnquiryListType">
+		<xs:sequence>
+			<xs:element name="broker-agent-enquiry" type="idth:baseCreditEnquiryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="bureauReferenceType">
+		<xs:sequence>
+			<xs:element name="file-number" type="xs:integer"/>
+		</xs:sequence>
+		<xs:attribute name="file-type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="2"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="businessExtractAddressType">
+		<xs:sequence>
+			<xs:element name="address-start-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="street-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-name" type="xs:string" minOccurs="0"/>
+			<xs:element name="street-type" type="xs:string" minOccurs="0"/>
+			<xs:element name="suburb" type="xs:string" minOccurs="0"/>
+			<xs:element name="state" type="xs:string" minOccurs="0"/>
+			<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+			<xs:element name="country" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="businessRegistrationNumberType">
+		<xs:sequence>
+			<xs:element name="state" type="xs:string" minOccurs="0"/>
+			<xs:element name="number" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="companyAddressesType">
+		<xs:sequence>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+			<xs:element name="history-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-plus" type="idth:addressPlusType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="companyShareType">
+		<xs:sequence>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+			<xs:element name="history-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="share-class-code" type="xs:string" minOccurs="0"/>
+			<xs:element name="share-class-title" type="xs:string" minOccurs="0"/>
+			<xs:element name="shares-issued" type="xs:integer" minOccurs="0"/>
+			<xs:element name="paid-capital" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="unpaid-capital" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="companyTradingHistoryRequestType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for single company trading history request messages
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="bureau-reference" minOccurs="0">
+					<xs:annotation>
+					<xs:documentation>The Veda bureau file number of the subject business.</xs:documentation>
+				</xs:annotation>
+				</xs:element>
+				<xs:element name="subject" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Details of the subject organisation of the enquiry. Note: Although the schema allows for multiple subjects this is design for future usage. Only 1 subject must be supplied presently.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="australian-company-number" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Company number (ACN) issued by ASIC.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="supplied-director" minOccurs="0" maxOccurs="20">
+								<xs:annotation>
+									<xs:documentation>{privacy-consent} optional yes, no</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="individual-name" type="idth:individualNameType"/>
+										<xs:element name="drivers-licence-number" minOccurs="0"/>
+										<xs:element name="gender" type="idth:genderType"/>
+										<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+										<xs:element name="address" type="idth:addressType" maxOccurs="2"/>
+									</xs:sequence>
+									<xs:attribute name="privacy-consent" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="yes"/>
+												<xs:enumeration value="no"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="role" use="optional">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="principal"/>
+									<xs:enumeration value="joint"/>
+									<xs:enumeration value="guarantor"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="current-historic-flag">
+					<xs:annotation>
+						<xs:documentation>Type of Company Extract required from ASIC (Current or Current &amp; Historical).
+Note: primarily intended for future use. Only Current is available presently for Company Enquiry reports</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="current"/>
+							<xs:enumeration value="current-and-historical"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="enquiry">
+					<xs:annotation>
+						<xs:documentation>{type} credit-enquiry, credit-review</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="account-type">
+								<xs:annotation>
+									<xs:documentation>{code} commercial codes</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attributeGroup ref="idth:commercialAccountTypeCodes"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="enquiry-amount">
+								<xs:annotation>
+									<xs:documentation>{currency-code} optional AUD, NZD</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attributeGroup ref="idth:currencyCodeType"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="co-borrower" minOccurs="0"/>
+							<xs:element name="client-reference" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="type" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="credit-enquiry"/>
+									<xs:enumeration value="credit-review"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="collateral-information">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="credit-type"/>
+							<xs:element name="link-limit" type="xs:integer" minOccurs="0"/>
+							<!--<xs:element name="privacy-consent" type="idth:yes-noType" minOccurs="0"/>-->
+							<!--<xs:element name="scoring-required" type="idth:yes-noType" minOccurs="0"/>-->
+							<xs:element name="ppsr-required" type="idth:yes-noType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>To enable the subscriber to determine whether a PPSR grantor search and response is required for the Company (based upon ACN). </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="individual-director-repsonse-list" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="request-id"/>
+						<xs:element name="director-consent-advice" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="bureau-reference"/>
+								</xs:sequence>
+								<xs:attribute name="privacy-consent" type="idth:yes-noType" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="client-reference" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional identifier that can be used to correlate
+					this transaction with other records. This identifier is returned in
+					the response message.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="reason-for-enquiry" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Reason this lectronic verification is being
+					requested (anticipated future use for compliance)
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="enquiry-id" type="xs:token" use="optional">
+			<xs:annotation>
+				<xs:documentation>Previous enquiry identifiier for multi-pass transactions</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="request-type" type="idth:requestTypeEnum" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="companyTradingHistoryResponseType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for single company trading history response messages
+	</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="individual-consent-list">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="request-id"/>
+						<xs:element name="individual-consent-request" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="bureau-reference" minOccurs="0"/>
+									<xs:element name="individual-name" type="idth:individualNameType"/>
+									<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="in-depth-trading-history-report">
+				<xs:annotation>
+					<xs:documentation>The body of the report content.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="organisation-report-header">
+								<xs:annotation>
+								<xs:documentation>Holds details of report requestor, report dates/times, and unique report identifiers.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="request-id" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Unique report identifier to be used when requesting this report as a previous enquiry in PDF format.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="member-code" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The subscriber code issued to the subscriber by Veda.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="branch-code" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The requestor&apos;s branch code / business unit code.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="channel-code" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The internal Veda code for the request channel VedaConnect.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="charge-back-code" type="xs:string" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Subscriber supplied reference code</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="report-create-date" type="xs:dateTime">
+										<xs:annotation>
+											<xs:documentation>Date/time this report was generated</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="pdf-link" type="xs:string" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>PDF reference: designed  for future use</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="with-links" type="idth:yes-noType">
+										<xs:annotation>
+											<xs:documentation>Not applicable to company / business enquiry products.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="trade-payments-required" type="idth:yes-noType">
+										<xs:annotation>
+											<xs:documentation>Indicates whether trade payments information is included in the report</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="extract-date" type="idth:asicExtractDateType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Container for the date / time of the Business Names extract used for this report</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="organisation-name" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Name of the business that is the subject of this report</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="company-response">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="organisation-details" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>The organisation&apos;s GST, DGR and ABN details from the ABR Register.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="abn-code" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>The organisation&apos;s Australian Business Number </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="abn-status-code" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ABR code indicating the current registration of the ABN</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="abn-status-from-date" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Date on which the ABN Status was assumed </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="entity-type-description" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Description of the organisation</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="main-legal-name" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Organisation name</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="business-address-state-code" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Organisation state (location)</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="business-address-post-code" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Organisation post code</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="gst-status-code" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ABR code indicating the current status of the ABN holder for GST</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="gst-status-from-date" type="xs:date" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Date on which the GST Status was assumed</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="asic-number-code" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Additional ASIC identifier (eg. ACN, ARBN) </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="abr-last-updated-date" type="xs:date" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Date on which the Australian Business Register was last updated in respect to the details associated with this ABN </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="deductible-gift-recipients" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Container for the list of deductible gift recipients (by NIN name) associated with this ABN.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="nin-name" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>Deductible gift recipient name</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="other-entities" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Container for the list of entity names associated with this ABN</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="entity-name" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>Entity name associated with this ABN</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>The organisation&apos;s industry classification in accordance with ANZSIC 2006 standard.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="division-description" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ANZSIC Division description associated with the given Division code</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="division-code" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ANZSIC Division code for the industry of this organisation </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="sub-division-description" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ANZSIC Sub-Division description associated with the given Sub-Division code</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="sub-division-code" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ANZSIC Sub-Division code for the industry of this organisation</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="group-description" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ANZSIC Group description associated with the given Division code</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="group-code" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ANZSIC Group code for the industry of this organisation</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="organisation-credit-history" type="idth:organisationCreditHistoryType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Lists all credit enquiries, broker enquiries, mercantile enquiries, payment defaults and file notes registered against the organisation on the Veda credit bureau</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="summary-data" type="idth:summaryDataType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Counts and totals (value) of groups of items detailed in other sections of the report (see table ?? for  valid values and their meaning).</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="trade-payments" type="idth:tradePaymentsType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Lists payments summary, payments history, late payment days and industry comparison, for information registered against the organisation on the Veda Trade Payments bureau.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="company-identity">
+										<xs:annotation>
+											<xs:documentation>Organisation name, status, bureau ID, registration, addresses, search and renewal dates, and principal activity</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="bureau-info">
+													<xs:annotation>
+														<xs:documentation>Container for Veda credit bureau identifier</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="bureau-reference" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation>Veda credit bureau file number</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="file-creation-date" type="xs:date" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Date the Veda credit bureau file was created</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="organisation-name" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Name of the business</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="organisation-type" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>the type of organisation, such as PTY or P/L</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="organisation-status" type="idth:typeCodeType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Current registration status of the business</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="organisation-name-start-date" type="xs:date" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Date the business name was first registered</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="australian-business-number" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>This organisation&apos;s ABN </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="nature-of-business" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>The primary activity this business is commercially engaged in</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="renewal-date" type="xs:date" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Date of registration renewal</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="last-search-date" type="xs:date" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Date that Veda last searched ASIC for a business name extract for this organisation</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="principal-place-of-business" type="idth:officeAddressType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Address from where the business undertakes its primary business</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="australian-company-number" type="xs:string" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>ACN registered for the organisation</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="incorporation" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>container of organisation&apos;s incorporation details</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="incorporation-date" type="xs:date" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Date when Organisation was incorporated</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="incorporation-state">
+																<xs:annotation>
+																	<xs:documentation>State in which the Organisation is incorporated</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="registered-office" type="idth:officeAddressType" minOccurs="0"/>
+												<xs:element name="asic-company-details" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="previous-state-number" type="xs:string" minOccurs="0"/>
+															<xs:element name="australian-company-number-review-date" type="xs:date" minOccurs="0"/>
+															<xs:element name="organisation-class" type="xs:string" minOccurs="0"/>
+															<xs:element name="organisation-subclass" type="xs:string" minOccurs="0"/>
+															<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="previous-name" minOccurs="0" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="organisation-name" type="xs:string"/>
+															<xs:element name="organisation-type" type="xs:string"/>
+															<xs:element name="organisation-name-start-date" type="xs:date" minOccurs="0"/>
+															<xs:element name="cease-date" type="xs:date" minOccurs="0"/>
+															<xs:element name="organisation-status" type="idth:typeCodeType"/>
+															<xs:element name="organisation-class" type="xs:string" minOccurs="0"/>
+															<xs:element name="organisation-subclass" type="xs:string" minOccurs="0"/>
+															<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ownership-officers" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="share-holder-list" type="idth:shareHolderListType" minOccurs="0"/>
+												<xs:element name="previous-share-holder-list" type="idth:shareHolderListType" minOccurs="0"/>
+												<xs:element name="directors-list" type="idth:directorsListType" minOccurs="0"/>
+												<xs:element name="previous-directors-list" type="idth:previousDirectorsListType" minOccurs="0"/>
+												<xs:element name="secretary-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="secretaries" type="idth:officerType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="previous-secretary-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="previous-secretaries" type="idth:officerType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="other-officers-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="other-officers" type="idth:officerType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="other-previous-officers-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="other-previous-officers" type="idth:officerType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="other-organisation-officers-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="other-organisation-officers" type="idth:officerType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="other-previous-organisation-officers-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="other-previous-organisation-officers" type="idth:officerType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="proprietorship-list" type="idth:proprietorshipListType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="company-shares-list" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="current-company-shares">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="annual-general-meeting-date" type="xs:date" minOccurs="0"/>
+															<xs:element name="lodge-date" type="xs:date" minOccurs="0"/>
+															<xs:element name="company-share" type="idth:companyShareType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="previous-company-shares">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="company-share" type="idth:companyShareType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="organisation-legal" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="court-writ-list" type="idth:courtWritListType"/>
+												<xs:element name="court-judgement-list" type="idth:courtJudgmentListType"/>
+												<xs:element name="file-message-list" type="idth:fileMessageListType"/>
+												<xs:element name="external-administrator-list">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="external-administrators" minOccurs="0" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="administrator-title" type="xs:string"/>
+																		<xs:element name="administrator-name" type="xs:string"/>
+																		<xs:element name="administrator-address" type="xs:string"/>
+																		<xs:element name="administrator-document-number" type="xs:string"/>
+																		<xs:element name="administrator-start-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="administrator-end-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="creditor" type="xs:string"/>
+																		<xs:element name="court-number" type="xs:string"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="petition-list">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="petition" minOccurs="0" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="creditor" type="xs:string"/>
+																		<xs:element name="court-number" type="xs:string"/>
+																		<xs:element name="liquidator" type="xs:string"/>
+																		<xs:element name="petition-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="hearing-date" type="xs:date" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="asic-documents" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="document-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="document-item" minOccurs="0" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+																		<xs:element name="received-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="form-code" type="xs:string" minOccurs="0"/>
+																		<xs:element name="sub-form-code" type="xs:string" minOccurs="0"/>
+																		<xs:element name="description" type="xs:string" minOccurs="0"/>
+																		<xs:element name="processed-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="pages" type="xs:positiveInteger" minOccurs="0"/>
+																		<xs:element name="effective-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="requisition-flag" type="xs:string" minOccurs="0"/>
+																		<xs:element name="xbrl-flag" type="xs:string" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="pre-asic-document" minOccurs="0" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="state" type="xs:string"/>
+																		<xs:element name="received-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="form-code" type="xs:string" minOccurs="0"/>
+																		<xs:element name="document-status" type="xs:string" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="annual-returns-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="annual-returns" minOccurs="0" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="returns-year" type="xs:string"/>
+																		<xs:element name="outstanding" type="xs:string"/>
+																		<xs:element name="return-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="extended-return-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="annual-general-meeting-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="extended-annual-general-meeting-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="annual-general-meeting-held-date" type="xs:date" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="financial-reports-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="financial-reports" minOccurs="0" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="balance-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="report-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="annual-general-meeting-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="extended-annual-general-meeting-due-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="annual-general-meeting-held-date" type="xs:date" minOccurs="0"/>
+																		<xs:element name="outstanding" type="xs:string"/>
+																		<xs:element name="document-number" type="xs:string" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="company-address-list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="current-company-addresses" type="idth:companyAddressesType" minOccurs="0" maxOccurs="unbounded"/>
+															<xs:element name="previous-company-addresses" type="idth:companyAddressesType" minOccurs="0" maxOccurs="unbounded"/>
+															<xs:element name="future-company-addresses" type="idth:companyAddressesType" minOccurs="0" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ppsr-registrations" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="report-information">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="search-number" type="xs:string"/>
+															<xs:element name="search-date" type="xs:dateTime"/>
+															<xs:element name="search-type" type="xs:string"/>
+															<xs:element name="grantor-search-criteria">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="organisation-name" type="xs:string" minOccurs="0"/>
+																		<xs:element name="organisation-number" type="xs:string" minOccurs="0"/>
+																		<xs:element name="organisation-number-type" type="xs:string" minOccurs="0"/>
+																		<xs:element name="ppsr-notes" type="xs:string" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="registration-summary">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="total-registrations" type="xs:integer"/>
+															<xs:element name="total-registrations-under-twelve-months" type="xs:integer" minOccurs="0"/>
+															<xs:element name="total-registrations-over-twelve-months" type="xs:integer" minOccurs="0"/>
+															<xs:element name="total-pmsi-registrations" type="xs:integer" minOccurs="0"/>
+															<xs:element name="total-registrations-designated-secured-parties" type="xs:integer" minOccurs="0"/>
+															<xs:element name="total-registrations-other-financier-secured-parties" type="xs:integer" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="commercial-collateral-class-summary" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="collateral-class-summary" maxOccurs="unbounded">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="registration-type" type="xs:string"/>
+																		<xs:element name="total-registrations" type="xs:integer"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="registration-list" type="idth:registrationListType"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="score" type="idth:scoreType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Risk rating of the organisation calculated by Veda including list of contributing factors, errors and warnings.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="df-address" type="idth:addressType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="in-depth-director-list" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="in-depth-commercial-individual" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="individual-identity" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="bureau-info">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="bureau-reference" type="xs:string"/>
+																		<xs:element name="file-creation-date" type="xs:date" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="individual-name" type="idth:individualNameType"/>
+															<xs:element name="privacy-consent" type="idth:yes-noType" minOccurs="0"/>
+															<xs:element name="individual-details" type="idth:individualDetailsType"/>
+															<xs:element name="employment-list" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="employment" minOccurs="0" maxOccurs="unbounded">
+																			<xs:complexType>
+																				<xs:sequence>
+																					<xs:element name="seq" type="xs:string" minOccurs="0"/>
+																					<xs:element name="first-reported-date" type="xs:date" minOccurs="0"/>
+																					<xs:element name="occupation" type="xs:string"/>
+																					<xs:element name="employer" type="xs:string"/>
+																				</xs:sequence>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="address-list" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="address" type="idth:addressResultType" minOccurs="0" maxOccurs="unbounded"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="cross-reference-list" type="idth:crossReferenceListType" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="individual-credit-history" type="idth:individualCreditHistoryType" minOccurs="0"/>
+												<xs:element name="individual-consumer-history" type="idth:individualCreditHistoryType" minOccurs="0"/>
+												<xs:element name="individual-legal" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="court-writ-list" type="idth:courtWritListType"/>
+															<xs:element name="court-judgement-list" type="idth:courtJudgmentListType"/>
+															<xs:element name="file-message-list" type="idth:fileMessageListType"/>
+															<xs:element name="bankruptcy-list" type="idth:bankruptcyListType"/>
+															<xs:element name="disqualifications-list" type="idth:disqualificationsListType"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="offices" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="directorship-list" type="idth:directorshipListType" minOccurs="0"/>
+															<xs:element name="previous-directorship-list" type="idth:previousDirectorshipListType" minOccurs="0"/>
+															<xs:element name="proprietorship-list" type="idth:proprietorshipListType" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="score" type="idth:scoreType" minOccurs="0"/>
+												<xs:element name="summary-data" type="idth:summaryDataType" minOccurs="0"/>
+												<xs:element name="business-relationships" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="current-company-list" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="current-company" minOccurs="0" maxOccurs="unbounded">
+																			<xs:complexType>
+																				<xs:sequence>
+																					<xs:element name="bureau-info">
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="bureau-reference" type="xs:string"/>
+																								<xs:element name="file-creation-date" type="xs:date" minOccurs="0"/>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="organisation-name" type="xs:string"/>
+																					<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+																					<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+																					<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+																					<xs:element name="organisation-summary" type="idth:organisationSummaryType" minOccurs="0"/>
+																					<xs:element name="organisation-status" type="idth:typeCodeType" minOccurs="0"/>
+																					<xs:element name="organisation-type" type="xs:string" minOccurs="0"/>
+																					<xs:element name="australian-company-number" type="xs:string" minOccurs="0"/>
+																					<xs:element name="last-search-date" type="xs:date" minOccurs="0"/>
+																				</xs:sequence>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="previous-company-list" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="previous-company" minOccurs="0" maxOccurs="unbounded">
+																			<xs:complexType>
+																				<xs:sequence>
+																					<xs:element name="bureau-info">
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="bureau-reference" type="xs:string"/>
+																								<xs:element name="file-creation-date" type="xs:date"/>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="organisation-name" type="xs:string"/>
+																					<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+																					<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+																					<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+																					<xs:element name="organisation-summary" type="idth:organisationSummaryType" minOccurs="0"/>
+																					<xs:element name="organisation-status" type="idth:typeCodeType" minOccurs="0"/>
+																					<xs:element name="organisation-type" type="xs:string" minOccurs="0"/>
+																					<xs:element name="australian-company-number" type="xs:string" minOccurs="0"/>
+																					<xs:element name="last-search-date" type="xs:date" minOccurs="0"/>
+																					<xs:element name="cease-date" type="xs:date" minOccurs="0"/>
+																					<xs:element name="last-known-date" type="xs:date" minOccurs="0"/>
+																				</xs:sequence>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="current-business-list" minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="current-business" minOccurs="0" maxOccurs="unbounded">
+																			<xs:complexType>
+																				<xs:sequence>
+																					<xs:element name="bureau-info">
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="bureau-reference" type="xs:string"/>
+																								<xs:element name="file-creation-date" type="xs:date" minOccurs="0"/>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="organisation-name" type="xs:string"/>
+																					<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+																					<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+																					<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+																					<xs:element name="organisation-summary" type="idth:organisationSummaryType" minOccurs="0"/>
+																					<xs:element name="business-registration-number" type="idth:businessRegistrationNumberType" minOccurs="0"/>
+																				</xs:sequence>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="director-warning-list" type="idth:directorWarningListType" minOccurs="0"/>
+						<xs:element name="faults" type="idth:faultsType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Lists faults encountered in the generation of the report that have not been severe enough to prevent report generation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="error" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Information associated to application errors.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="idth:errorType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="contributingFactorType">
+		<xs:sequence>
+			<xs:element name="score-factor" type="xs:string"/>
+			<xs:element name="score-impactor" type="xs:string"/>
+			<xs:element name="contributing-factor-description" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="contributingFactorListType">
+		<xs:sequence>
+			<xs:element name="contributing-factor" type="idth:contributingFactorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="countryType">
+		<xs:annotation>
+			<xs:documentation>Enumerated complexType for ISO 3166-1 alpha-3 country codes
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="idth:countryCodeEnumType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="courtActionType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Veda bureau sequence number for the item within this organisation&apos;s file</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="action-date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date the judgement was signed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="creditor" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the creditor </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="plaint-number" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Court-issued identification number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="role" type="idth:typeCodeType">
+				<xs:annotation>
+					<xs:documentation>Veda credit bureau code used to indicate the role the organisation had in the original credit arrangement that this enquiry is associated with</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="action-status" type="idth:typeCodeType">
+				<xs:annotation>
+					<xs:documentation>Code  used to indicate the current status of  the court action</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="amount" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>The amount the judgement was made for</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="court-type" type="idth:typeCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of court in which the action took place</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="co-borrower" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier / name (where known) of the organisation&apos;s co-borrower in relation to the credit arrangement that this enquiry is associated with.
+Note: only populated where the role type = &quot;JOINT&quot;</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status-date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date the action-status was recorded</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="courtDetailsType">
+		<xs:sequence>
+			<xs:element name="asic-court-type" type="xs:string"/>
+			<xs:element name="state" type="xs:string" minOccurs="0"/>
+			<xs:element name="application-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="application-year" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="courtJudgmentListType">
+		<xs:sequence>
+			<xs:element name="judgements" type="idth:courtActionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="courtWritListType">
+		<xs:sequence>
+			<xs:element name="writs" type="idth:writsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="creditEnquiryListType">
+		<xs:sequence>
+			<xs:element name="credit-enquiry" type="idth:baseCreditEnquiryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="creditProvidersType">
+		<xs:sequence>
+			<xs:element name="seq" minOccurs="0"/>
+			<xs:element name="credit-provider" type="xs:string"/>
+			<xs:element name="credit-provided-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="account-number" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="creditProviderListType">
+		<xs:sequence>
+			<xs:element name="credit-providers" type="idth:creditProvidersType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="crossReferenceListType">
+		<xs:sequence>
+			<xs:element name="individual-cross-reference" type="idth:individualCrossReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="directorWarningType">
+		<xs:sequence>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+			<xs:element name="individual-details" type="idth:individualDetailsType"/>
+			<xs:element name="address" type="idth:addressType"/>
+			<xs:element name="warning-message" type="xs:string"/>
+			<xs:element name="warning-message-description" type="xs:string" minOccurs="0"/>
+			<xs:element name="warning-meta-data" type="idth:warningMetaDataDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="directorWarningListType">
+		<xs:sequence>
+			<xs:element name="director-warning" type="idth:directorWarningType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="directorsType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="bureau-reference" type="xs:string"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+			<xs:element name="gender" type="idth:genderType" minOccurs="0"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+			<xs:element name="birth-details" type="idth:birthDetailsType" minOccurs="0"/>
+			<xs:element name="residency-overseas" minOccurs="0"/>
+			<xs:element name="address" type="idth:addressResultType"/>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+			<xs:element name="court-details" type="idth:courtDetailsType" minOccurs="0"/>
+			<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="directorsListType">
+		<xs:sequence>
+			<xs:element name="directors" type="idth:directorsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="directorshipsType">
+		<xs:sequence>
+			<xs:element name="bureau-reference" type="xs:string"/>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-type" type="xs:string"/>
+			<xs:element name="organisation-status" type="idth:typeCodeType" minOccurs="0"/>
+			<xs:element name="australian-company-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="directorshipListType">
+		<xs:sequence>
+			<xs:element name="directorships" type="idth:directorshipsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="disqualificationsType">
+		<xs:sequence>
+			<xs:element name="disqualified-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="disqualified-to-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="disqualificationsListType">
+		<xs:sequence>
+			<xs:element name="disqualifications" type="idth:disqualificationsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="documentDetailsType">
+		<xs:sequence>
+			<xs:element name="document-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="document-number-qualifier" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="errorType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for application error messages
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="faultcode" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>Code identifying the error or condition
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="faultstring" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Human readable explaination of the error or
+						condition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="faultactor" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Information on the system responsible for the
+						error or condition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="detail" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Application specific, detailed information on the
+						error or condition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="faultType">
+		<xs:sequence>
+			<xs:element name="code"/>
+			<xs:element name="fault-string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="faultsType">
+		<xs:sequence>
+			<xs:element name="fault" type="idth:faultType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fileMessageType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string"/>
+			<xs:element name="narrative" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fileMessageListType">
+		<xs:sequence>
+			<xs:element name="file-message" type="idth:fileMessageType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fileNoteType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="note-recorded-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="narrative" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fileNoteListType">
+		<xs:sequence>
+			<xs:element name="file-note" type="idth:fileNoteType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualCreditHistoryType">
+		<xs:sequence>
+			<xs:element name="payment-default-list" type="idth:paymentDefaultListType" minOccurs="0"/>
+			<xs:element name="credit-provider-list" type="idth:creditProviderListType" minOccurs="0"/>
+			<xs:element name="all-credit-enquiry-list" type="idth:allCreditEnquiryListType" minOccurs="0"/>
+			<xs:element name="file-note-list" type="idth:fileNoteListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualCrossReferenceType">
+		<xs:sequence>
+			<xs:element name="bureau-reference" type="xs:string"/>
+			<xs:element name="creation-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualDetailsType">
+		<xs:sequence>
+			<xs:element name="gender" type="idth:genderType"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+			<xs:element name="drivers-licence" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualNameType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for the elements of an individuals full name
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="family-name" type="idth:familyNameType">
+				<xs:annotation>
+					<xs:documentation>Family name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="first-given-name" type="idth:firstGivenNameType">
+				<xs:annotation>
+					<xs:documentation>First name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="other-given-name" type="idth:otherGivenNameType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Other names</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualPpsrNameType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for the elements of an individuals full name
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="family-name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Family name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="given-names" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Given names</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualOfficerType">
+		<xs:sequence>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+			<xs:element name="birth-details" type="idth:birthDetailsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualProprietorType">
+		<xs:sequence>
+			<xs:element name="bureau-reference" minOccurs="0"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="address" type="idth:addressResultType" minOccurs="0"/>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+			<xs:element name="gender" type="idth:genderType" minOccurs="0"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+			<xs:element name="individual-previous-name" type="idth:individualNameType" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="individualShareHolderType">
+		<xs:sequence>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+			<xs:element name="address-lines" type="idth:addressLinesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="mercantileEnquiriesType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="account-type" type="idth:typeCodeType"/>
+			<xs:element name="role" type="idth:typeCodeType"/>
+			<xs:element name="co-borrower" type="xs:string" minOccurs="0"/>
+			<xs:element name="amount" type="xs:decimal"/>
+			<xs:element name="client-name" type="xs:string"/>
+			<xs:element name="enquirer" type="xs:string"/>
+			<xs:element name="report-reason" type="idth:typeCodeType"/>
+			<xs:element name="status-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="payment-status" type="idth:typeCodeType"/>
+			<xs:element name="coll-date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="mercantileEnquiryListType">
+		<xs:sequence>
+			<xs:element name="mercantile-enquiries" type="idth:mercantileEnquiriesType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="officeAddressType">
+		<xs:sequence>
+			<xs:element name="first-reported-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="address-lines" type="idth:addressLinesType"/>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="officerType">
+		<xs:sequence>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+			<xs:element name="office" type="xs:string" minOccurs="0"/>
+			<xs:element name="history-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="cease-date" type="xs:date" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="individual-officer" type="idth:individualOfficerType" minOccurs="0"/>
+				<xs:element name="organisation-officer" type="idth:organisationOfficerType" minOccurs="0"/>
+			</xs:choice>
+			<xs:element name="address-lines" type="idth:addressLinesType" minOccurs="0"/>
+			<xs:element name="court-details" type="idth:courtDetailsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationCreditCountType">
+		<xs:sequence>
+			<xs:element name="payment-default-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="credit-enquiry-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="broker-dealer-enquiry-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="mercantile-enquiry-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationCreditHistoryType">
+		<xs:sequence>
+			<xs:element name="payment-default-list" type="idth:paymentDefaultListType"/>
+			<xs:element name="mercantile-enquiry-list" type="idth:mercantileEnquiryListType"/>
+			<xs:element name="all-credit-enquiry-list" type="idth:allCreditEnquiryListType"/>
+			<xs:element name="file-note-list" type="idth:fileNoteListType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationOfficerType">
+		<xs:sequence>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-number-heading" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationProprietorType">
+		<xs:sequence>
+			<xs:element name="bureau-reference" type="xs:string" minOccurs="0"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="address" type="idth:addressResultType" minOccurs="0"/>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-type" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-company-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationPublicCountType">
+		<xs:sequence>
+			<xs:element name="court-writ-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="court-judgement-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="external-administration-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="petition-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="current-director-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="previous-director-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="proprietorship-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="organisation-proprietor-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="individual-proprietor-count" type="xs:nonNegativeInteger" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationShareHolderType">
+		<xs:sequence>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-number-type" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-lines" type="idth:addressLinesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationSummaryType">
+		<xs:sequence>
+			<xs:element name="organisation-public-count" type="idth:organisationPublicCountType"/>
+			<xs:element name="organisation-credit-count" type="idth:organisationCreditCountType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="paymentDefaultListType">
+		<xs:sequence>
+			<xs:element name="payment-defaults" type="idth:paymentDefaultsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="paymentDefaultsType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="account-type" type="idth:typeCodeType"/>
+			<xs:element name="role" type="idth:typeCodeType"/>
+			<xs:element name="co-borrower" type="xs:string" minOccurs="0"/>
+			<xs:element name="amount" type="xs:decimal"/>
+			<xs:element name="account-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="provider" type="xs:string" minOccurs="0"/>
+			<xs:element name="default-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="report-reason" type="idth:typeCodeType" minOccurs="0"/>
+			<xs:element name="original-provider"/>
+			<xs:element name="original-default-date" minOccurs="0"/>
+			<xs:element name="original-amount"/>
+			<xs:element name="original-report-reason" type="idth:typeCodeType" minOccurs="0"/>
+			<xs:element name="payment-status" type="idth:typeCodeType"/>
+			<xs:element name="status-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="serious-credit-infringement" type="idth:yes-noType" minOccurs="0"/>
+			<xs:element name="serious-credit-infringement-start-date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ppsrAddressType">
+		<xs:sequence>
+			<xs:element name="address-line1" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-line2" type="xs:string" minOccurs="0"/>
+			<xs:element name="address-line3" type="xs:string" minOccurs="0"/>
+			<xs:element name="suburb" type="xs:string" minOccurs="0"/>
+			<xs:element name="state" type="xs:string" minOccurs="0"/>
+			<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+			<xs:element name="country" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ppsrOrganisationType">
+		<xs:sequence>
+			<xs:element name="organisation-name" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-number-type" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-number" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="previousDirectorsType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="bureau-reference" type="xs:string"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="individual-name" type="idth:individualNameType"/>
+			<xs:element name="gender" type="idth:genderType" minOccurs="0"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0"/>
+			<xs:element name="birth-details" type="idth:birthDetailsType" minOccurs="0"/>
+			<xs:element name="residency-overseas" minOccurs="0"/>
+			<xs:element name="address" type="idth:addressResultType"/>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+			<xs:element name="court-details" type="idth:courtDetailsType" minOccurs="0"/>
+			<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+			<xs:element name="cease-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="last-known-date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="previousDirectorsListType">
+		<xs:sequence>
+			<xs:element name="previous-directors" type="idth:previousDirectorsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="previousDirectorshipsType">
+		<xs:sequence>
+			<xs:element name="bureau-reference" type="xs:string"/>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-type" type="xs:string"/>
+			<xs:element name="organisation-status" type="idth:typeCodeType" minOccurs="0"/>
+			<xs:element name="australian-company-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+			<xs:element name="cease-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="last-known-date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="previousDirectorshipListType">
+		<xs:sequence>
+			<xs:element name="previous-directorships" type="idth:previousDirectorshipsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="proprietorshipType">
+		<xs:sequence>
+			<xs:element name="bureau-reference" type="xs:string"/>
+			<xs:element name="seq" type="xs:string" minOccurs="0"/>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-type" type="xs:string"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="business-registration-number" type="idth:businessRegistrationNumberType" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="file-message-list" type="idth:fileMessageListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="proprietorshipListType">
+		<xs:sequence>
+			<xs:element name="proprietorship" type="idth:proprietorshipType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="registrationDetailType">
+		<xs:sequence>
+			<xs:element name="registration-number" type="xs:string"/>
+			<xs:element name="registration-start-date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="registration-end-date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="migrated-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="collateral-class" type="xs:string" minOccurs="0"/>
+			<xs:element name="pmsi-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="secured-parties" type="idth:securedPartiesType" minOccurs="0"/>
+			<xs:element name="registration-elements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="registration-heading" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="registration-number" type="xs:string" minOccurs="0"/>
+									<xs:element name="collateral-type" type="xs:string" minOccurs="0"/>
+									<xs:element name="collateral-class" type="xs:string" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registration-boiler-plate" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="registration-number" type="xs:string" minOccurs="0"/>
+									<xs:element name="registration-status" type="xs:string" minOccurs="0"/>
+									<xs:element name="pmsi-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="change-number" type="xs:string" minOccurs="0"/>
+									<xs:element name="transitional-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="registration-start-date" type="xs:dateTime" minOccurs="0"/>
+									<xs:element name="registration-change-date" type="xs:dateTime" minOccurs="0"/>
+									<xs:element name="registration-end-date" type="xs:dateTime" minOccurs="0"/>
+									<xs:element name="migrated-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="subordinate-flag" type="xs:string" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registration-details" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="linked-to" type="xs:string" minOccurs="0"/>
+									<xs:element name="registration-kind" type="xs:string" minOccurs="0"/>
+									<xs:element name="giving-of-notice-identifier" type="xs:string" minOccurs="0"/>
+									<xs:element name="source-register" type="xs:string" minOccurs="0"/>
+									<xs:element name="original-start-date" type="xs:dateTime" minOccurs="0"/>
+									<xs:element name="original-charge-registration-date" type="xs:dateTime" minOccurs="0"/>
+									<xs:element name="fixed-floating-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="charge-status" type="xs:string" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registration-spg" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="contact" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="addressee" type="xs:string" minOccurs="0"/>
+												<xs:element name="email-address" type="xs:string" minOccurs="0"/>
+												<xs:element name="fax-number" type="xs:string" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="mailing-address" type="idth:ppsrAddressType" minOccurs="0"/>
+									<xs:element name="physical-address" type="idth:ppsrAddressType" minOccurs="0"/>
+									<xs:element name="secured-parties" type="idth:securedPartiesType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registration-collateral" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="serial-number" type="xs:string" minOccurs="0"/>
+									<xs:element name="serial-number-type" type="xs:string" minOccurs="0"/>
+									<xs:element name="collateral-type" type="xs:string" minOccurs="0"/>
+									<xs:element name="collateral-class" type="xs:string" minOccurs="0"/>
+									<xs:element name="collateral-description" type="xs:string" minOccurs="0"/>
+									<xs:element name="proceeds-claimed-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="proceeds-claimed-description" type="xs:string" minOccurs="0"/>
+									<xs:element name="inventory-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="subject-to-control-flag" type="xs:string" minOccurs="0"/>
+									<xs:element name="vehicle-details" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="vehicle-registration-number" type="xs:string" minOccurs="0"/>
+												<xs:element name="vehicle-description" type="xs:string" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="aircraft-details" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="aircraft-manufacturer" type="xs:string" minOccurs="0"/>
+												<xs:element name="aircraft-model" type="xs:string" minOccurs="0"/>
+												<xs:element name="aircraft-nationality" type="xs:string" minOccurs="0"/>
+												<xs:element name="aircraft-code-registration-mark" type="xs:string" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="registration-attachments" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="attachment-detail" minOccurs="0" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="attachment-id" type="xs:string" minOccurs="0"/>
+															<xs:element name="attachment-file-name" type="xs:string" minOccurs="0"/>
+															<xs:element name="attachment-file-size-bytes" type="xs:string" minOccurs="0"/>
+															<xs:element name="attachment-description" type="xs:string" minOccurs="0"/>
+															<xs:element name="attachment-migrated-flag" type="xs:string" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registration-grantors" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="grantor-search-detail" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="grantor-type" minOccurs="0"/>
+												<xs:element name="grantor" type="idth:securedPartyType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registration-change-history" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="change-details-list" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="change-detail" minOccurs="0" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="change-number" type="xs:string" minOccurs="0"/>
+															<xs:element name="change-type" type="xs:string" minOccurs="0"/>
+															<xs:element name="change-date" type="xs:dateTime" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="registrationListType">
+		<xs:sequence>
+			<xs:element name="registration-detail" type="idth:registrationDetailType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoreType">
+		<xs:sequence>
+			<xs:element name="bureau-score" type="xs:string" minOccurs="0"/>
+			<xs:element name="contributing-factor-list" type="idth:contributingFactorListType" minOccurs="0"/>
+			<xs:element name="scoring-error-list" type="idth:scoringErrorListType" minOccurs="0"/>
+			<xs:element name="scoring-warning-list" type="idth:scoringWarningListType" minOccurs="0"/>
+			<xs:element name="probability-adverse" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="probability-failure" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoringErrorType">
+		<xs:sequence>
+			<xs:element name="scoring-error-code" type="xs:string"/>
+			<xs:element name="scoring-error-description" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoringErrorListType">
+		<xs:sequence>
+			<xs:element name="scoring-error" type="idth:scoringErrorType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoringWarningType">
+		<xs:sequence>
+			<xs:element name="scoring-warning-code" type="xs:string"/>
+			<xs:element name="scoring-warning-description"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoringWarningListType">
+		<xs:sequence>
+			<xs:element name="scoring-warning" type="idth:scoringWarningType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="securedPartyType">
+		<xs:choice>
+			<xs:element name="individual" type="idth:individualPpsrNameType" minOccurs="0"/>
+			<xs:element name="organisation" type="idth:ppsrOrganisationType" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="securedPartiesType">
+		<xs:sequence>
+			<xs:element name="secured-party" type="idth:securedPartyType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="shareHolderType">
+		<xs:sequence>
+			<xs:element name="individual-share-holder" type="idth:individualShareHolderType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="organisation-share-holder" type="idth:organisationShareHolderType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="document-details" type="idth:documentDetailsType" minOccurs="0"/>
+			<xs:element name="history-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="share-class-code" type="xs:string" minOccurs="0"/>
+			<xs:element name="shares-held" type="xs:integer"/>
+			<xs:element name="beneficial-ownership" type="xs:string" minOccurs="0"/>
+			<xs:element name="fully-paid-flag" type="xs:string" minOccurs="0"/>
+			<xs:element name="joint-holding" type="idth:yes-noType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="shareHolderListType">
+		<xs:sequence>
+			<xs:element name="share-holder" type="idth:shareHolderType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="stateType">
+		<xs:annotation>
+			<xs:documentation>Enumerated complexType for Australian states
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="idth:AustralianStateType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="summaryDataType">
+		<xs:sequence>
+			<xs:element name="summary-entry" type="idth:summaryEntryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="summaryEntryType">
+		<xs:sequence>
+			<xs:element name="summary-name" type="xs:string"/>
+			<xs:element name="summary-value" type="xs:string"/>
+			<xs:element name="summary-type" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tradePaymentsType">
+		<xs:sequence>
+			<xs:element name="payment-summary" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="trade-references" type="xs:integer"/>
+						<xs:element name="total-owing" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="total-past-due" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="within-terms" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-1-to-30" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-31-to-60" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-61-to-90" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-91-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="average-owed" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="percent-debt-31-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="percent-debt-61-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="percent-debt-91-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="maximum-debt-31-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="maximum-debt-61-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="maximum-debt-91-plus" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="maximum-now-owing" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="maximum-now-past-due" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="within-terms-percent" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-1-to-30-percent" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-31-to-60-percent" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-61-to-90-percent" type="xs:decimal" minOccurs="0"/>
+						<xs:element name="owing-91-plus-percent" type="xs:decimal" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="payment-history" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="payment-references-by-debt-size" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="payment-references-summary" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="row-number"/>
+												<xs:element name="description" type="xs:string"/>
+												<xs:element name="payment-reference-count" type="xs:integer"/>
+												<xs:element name="total-owing" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="percent-within-terms" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="percent-1-to-30-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="percent-31-to-60-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="percent-61-to-90-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="percent-91-plus-days" type="xs:decimal" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="aggregated-payment-references" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="aggregated-payment-reference" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="period" type="xs:string"/>
+												<xs:element name="total-owed" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="within-terms" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="overdue-1-to-30-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="overdue-31-to-60-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="overdue-61-to-90-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="overdue-91-plus-days" type="xs:decimal" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="last-200-payment-references" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="payment-reference-detail" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="period" type="xs:string"/>
+												<xs:element name="data-provider-id" type="xs:integer"/>
+												<xs:element name="sub-division-description" type="xs:token"/>
+												<xs:element name="total-amount" type="xs:decimal"/>
+												<xs:element name="current-amount" type="xs:decimal"/>
+												<xs:element name="amount-overdue-1-to-30-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="amount-overdue-31-to-60-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="amount-overdue-61-to-90-days" type="xs:decimal" minOccurs="0"/>
+												<xs:element name="amount-overdue-91-plus-days" type="xs:decimal" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="late-payment-days" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="current-late-payment-days" type="xs:integer" minOccurs="0"/>
+						<xs:element name="current-universe-late-payment-days" type="xs:integer" minOccurs="0"/>
+						<xs:element name="late-payment-trend" type="xs:integer" minOccurs="0"/>
+						<xs:element name="industry-late-payment-days" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="industry-late-payment-days-item" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="sub-division-code" type="xs:token"/>
+												<xs:element name="sub-division-description" type="xs:string"/>
+												<xs:element name="average-late-payment-days" type="xs:integer" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="market-late-payment-days-history" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="market-late-payment-days-item" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="period" type="xs:string"/>
+												<xs:element name="sort-order" type="xs:integer"/>
+												<xs:element name="market-late-payment-days" type="xs:integer" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="industry-payment-experiences" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="industry-scores" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="industry-score-range" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="rank" type="xs:integer"/>
+												<xs:element name="value" type="xs:integer"/>
+												<xs:element name="x-point" type="xs:string"/>
+												<xs:element name="y-points" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="y-point-mapping" maxOccurs="6">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="industry-reference" type="xs:string"/>
+																		<xs:element name="y-point" type="xs:integer"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="days-beyond-term-industries" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="industry-days-beyond-term" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="industry-id" type="xs:integer"/>
+												<xs:element name="sub-division-code" type="xs:token"/>
+												<xs:element name="sub-division-description" type="xs:string"/>
+												<xs:element name="days-beyond-term" type="xs:integer" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="typeCodeType">
+		<xs:annotation>
+			<xs:documentation>ComplexType for a element encoding a type string and corresponding code</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="code" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="unincorporatedEntityType">
+		<xs:sequence>
+			<xs:element name="organisation-name" type="xs:string"/>
+			<xs:element name="organisation-type" type="xs:string" minOccurs="0"/>
+			<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="representatives-list" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="organisation-representatives-list" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="organisation-representative" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="organisation-name" type="xs:string"/>
+												<xs:element name="organisation-type" type="xs:date" minOccurs="0"/>
+												<xs:element name="australian-company-number" type="xs:string" minOccurs="0"/>
+												<xs:element name="australian-business-number" type="xs:string" minOccurs="0"/>
+												<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="individual-representatives-list" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="individual-representative" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="individual-name" type="idth:individualNameType"/>
+												<xs:element name="individual-previous-name" type="idth:individualNameType" minOccurs="0"/>
+												<xs:element name="australian-businnes-number" type="xs:string" minOccurs="0"/>
+												<xs:element name="appointment-date" type="xs:date" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="writsType">
+		<xs:sequence>
+			<xs:element name="seq" type="xs:string"/>
+			<xs:element name="action-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="creditor" type="xs:string"/>
+			<xs:element name="plaint-number" type="xs:string" minOccurs="0"/>
+			<xs:element name="role" type="idth:typeCodeType"/>
+			<xs:element name="action-status" type="idth:typeCodeType"/>
+			<xs:element name="amount" type="xs:decimal"/>
+			<xs:element name="court-type" type="idth:typeCodeType" minOccurs="0"/>
+			<xs:element name="co-borrower" type="xs:string" minOccurs="0"/>
+			<xs:element name="status-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="writ-type" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="warningMetaDataDataType">
+		<xs:sequence>
+			<xs:element name="warning-meta-data-entry" type="idth:warningMetaDataEntry" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="warningMetaDataEntry">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="value" type="xs:string"/>
+			<xs:element name="type" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="request" type="idth:companyTradingHistoryRequestType">
+		<xs:annotation>
+			<xs:documentation>Message element that contains a single request
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="response">
+		<xs:annotation>
+			<xs:documentation>Message element that contains a single response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="idth:companyTradingHistoryResponseType">
+					<xs:attribute name="type" type="xs:string"/>
+					<xs:attribute name="client-reference" type="xs:string"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
