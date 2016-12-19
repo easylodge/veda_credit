@@ -43,6 +43,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def in_depth_trading_history_report
@@ -74,6 +76,8 @@ module VedaCredit
           },
           'organisation_name' => result['organisation_name']
         }
+      rescue
+        {}
       end
 
       def company_response
@@ -122,6 +126,8 @@ module VedaCredit
         end if result['other_entities'].present?
 
         output
+      rescue
+        {}
       end
 
       def classification
@@ -140,6 +146,8 @@ module VedaCredit
         end if result['classification'].present?
 
         output
+      rescue
+        []
       end
 
       def organisation_credit_history
@@ -341,6 +349,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def company_identity
@@ -517,6 +527,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def organisation_legal
@@ -562,6 +574,8 @@ module VedaCredit
         end if result['petition_list'].present?
 
         output
+      rescue
+        {}
       end
 
       def asic_documents
@@ -638,6 +652,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def ppsr_registrations
@@ -690,16 +706,22 @@ module VedaCredit
 
           output
         end
+      rescue
+        {}
       end
 
       def score
         result = get_hash('/in-depth-trading-history-report/company-response/score')['score']
 
         hash_to_score(result)
+      rescue
+        {}
       end
 
       def df_address
         get_hash('/in-depth-trading-history-report/company-response/df-address')['df_address']
+      rescue
+        {}
       end
 
       def in_depth_director_list
@@ -862,6 +884,8 @@ module VedaCredit
         end
 
         individuals
+      rescue
+        []
       end
 
       def director_warnings
@@ -896,6 +920,8 @@ module VedaCredit
         end if results.present?
 
         output
+      rescue
+        []
       end
 
       def faults
