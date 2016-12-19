@@ -43,6 +43,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def in_depth_trading_history_report
@@ -74,6 +76,8 @@ module VedaCredit
           },
           'organisation_name' => result['organisation_name']
         }
+      rescue
+        {}
       end
 
       def company_response
@@ -122,19 +126,28 @@ module VedaCredit
         end if result['other_entities'].present?
 
         output
+      rescue
+        {}
       end
 
       def classification
-        result = get_hash('/in-depth-trading-history-report/company-response/classification')['classification']
+        result = get_hash('/in-depth-trading-history-report/company-response')['company_response']
+        output = []
 
-        {
-          'division_description' => result['division_description'],
-          'division_code' => result['division_code'],
-          'sub_division_description' => result['sub_division_description'],
-          'sub_division_code' => result['sub_division_code'],
-          'group_description' => result['group_description'],
-          'group_code' => result['group_code']
-        } if result.present?
+        result['classification'].ensure_array.each do |item|
+          output << {
+            'division_description' => item['division_description'],
+            'division_code' => item['division_code'],
+            'sub_division_description' => item['sub_division_description'],
+            'sub_division_code' => item['sub_division_code'],
+            'group_description' => item['group_description'],
+            'group_code' => item['group_code']
+          }
+        end if result['classification'].present?
+
+        output
+      rescue
+        []
       end
 
       def organisation_credit_history
@@ -336,6 +349,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def company_identity
@@ -512,6 +527,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def organisation_legal
@@ -557,6 +574,8 @@ module VedaCredit
         end if result['petition_list'].present?
 
         output
+      rescue
+        {}
       end
 
       def asic_documents
@@ -633,6 +652,8 @@ module VedaCredit
         end
 
         output
+      rescue
+        {}
       end
 
       def ppsr_registrations
@@ -685,16 +706,22 @@ module VedaCredit
 
           output
         end
+      rescue
+        {}
       end
 
       def score
         result = get_hash('/in-depth-trading-history-report/company-response/score')['score']
 
         hash_to_score(result)
+      rescue
+        {}
       end
 
       def df_address
         get_hash('/in-depth-trading-history-report/company-response/df-address')['df_address']
+      rescue
+        {}
       end
 
       def in_depth_director_list
@@ -857,6 +884,8 @@ module VedaCredit
         end
 
         individuals
+      rescue
+        []
       end
 
       def director_warnings
@@ -891,6 +920,8 @@ module VedaCredit
         end if results.present?
 
         output
+      rescue
+        []
       end
 
       def faults
@@ -928,7 +959,7 @@ module VedaCredit
       end
 
       def age_of_file
-        create_date = get_hash('file-creation-date')['file_creation_date']
+        create_date = get_hash('/in-depth-trading-history-report/company-response/company-identity//file-creation-date')['file_creation_date']
         return nil unless create_date.present?
         now = DateTime.current
         create_date = create_date.to_date
