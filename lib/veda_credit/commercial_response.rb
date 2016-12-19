@@ -38,7 +38,6 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   end
 
   def age_of_file
-    binding.pry
     create_date = get_hash("file-creation-date")["file_creation_date"]
     return nil unless create_date.present?
     now = DateTime.now
