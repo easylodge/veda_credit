@@ -933,7 +933,7 @@ module VedaCredit
       end
 
       def age_of_file
-        create_date = get_hash('file-creation-date')['file_creation_date']
+        create_date = get_hash('/in-depth-trading-history-report/company-response/company-identity//file-creation-date')['file_creation_date']
         return nil unless create_date.present?
         now = DateTime.current
         create_date = create_date.to_date
