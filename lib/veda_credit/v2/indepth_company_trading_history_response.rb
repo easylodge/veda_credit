@@ -125,16 +125,21 @@ module VedaCredit
       end
 
       def classification
-        result = get_hash('/in-depth-trading-history-report/company-response/classification')['classification']
+        result = get_hash('/in-depth-trading-history-report/company-response')['company_response']
+        output = []
 
-        {
-          'division_description' => result['division_description'],
-          'division_code' => result['division_code'],
-          'sub_division_description' => result['sub_division_description'],
-          'sub_division_code' => result['sub_division_code'],
-          'group_description' => result['group_description'],
-          'group_code' => result['group_code']
-        } if result.present?
+        result['classification'].ensure_array.each do |item|
+          output << {
+            'division_description' => item['division_description'],
+            'division_code' => item['division_code'],
+            'sub_division_description' => item['sub_division_description'],
+            'sub_division_code' => item['sub_division_code'],
+            'group_description' => item['group_description'],
+            'group_code' => item['group_code']
+          }
+        end if result['classification'].present?
+
+        output
       end
 
       def organisation_credit_history
