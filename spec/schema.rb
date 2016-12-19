@@ -1,5 +1,5 @@
 ActiveRecord::Schema.define do
-self.verbose = false
+  self.verbose = false
 
   create_table :veda_credit_commercial_requests do |t|
     t.integer :ref_id
@@ -12,7 +12,7 @@ self.verbose = false
     t.timestamps
   end
 
-  create_table :veda_credit_commercial_responses  do |t|
+  create_table :veda_credit_commercial_responses do |t|
     t.text :headers
     t.integer :code
     t.text :xml
@@ -33,7 +33,7 @@ self.verbose = false
     t.timestamps
   end
 
-  create_table :veda_credit_consumer_responses  do |t|
+  create_table :veda_credit_consumer_responses do |t|
     t.text :headers
     t.integer :code
     t.text :xml

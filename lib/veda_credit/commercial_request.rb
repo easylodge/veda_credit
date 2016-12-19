@@ -1,14 +1,14 @@
 class VedaCredit::CommercialRequest < ActiveRecord::Base
   self.table_name = "veda_credit_commercial_requests"
-  
+
   has_one :commercial_response, dependent: :destroy
 
   serialize :access
   serialize :service
   serialize :entity
   serialize :enquiry
- 
-  validates :ref_id, presence: true 
+
+  validates :ref_id, presence: true
   validates :access, presence: true
   validates :service, presence: true
   validates :entity, presence: true
@@ -18,13 +18,13 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
 
   def to_xml_body
     if self.access && self.service && self.enquiry
-      
+
       url = self.access[:url]
-      username = self.access[:username] 
+      username = self.access[:username]
       password = self.access[:password]
-      
+
       acn = self.entity[:acn]
-      
+
       client_ref = self.ref_id
       role = self.enquiry[:role]
       amount = self.enquiry[:enquiry_amount]
@@ -42,9 +42,9 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
       account_type = self.enquiry[:account_type] #HC
       account_type_code = self.enquiry[:account_type_code] #HIREPURCHASE
       link_limit = self.enquiry[:link_limit] || 0 #100
-      
-      
-      soap_xml = 
+
+
+      soap_xml =
                   "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://vedaxml.com/vxml2/company-enquiry-v3-2.xsd\" xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">
                      <soapenv:Header>
                         <wsse:Security mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">
@@ -102,14 +102,14 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
     # xsd.validate(doc.xpath("//com").to_s).each do |error|
     xsd.validate(doc).each do |error|
       error.message
-    end     
+    end
   end
 
   def schema
     fname = File.expand_path('../../lib/assets/company-enquiry-3-2-1.xsd', File.dirname(__FILE__) )
     File.read(fname)
   end
-  
+
 	def post
     if self.access
 			headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
@@ -123,5 +123,5 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
     "Veda Credit Commercial Request"
   end
 
- 
+
 end

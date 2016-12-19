@@ -5,11 +5,10 @@ require 'pry'
 Bundler.setup
 
 ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3',
-  :database => ':memory:'
-  )
-  require 'schema'
-
+  adapter: 'sqlite3',
+  database: ':memory:'
+)
+require 'schema'
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
@@ -23,4 +22,3 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
-

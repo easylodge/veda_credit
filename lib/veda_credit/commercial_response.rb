@@ -1,10 +1,10 @@
 class VedaCredit::CommercialResponse < ActiveRecord::Base
   self.table_name = "veda_credit_commercial_responses"
-  
+
   belongs_to :commercial_request, dependent: :destroy
 
   serialize :headers
-  
+
   validates :commercial_request_id, presence: true
   validates :xml, presence: true
 
@@ -36,7 +36,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     hsh["report_created"] = hsh.delete("report_create_date")
     hsh
   end
-  
+
   def age_of_file
     create_date = get_hash("file-creation-date")["file_creation_date"]
     return nil unless create_date.present?
@@ -50,12 +50,12 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     hash = {}
     doc.remove_namespaces!
     doc.xpath("//summary-entry").each do |el|
-      hash[el.children.children[0].text.underscore] = el.children.children[1].text.to_i 
+      hash[el.children.children[0].text.underscore] = el.children.children[1].text.to_i
     end
     hash["age_of_file"] = age_of_file if hash.present?
     hash
   end
-  
+
   def file_messages
     hsh = (get_hash("organisation-legal")["organisation_legal"]["file_message_list"]["file_message"] rescue nil)
     hsh = [hsh].flatten.compact
@@ -71,8 +71,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |writ|
-      writ["amount"] = writ["amount"].to_f rescue nil 
-      writ["action_date"] = writ["action_date"].to_date rescue nil 
+      writ["amount"] = writ["amount"].to_f rescue nil
+      writ["action_date"] = writ["action_date"].to_date rescue nil
     end
     hsh
   end
@@ -82,8 +82,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |judgement|
-      judgement["amount"] = judgement["amount"].to_f rescue nil 
-      judgement["action_date"] = judgement["action_date"].to_date rescue nil 
+      judgement["amount"] = judgement["amount"].to_f rescue nil
+      judgement["action_date"] = judgement["action_date"].to_date rescue nil
     end
     hsh
   end
@@ -107,11 +107,11 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     return [] unless hsh.present?
     hsh = [hsh].flatten.compact
     hsh.each do |default|
-      default["amount"] = default["amount"].to_f rescue nil 
-      default["default_date"] = default["default_date"].to_date rescue nil 
-      default["original_default_date"] = default["original_default_date"].to_date rescue nil 
-      default["original_amount"] = default["original_amount"].to_f rescue nil 
-      default["status_date"] = default["status_date"].to_date rescue nil 
+      default["amount"] = default["amount"].to_f rescue nil
+      default["default_date"] = default["default_date"].to_date rescue nil
+      default["original_default_date"] = default["original_default_date"].to_date rescue nil
+      default["original_amount"] = default["original_amount"].to_f rescue nil
+      default["status_date"] = default["status_date"].to_date rescue nil
     end
     hsh
   end

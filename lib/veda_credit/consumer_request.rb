@@ -1,14 +1,14 @@
 class VedaCredit::ConsumerRequest < ActiveRecord::Base
   self.table_name = "veda_credit_consumer_requests"
-  
+
   has_one :consumer_response, dependent: :destroy
 
   serialize :access
   serialize :service
   serialize :entity
   serialize :enquiry
- 
-  validates :ref_id, presence: true 
+
+  validates :ref_id, presence: true
   validates :access, presence: true
   validates :service, presence: true
   validates :entity, presence: true
@@ -27,8 +27,8 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
           xml.BCAservice {
             xml.send(:"BCAservice-client-ref", self.enquiry[:client_reference])
             xml.send(:"BCAservice-code", self.service[:service_code])
-            xml.send(:"BCAservice-code-version", self.service[:service_code_version])   
-            xml.send(:"BCAservice-data") { 
+            xml.send(:"BCAservice-code-version", self.service[:service_code_version])
+            xml.send(:"BCAservice-data") {
               xml.send(:"request", "version" => self.service[:request_version], "mode" => self.access[:request_mode]){
                 xml.send(:"subscriber-details"){
                   xml.send(:"subscriber-identifier", self.access[:subscriber_id])
@@ -37,9 +37,9 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
                 xml.send(:"product", "name" => self.enquiry[:product_name], "summary" => self.enquiry[:summary])
                 if self.bureau_reference
                   self.to_bureau_reference(xml)
-                elsif self.entity && self.individual? 
+                elsif self.entity && self.individual?
                   self.to_individual(xml)
-                elsif self.entity && self.business? 
+                elsif self.entity && self.business?
                   self.to_business(xml)
                 end
                 xml.send(:"enquiry", "type" => self.enquiry[:enquiry_type]) {
@@ -59,13 +59,13 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   end
 
   def individual?
-    ["vedascore-financial-commercial-1.1", "vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1", "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1", 
-      "vedascore-authorized-agent-financial-consumer-1.1", "vedascore-financial-consumer-plus-commercial-1.1", "vedascore-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-commercial-1.1"].include? self.enquiry[:product_name] 
+    ["vedascore-financial-commercial-1.1", "vedascore-financial-consumer-1.1", "consumer-enquiry", "commercial-plus-consumer-enquiry", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1", "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1",
+      "vedascore-authorized-agent-financial-consumer-1.1", "vedascore-financial-consumer-plus-commercial-1.1", "vedascore-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-commercial-1.1"].include? self.enquiry[:product_name]
   end
 
   def business?
-    ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1", 
-      "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-commercial-1.1"].include? self.enquiry[:product_name] 
+    ["vedascore-financial-commercial-1.1", "company-business-enquiry", "company-business-broker-dealer-enquiry", "vedascore-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-consumer-plus-commercial-1.1",
+      "vedascore-authorized-agent-financial-commercial-plus-consumer-1.1", "vedascore-authorized-agent-financial-commercial-1.1"].include? self.enquiry[:product_name]
   end
 
   def to_individual(xml)
@@ -84,7 +84,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
       xml.send(:"gender", "type" => self.entity[:gender])
       xml.send(:"date-of-birth", self.entity[:date_of_birth])
     }
-              
+
   end
 
   def to_business(xml)
@@ -93,11 +93,11 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
       xml.send(:"australian-business-number", self.entity[:abn]) unless self.entity[:abn].blank? || self.entity[:abn].size < 11
       self.to_address(xml,:trading_address) if self.entity[:trading_address]
     }
-              
+
   end
 
   def to_address(xml,type)
-    if type == :previous_address 
+    if type == :previous_address
       address_type = 'residential-previous'
     elsif type == :current_address
       address_type = 'residential-current'
@@ -122,7 +122,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   end
 
   def to_bureau_reference(xml)
-    xml.send(:"bureau-reference", self.bureau_reference, "role" => self.enquiry[:role]) 
+    xml.send(:"bureau-reference", self.bureau_reference, "role" => self.enquiry[:role])
   end
 
 	def post
@@ -142,7 +142,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
     doc = Nokogiri::XML(self.xml)
     xsd.validate(doc).each do |error|
       error.message
-    end     
+    end
   end
 
 	def schema
@@ -153,5 +153,5 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
   def to_s
     "Veda Credit Consumer Request"
   end
-	
+
 end
