@@ -23,7 +23,7 @@ module VedaCredit
       end
 
       def individual_consent_list
-        @individual_consent_list ||= do
+        @individual_consent_list ||= begin
           result = get_hash('/individual-consent-list')['individual_consent_list']
 
           output = {
@@ -49,7 +49,7 @@ module VedaCredit
       end
 
       def in_depth_trading_history_report
-        @in_depth_trading_history_report ||= do
+        @in_depth_trading_history_report ||= begin
           {
             'organisation_report_header' => organisation_report_header,
             'company_response' => company_response,
@@ -61,7 +61,7 @@ module VedaCredit
       end
 
       def organisation_report_header
-        @organisation_report_header ||= do
+        @organisation_report_header ||= begin
           result = get_hash('/in-depth-trading-history-report/organisation-report-header')['organisation_report_header']
 
           {
@@ -86,7 +86,7 @@ module VedaCredit
       end
 
       def company_response
-        @company_response ||= do
+        @company_response ||= begin
           {
             'organisation_details' => organisation_details,
             'classification' => classification,
@@ -106,7 +106,7 @@ module VedaCredit
       end
 
       def organisation_details
-        @organisation_details ||= do
+        @organisation_details ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/organisation-details')['organisation_details']
 
           output = {
@@ -140,7 +140,7 @@ module VedaCredit
       end
 
       def classification
-        @classification ||= do
+        @classification ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response')['company_response']
           output = []
 
@@ -162,7 +162,7 @@ module VedaCredit
       end
 
       def organisation_credit_history
-        @organisation_credit_history ||= do
+        @organisation_credit_history ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/organisation-credit-history')['organisation_credit_history']
 
           output = {
@@ -204,7 +204,7 @@ module VedaCredit
       end
 
       def summary_data
-        @summary_data ||= do
+        @summary_data ||= begin
           results = get_hash('/in-depth-trading-history-report/company-response/summary-data')['summary_data']
 
           output = hash_to_summary_data(results)
@@ -219,7 +219,7 @@ module VedaCredit
       end
 
       def trade_payments
-        @trade_payments ||= do
+        @trade_payments ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/trade-payments')['trade_payments']
 
           if result.present?
@@ -371,7 +371,7 @@ module VedaCredit
       end
 
       def company_identity
-        @company_identity ||= do
+        @company_identity ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/company-identity')['company_identity']
 
           output = {
@@ -446,7 +446,7 @@ module VedaCredit
       end
 
       def ownership_officers
-        @ownership_officers ||= do
+        @ownership_officers ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/ownership-officers')['ownership_officers']
 
           output = {
@@ -524,7 +524,7 @@ module VedaCredit
       end
 
       def company_shares
-        @company_shares ||= do
+        @company_shares ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/company-shares-list')['company_shares_list']
 
           output = {
@@ -555,7 +555,7 @@ module VedaCredit
       end
 
       def organisation_legal
-        @organisation_legal ||= do
+        @organisation_legal ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/organisation-legal')['organisation_legal']
 
           output = {
@@ -604,7 +604,7 @@ module VedaCredit
       end
 
       def asic_documents
-        @asic_documents ||= do
+        @asic_documents ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/asic-documents')['asic_documents']
 
           output = {
@@ -684,7 +684,7 @@ module VedaCredit
       end
 
       def ppsr_registrations
-        @ppsr_registrations ||= do
+        @ppsr_registrations ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/ppsr-registrations')['ppsr_registrations']
 
           if result.present?
@@ -740,7 +740,7 @@ module VedaCredit
       end
 
       def score
-        @score ||= do
+        @score ||= begin
           result = get_hash('/in-depth-trading-history-report/company-response/score')['score']
 
           hash_to_score(result)
@@ -750,7 +750,7 @@ module VedaCredit
       end
 
       def df_address
-        @df_address ||= do
+        @df_address ||= begin
           get_hash('/in-depth-trading-history-report/company-response/df-address')['df_address']
         end
       rescue
@@ -758,7 +758,7 @@ module VedaCredit
       end
 
       def in_depth_director_list
-        @in_depth_director_list ||= do
+        @in_depth_director_list ||= begin
           {
             'in_depth_commercial_individual' => in_depth_commercial_individual
           }
@@ -766,7 +766,7 @@ module VedaCredit
       end
 
       def in_depth_commercial_individual
-        @in_depth_commercial_individual ||= do
+        @in_depth_commercial_individual ||= begin
           results = get_hash('/in-depth-trading-history-report/in-depth-director-list')['in_depth_director_list']['in_depth_commercial_individual']
           individuals = []
 
@@ -926,7 +926,7 @@ module VedaCredit
       end
 
       def director_warnings
-        @director_warnings ||= do
+        @director_warnings ||= begin
           results = get_hash('/in-depth-trading-history-report/director-warning-list')['director_warning_list']
           output = []
 
@@ -964,7 +964,7 @@ module VedaCredit
       end
 
       def faults
-        @faults ||= do
+        @faults ||= begin
           get_hash('/in-depth-trading-history-report/faults')['faults']['fault']
         end
       end
@@ -972,7 +972,7 @@ module VedaCredit
       # Legacy methods for backwards compatability
 
       def credit_enquiries
-        @credit_enquiries ||= do
+        @credit_enquiries ||= begin
           output = (organisation_credit_history['all_credit_enquiries']['credit_enquiries'] rescue []) + (in_depth_commercial_individual['individual_credit_history']['all_credit_enquiries']['credit_enquiries'] rescue []) + (in_depth_commercial_individual['individual_consumer_history']['all_credit_enquiries']['credit_enquiries'] rescue [])
           output = [output].flatten.compact
 
@@ -990,7 +990,7 @@ module VedaCredit
       end
 
       def company_enquiry_header
-        @company_enquiry_header ||= do
+        @company_enquiry_header ||= begin
           output = organisation_report_header
 
           return {} unless output.present?
@@ -1004,17 +1004,17 @@ module VedaCredit
       end
 
       def age_of_file
-        @age_of_file ||= do
+        @age_of_file ||= begin
           create_date = get_hash('/in-depth-trading-history-report/company-response/company-identity//file-creation-date')['file_creation_date']
           return nil unless create_date.present?
           now = DateTime.current
           create_date = create_date.to_date
-          (now.year * 12 + now.month) - (create_date.year * 12 + create_date.month
+          (now.year * 12 + now.month) - (create_date.year * 12 + create_date.month)
         end
       end
 
       def file_messages
-        @file_messages ||= do
+        @file_messages ||= begin
           results = organisation_legal['file_messages']
 
           output = []
@@ -1047,7 +1047,7 @@ module VedaCredit
       end
 
       def defaults
-        @defaults ||= do
+        @defaults ||= begin
           output = (organisation_credit_history['payment_defaults'] rescue []) + (in_depth_commercial_individual['individual_credit_history']['payment_defaults'] rescue []) + (in_depth_commercial_individual['individual_consumer_history']['payment_defaults'] rescue [])
 
           [output].flatten.compact
@@ -1055,7 +1055,7 @@ module VedaCredit
       end
 
       def directors
-        @directors ||= do
+        @directors ||= begin
           output = ownership_officers['directors']
 
           output.each do |director|
@@ -1079,7 +1079,7 @@ module VedaCredit
       end
 
       def secretaries
-        @secretaries ||= do
+        @secretaries ||= begin
           output = ownership_officers['secretaries']
 
           output.each do |secretary|
