@@ -300,6 +300,21 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
       self.send("credit_clearouts_#{term}".to_sym).count
     end
 
+    define_method("paid_non_credit_defaults_#{term}".to_sym) do
+      paid_non_credit_defaults.select{|d| d[:date].to_date >= term.months.ago}
+    end
+
+    define_method("paid_non_credit_defaults_#{term}_amount".to_sym) do
+      self.send("paid_non_credit_defaults_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
+    end
+
+    define_method("paid_credit_defaults_#{term}".to_sym) do
+      paid_credit_defaults.select{|d| d[:date].to_date >= term.months.ago}
+    end
+
+    define_method("paid_credit_defaults_#{term}_amount".to_sym) do
+      self.send("paid_credit_defaults_#{term}".to_sym).collect{|d| d[:current_amount].to_f}.sum
+
     define_method("unpaid_non_credit_defaults_#{term}".to_sym) do
       unpaid_non_credit_defaults.select{|d| d[:date].to_date >= term.months.ago}
     end
@@ -345,6 +360,22 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def current_non_credit_defaults_total
     current_non_credit_defaults.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def paid_non_credit_defaults
+    paid_defaults.select{|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }
+  end
+
+  def paid_credit_defaults
+    paid_defaults.select{|d| ["Telecommunication Service", "Utilities"].exclude?(d["type"].split(",").first) rescue nil }
+  end
+
+  def paid_non_credit_defaults_total
+    paid_defaults.select{|d| ["Telecommunication Service", "Utilities"].include?(d["type"].split(",").first) rescue nil }.collect{|d| d[:current_amount].to_f}.sum
+  end
+
+  def paid_credit_defaults_total
+    paid_defaults.select{|d| ["Telecommunication Service", "Utilities"].exclude?(d["type"].split(",").first) rescue nil }.collect{|d| d[:current_amount].to_f}.sum
   end
 
   def unpaid_non_credit_defaults
