@@ -95,7 +95,7 @@ module VedaCredit
       def post
         if access
           headers = { 'Content-Type' => 'text/xml', 'Accept' => 'text/xml' }
-          HTTParty.post(access[:url], body: to_xml_body, headers: headers)
+          HTTParty.post(access[:url], body: to_xml_body, headers: headers, timeout: access[:timeout])
         else
           'No access hash!'
         end

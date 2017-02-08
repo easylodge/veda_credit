@@ -13,7 +13,7 @@ And then execute:
     $ bundle
 
 Then run install generator:
-	
+
 	rails g veda_credit:install
 
 Then run migrations:
@@ -36,7 +36,8 @@ Attributes for access_hash:
       :password => config["password"],
       :subscriber_id => config["subscriber_id"],
       :security_code => config["security_code"],
-      :request_mode => config["request_mode"]
+      :request_mode => config["request_mode"],
+      :timeout => config["timeout"]
     }
 
 Attributes for service_hash:
@@ -46,7 +47,7 @@ Attributes for service_hash:
       :service_code_version => 'V00',
       :request_version => '1.0',
     }
-    
+
 Attributes for entity_hash:
 
     {
