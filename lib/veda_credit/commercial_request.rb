@@ -113,7 +113,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
 	def post
     if self.access
 			headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
-      HTTParty.post(self.access[:url], :body => to_xml_body, :headers => headers)
+      HTTParty.post(self.access[:url], :body => to_xml_body, :headers => headers, :timeout => self.access[:timeout])
 	  else
       "No access hash!"
     end

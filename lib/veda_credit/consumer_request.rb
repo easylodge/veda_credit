@@ -131,7 +131,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
 			base_uri = self.access[:url]
 			body = self.xml
       headers = {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'}
-			HTTParty.post(base_uri, :body => body, :basic_auth => auth, :headers => headers)
+			HTTParty.post(base_uri, :body => body, :basic_auth => auth, :headers => headers, :timeout => self.access[:timeout])
 	  else
       "No access hash!"
     end
