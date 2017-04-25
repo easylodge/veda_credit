@@ -68,6 +68,15 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  def age_of_file
+    return nil unless primary_match.present?
+    create_date = primary_match["individual"]["individual_name"]["create_date"]
+    return nil unless create_date.present?
+    now = DateTime.now
+    create_date = create_date.to_date
+    (now.year * 12 + now.month) - (create_date.year * 12 + create_date.month)
+  end
+
   def service_version
     self.consumer_request.enquiry[:product_name] rescue nil
   end
@@ -198,8 +207,10 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     self.discharged_bankruptcies.count
   end
 
-  def number_of_discharged_bankruptcies_last_12_months
-    discharged_bankruptcies.select{|x| (x["discharge_date"].to_date >= 12.months.ago rescue false) }.count
+  [12, 24, 36, 48, 60, 72].each do |term|
+    define_method("number_of_discharged_bankruptcies_last_#{term}_months".to_sym) do
+      discharged_bankruptcies.select{|x| (x["discharge_date"].to_date >= term.months.ago rescue false) }.count
+    end
   end
 
   def number_of_part_x_bankruptcies
@@ -598,6 +609,14 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
 
   def age_of_latest_unpaid_default_in_months
     unpaid_defaults.any? ? number_of_months(unpaid_defaults.first["date"]) : "no_defaults"
+  end
+
+  def age_of_latest_unpaid_credit_default_in_months
+    unpaid_credit_default.any? ? number_of_months(unpaid_credit_default.first["date"]) : "no_defaults"
+  end
+
+  def age_of_latest_paid_default_in_months
+    paid_defaults.any? ? number_of_months(paid_defaults.first["date"]) : "no_defaults"
   end
 
   def age_of_latest_credit_default_in_months
