@@ -197,6 +197,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     doc.remove_namespaces!
     node = doc.search("//#{search_node}")
     return {} unless node.present?
+    #5902: sometimes 'node' has multiple file-creation-date elements; return the oldest in this case
+    node = node.min{ |a,b| Date.parse(a.children.text) <=> Date.parse(b.children.text)} if node.count > 1
     Marshal.load(Marshal.dump(Hash.from_xml(node.to_s)))
   end
 
