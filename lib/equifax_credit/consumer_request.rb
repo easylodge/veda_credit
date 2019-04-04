@@ -1,5 +1,5 @@
-class VedaCredit::ConsumerRequest < ActiveRecord::Base
-  self.table_name = "veda_credit_consumer_requests"
+class EquifaxCredit::ConsumerRequest < ActiveRecord::Base
+  self.table_name = "equifax_credit_consumer_requests"
 
   has_one :consumer_response, dependent: :destroy
 
@@ -151,7 +151,7 @@ class VedaCredit::ConsumerRequest < ActiveRecord::Base
 	end
 
   def to_s
-    "Veda Credit Consumer Request"
+    "Equifax Credit Consumer Request"
   end
 
 end

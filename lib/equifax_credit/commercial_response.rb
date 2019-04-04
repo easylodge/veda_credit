@@ -1,5 +1,5 @@
-class VedaCredit::CommercialResponse < ActiveRecord::Base
-  self.table_name = "veda_credit_commercial_responses"
+class EquifaxCredit::CommercialResponse < ActiveRecord::Base
+  self.table_name = "equifax_credit_commercial_responses"
 
   belongs_to :commercial_request, dependent: :destroy
 
@@ -9,7 +9,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
   validates :xml, presence: true
 
   def to_s
-    "Veda Credit Commercial Response"
+    "Equifax Credit Commercial Response"
   end
 
   def credit_enquiries

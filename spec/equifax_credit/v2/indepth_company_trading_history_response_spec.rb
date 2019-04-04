@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe VedaCredit::V2::IndepthCompanyTradingHistoryResponse do
+describe EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse do
   it { should belong_to(:indepth_company_trading_history_request).dependent(:destroy) }
   it { should validate_presence_of(:commercial_request_id) }
   it { should validate_presence_of(:xml) }
 
   it '.to_s' do
-    expect(subject.to_s).to eq('Veda Credit Indepth Company Trading History Response')
+    expect(subject.to_s).to eq('Equifax Credit Indepth Company Trading History Response')
   end
 
   context 'with valid xml' do
     before(:all) do
-      @xml = File.read('spec/veda_credit/v2/indepth_company_trading_history_response.xml')
+      @xml = File.read('spec/equifax_credit/v2/indepth_company_trading_history_response.xml')
       @headers = {
         'date' => ['Tue, 21 Oct 2014 13:16:48 GMT'],
         'server' => ['Apache-Coyote/1.1'],
@@ -21,7 +21,7 @@ describe VedaCredit::V2::IndepthCompanyTradingHistoryResponse do
         'connection' => ['close']
       }
       @request_id = 1
-      @response = VedaCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: @request_id)
+      @response = EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: @request_id)
       @response.save
     end
 
@@ -126,8 +126,8 @@ describe VedaCredit::V2::IndepthCompanyTradingHistoryResponse do
     ['commercial_error_response.xml', 'commercial_html_error.html'].each do |file|
       context "#{file} error response" do
         before(:each) do
-          @xml = File.read("spec/veda_credit/#{file}")
-          @resp = VedaCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
+          @xml = File.read("spec/equifax_credit/#{file}")
+          @resp = EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
           @resp.save
         end
         it '.get_hash for error' do
@@ -161,7 +161,7 @@ describe VedaCredit::V2::IndepthCompanyTradingHistoryResponse do
 
   context 'with empty xml' do
     before(:each) do
-      @resp = VedaCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: nil, commercial_request_id: 1)
+      @resp = EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: nil, commercial_request_id: 1)
       @resp.save
     end
     it '.error returns blank' do
@@ -193,15 +193,15 @@ describe VedaCredit::V2::IndepthCompanyTradingHistoryResponse do
 
   context '.error' do
     it 'xml - returns error message' do
-      @xml = File.read('spec/veda_credit/commercial_error_response.xml')
-      @response = VedaCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
+      @xml = File.read('spec/equifax_credit/commercial_error_response.xml')
+      @response = EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
 
       expect(@response.error).to eq('Error: 030 - ASIC Org Extract Gateway Unavailable')
     end
     it 'html - returns error message' do
-      @xml = File.read('spec/veda_credit/commercial_html_error.html')
-      @response = VedaCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
+      @xml = File.read('spec/equifax_credit/commercial_html_error.html')
+      @response = EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
 
       expect(@response.error).to eq('Bad Request The request sent by the client was syntactically incorrect.')

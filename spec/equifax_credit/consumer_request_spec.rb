@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VedaCredit::ConsumerRequest do
+describe EquifaxCredit::ConsumerRequest do
   it { should have_one(:consumer_response).dependent(:destroy) }
   it { should validate_presence_of(:access) }
   it { should validate_presence_of(:service) }
@@ -45,7 +45,7 @@ describe VedaCredit::ConsumerRequest do
             :unformatted_address => "Potter Manor 3/4 Privet Drive Little Whinging NSW 2999"
           },
           :previous_address => {
-            :property => "Veda House",
+            :property => "Equifax House",
             :unit_number => "15",
             :street_number => "100",
             :street_name => "Arthur",
@@ -54,7 +54,7 @@ describe VedaCredit::ConsumerRequest do
             :state => "NSW",
             :postcode => "2060",
             :country_code => "AU",
-            :unformatted_address => "Veda House 15/100 Arthur Street North Sydney NSW 2060"
+            :unformatted_address => "Equifax House 15/100 Arthur Street North Sydney NSW 2060"
           },
           :home_phone_number => "0312345678",
           :mobile_phone_number => "0487654321",
@@ -75,7 +75,7 @@ describe VedaCredit::ConsumerRequest do
           :enquiry_amount => '5000',
           :client_reference => '123456789'
         }
-      @request = VedaCredit::ConsumerRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      @request = EquifaxCredit::ConsumerRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
       @request.save
     end
 
@@ -123,7 +123,7 @@ describe VedaCredit::ConsumerRequest do
               :unformatted_address=>"Potter Manor 3/4 Privet Drive Little Whinging NSW 2999"
               }, 
             :previous_address=>{
-              :property=>"Veda House", 
+              :property=>"Equifax House",
               :unit_number=>"15", 
               :street_number=>"100", 
               :street_name=>"Arthur", 
@@ -132,7 +132,7 @@ describe VedaCredit::ConsumerRequest do
               :state=>"NSW", 
               :postcode=>"2060",
               :country_code => "AU", 
-              :unformatted_address=>"Veda House 15/100 Arthur Street North Sydney NSW 2060"
+              :unformatted_address=>"Equifax House 15/100 Arthur Street North Sydney NSW 2060"
               }, 
             :home_phone_number=>"0312345678", 
             :mobile_phone_number=>"0487654321", 

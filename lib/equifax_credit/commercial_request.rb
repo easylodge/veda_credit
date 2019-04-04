@@ -1,5 +1,5 @@
-class VedaCredit::CommercialRequest < ActiveRecord::Base
-  self.table_name = "veda_credit_commercial_requests"
+class EquifaxCredit::CommercialRequest < ActiveRecord::Base
+  self.table_name = "equifax_credit_commercial_requests"
 
   has_one :commercial_response, dependent: :destroy
 
@@ -120,7 +120,7 @@ class VedaCredit::CommercialRequest < ActiveRecord::Base
   end
 
   def to_s
-    "Veda Credit Commercial Request"
+    "Equifax Credit Commercial Request"
   end
 
 

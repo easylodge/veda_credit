@@ -1,9 +1,9 @@
-module VedaCredit
+module EquifaxCredit
   module V2
     class IndepthCompanyTradingHistoryRequest < ActiveRecord::Base
-      self.table_name = 'veda_credit_commercial_requests'
+      self.table_name = 'equifax_credit_commercial_requests'
 
-      has_one :commercial_response, class_name: 'VedaCredit::V2::IndepthCompanyTradingHistoryResponse', foreign_key: 'commercial_request_id', dependent: :destroy
+      has_one :commercial_response, class_name: 'EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse', foreign_key: 'commercial_request_id', dependent: :destroy
 
       serialize :access
       serialize :service
@@ -102,7 +102,7 @@ module VedaCredit
       end
 
       def to_s
-        'Veda Credit Indepth Company Trading History Request'
+        'Equifax Credit Indepth Company Trading History Request'
       end
     end
   end

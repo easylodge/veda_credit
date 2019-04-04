@@ -1,7 +1,7 @@
-module VedaCredit
+module EquifaxCredit
   module V2
     class IndepthCompanyTradingHistoryResponse < ActiveRecord::Base
-      self.table_name = 'veda_credit_commercial_responses'
+      self.table_name = 'equifax_credit_commercial_responses'
 
       belongs_to :indepth_company_trading_history_request, foreign_key: 'commercial_request_id', dependent: :destroy
 
@@ -11,7 +11,7 @@ module VedaCredit
       validates :xml, presence: true
 
       def to_s
-        'Veda Credit Indepth Company Trading History Response'
+        'Equifax Credit Indepth Company Trading History Response'
       end
 
       def type
