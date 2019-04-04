@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VedaCredit::ConsumerResponse do
+describe EquifaxCredit::ConsumerResponse do
   it { should belong_to(:consumer_request).dependent(:destroy) }
   it { should validate_presence_of(:consumer_request_id) }
   it { should validate_presence_of(:xml) }
@@ -91,12 +91,12 @@ describe VedaCredit::ConsumerResponse do
 
   describe "with valid response xml" do
     before(:all) do
-      @xml = File.read('spec/veda_credit/valid_consumer_response.xml')
+      @xml = File.read('spec/equifax_credit/valid_consumer_response.xml')
       @headers = {"date"=>["Tue, 21 Oct 2014 13:16:48 GMT"], "server"=>["Apache-Coyote/1.1"], "http"=>[""], "content-type"=>["text/xml"], "content-length"=>["4888"], "connection"=>["close"]}
       @code = 200
       @success = true
       @request_id = 1
-      @response = VedaCredit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
+      @response = EquifaxCredit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
       @response.save
     end
 

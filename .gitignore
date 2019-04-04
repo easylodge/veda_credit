@@ -34,7 +34,7 @@ build/
 .rvmrc
 
 # config files
-dev_veda_access.yml
+dev_equifax_access.yml
 dev_config.yml
 
 # vcr files

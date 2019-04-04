@@ -1,23 +1,23 @@
-# veda.gemspec
+# equifax.gemspec
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'veda_credit/version'
+require 'equifax_credit/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'veda_credit'
-  spec.version       = VedaCredit::VERSION
+  spec.name          = 'equifax_credit'
+  spec.version       = EquifaxCredit::VERSION
   spec.authors       = ['Andre Mouton', 'Barry Mieny']
   spec.email         = ['andre@amtek.co.za', 'info@shuntyard.co.za', 'info@easylodge.com.au']
-  spec.summary       = 'Veda Credit Checks.'
-  spec.description   = 'Veda Credit Checks.'
-  spec.homepage      = 'https://github.com/easylodge/veda_credit'
+  spec.summary       = 'Equifax Credit Checks.'
+  spec.description   = 'Equifax Credit Checks.'
+  spec.homepage      = 'https://github.com/easylodge/equifax_credit'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ['lib', 'lib/veda']
+  spec.require_paths = ['lib', 'lib/equifax']
 
   spec.add_development_dependency 'bundler', '~> 1.5'
   spec.add_development_dependency 'rake'

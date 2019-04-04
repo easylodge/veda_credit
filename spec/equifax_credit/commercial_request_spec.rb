@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VedaCredit::CommercialRequest do
+describe EquifaxCredit::CommercialRequest do
   it { should have_one(:commercial_response).dependent(:destroy) }
   it { should validate_presence_of(:access) }
   it { should validate_presence_of(:service) }
@@ -44,7 +44,7 @@ describe VedaCredit::CommercialRequest do
           :ppsr_required => "no",
           :credit_type => "COMMERCIAL",
         }
-      @request = VedaCredit::CommercialRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      @request = EquifaxCredit::CommercialRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
       @request.save
     end
 

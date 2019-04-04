@@ -1,5 +1,5 @@
-class VedaCredit::ConsumerResponse < ActiveRecord::Base
-  self.table_name = "veda_credit_consumer_responses"
+class EquifaxCredit::ConsumerResponse < ActiveRecord::Base
+  self.table_name = "equifax_credit_consumer_responses"
 
   belongs_to :consumer_request, dependent: :destroy
 
@@ -82,8 +82,8 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def error
-    bca_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
-    product_error = VedaCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
+    bca_error = EquifaxCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
+    product_error = EquifaxCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
     if bca_error
       service_request = self.as_hash["BCAmessage"]["service_request_id"]
       error = self.as_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]
@@ -113,7 +113,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
   end
 
   def to_s
-    "Veda Credit Consumer Response"
+    "Equifax Credit Consumer Response"
   end
 
   def enquiry_report

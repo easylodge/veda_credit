@@ -1,7 +1,7 @@
 ActiveRecord::Schema.define do
   self.verbose = false
 
-  create_table :veda_credit_commercial_requests do |t|
+  create_table :equifax_credit_commercial_requests do |t|
     t.integer :ref_id
     t.text :xml
     t.text :access
@@ -12,7 +12,7 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
-  create_table :veda_credit_commercial_responses do |t|
+  create_table :equifax_credit_commercial_responses do |t|
     t.text :headers
     t.integer :code
     t.text :xml
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
-  create_table :veda_credit_consumer_requests do |t|
+  create_table :equifax_credit_consumer_requests do |t|
     t.integer :ref_id
     t.text :xml
     t.text :access
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
-  create_table :veda_credit_consumer_responses do |t|
+  create_table :equifax_credit_consumer_responses do |t|
     t.text :headers
     t.integer :code
     t.text :xml
