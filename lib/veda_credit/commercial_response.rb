@@ -178,7 +178,7 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       "Error: #{hsh["Fault"]["faultcode"]} - #{hsh["Fault"]["detail"]["policyResult"]["status"]}"
     end
   rescue
-    "An unknown error has occured"
+    "Error: An unknown error has occured"
   end
 
   def success?
