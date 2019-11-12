@@ -177,6 +177,8 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
       hsh = get_hash("Fault")
       "Error: #{hsh["Fault"]["faultcode"]} - #{hsh["Fault"]["detail"]["policyResult"]["status"]}"
     end
+  rescue
+    "Error: An unknown error has occured"
   end
 
   def success?
