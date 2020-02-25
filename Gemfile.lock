@@ -51,7 +51,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.14.1)
     multi_xml (0.6.0)
-    nokogiri (1.10.5)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     polyglot (0.3.5)
     pry (0.10.1)
