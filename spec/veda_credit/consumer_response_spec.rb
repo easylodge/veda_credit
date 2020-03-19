@@ -59,7 +59,9 @@ describe VedaCredit::ConsumerResponse do
   it {expect(subject).to respond_to(:bureau_reference)}
   it {expect(subject).to respond_to(:individual)}
   it {expect(subject).to respond_to(:defaults)}
+  it {expect(subject).to respond_to(:number_of_defaults)}
   it {expect(subject).to respond_to(:commercial_defaults)}
+  it {expect(subject).to respond_to(:number_of_commercial_defaults)}
   it {expect(subject).to respond_to(:credit_enquiries)}
   it {expect(subject).to respond_to(:commercial_credit_enquiries)}
   it {expect(subject).to respond_to(:court_actions)}

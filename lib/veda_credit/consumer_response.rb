@@ -479,6 +479,12 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     defaults_array
   end
 
+  def number_of_defaults
+    defaults.length
+  rescue
+    0
+  end
+
   def commercial_defaults
     return [] unless (primary_match["individual_commercial_credit_file"]["default"] rescue false)
     hsh = Marshal.load(Marshal.dump(primary_match["individual_commercial_credit_file"]["default"]))
@@ -497,6 +503,12 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
       defaults_array << tmp_hash
     end
     defaults_array
+  end
+
+  def number_of_commercial_defaults
+    commercial_defaults.length
+  rescue
+    0
   end
 
   def credit_enquiries
