@@ -37,12 +37,18 @@ class VedaCredit::CommercialResponse < ActiveRecord::Base
     hsh
   end
 
+  # This is for veda
   def age_of_file
     create_date = get_hash("file-creation-date")["file_creation_date"]
     return nil unless create_date.present?
     now = DateTime.now
     create_date = create_date.to_date
     (now.year * 12 + now.month) - (create_date.year * 12 + create_date.month)
+  end
+
+  # This is our own
+  def days_created_ago
+    (self.created_at.to_date - Date.current).to_i.abs
   end
 
   def summary_data
