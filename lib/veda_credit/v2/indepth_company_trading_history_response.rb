@@ -1015,7 +1015,7 @@ module VedaCredit
       end
 
       # This is our own
-      def days_created_ago
+      def age_of_response
         (self.created_at.to_date - Date.current).to_i.abs
       end
 
