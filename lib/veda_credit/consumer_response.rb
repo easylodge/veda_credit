@@ -68,6 +68,7 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     end
   end
 
+  # This has to do with Veda
   def age_of_file
     return nil unless primary_match.present?
     create_date = primary_match["individual"]["individual_name"]["create_date"]
@@ -75,6 +76,11 @@ class VedaCredit::ConsumerResponse < ActiveRecord::Base
     now = DateTime.now
     create_date = create_date.to_date
     (now.year * 12 + now.month) - (create_date.year * 12 + create_date.month)
+  end
+
+  # This is our own
+  def age_of_response
+    (self.created_at.to_date - Date.current).to_i.abs
   end
 
   def service_version

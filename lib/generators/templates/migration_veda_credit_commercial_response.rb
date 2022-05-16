@@ -2,12 +2,13 @@ class CreateVedaCreditCommercialResponse < ActiveRecord::Migration
   def self.up
     unless ActiveRecord::Base.connection.table_exists? 'veda_credit_commercial_responses'
       create_table :veda_credit_commercial_responses do |t|
-        t.text :headers
-        t.integer :code
-        t.text :xml
-        t.boolean :success
-        t.integer :commercial_request_id
-        t.text :as_hash
+        t.text      :headers
+        t.integer   :code
+        t.text      :xml
+        t.boolean   :success
+        t.integer   :commercial_request_id
+        t.text      :as_hash
+        t.string    :client_reference_number
         t.timestamps
       end
     end

@@ -1003,6 +1003,7 @@ module VedaCredit
         end
       end
 
+      # This is for veda
       def age_of_file
         @age_of_file ||= begin
           create_date = get_hash('/in-depth-trading-history-report/company-response/company-identity//file-creation-date')['file_creation_date']
@@ -1011,6 +1012,11 @@ module VedaCredit
           create_date = create_date.to_date
           (now.year * 12 + now.month) - (create_date.year * 12 + create_date.month)
         end
+      end
+
+      # This is our own
+      def age_of_response
+        (self.created_at.to_date - Date.current).to_i.abs
       end
 
       def file_messages
