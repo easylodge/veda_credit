@@ -1,3 +1,3 @@
 module VedaCredit
-  VERSION = '0.0.48'
+  VERSION = '0.0.50'
 end
