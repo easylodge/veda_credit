@@ -1,17 +1,16 @@
-# veda.gemspec
+# equifax_gem.gemspec
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'veda_credit/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'veda_credit'
-  spec.version       = VedaCredit::VERSION
+  spec.name          = 'equifax'
+  spec.version       = '1.0.0'
   spec.authors       = ['Andre Mouton', 'Barry Mieny']
   spec.email         = ['andre@amtek.co.za', 'info@shuntyard.co.za', 'info@easylodge.com.au']
-  spec.summary       = 'Veda Credit Checks.'
-  spec.description   = 'Veda Credit Checks.'
-  spec.homepage      = 'https://github.com/easylodge/veda_credit'
+  spec.summary       = 'Veda Credit Checks and Veda IDMatrix Identity Verification.'
+  spec.description   = 'Veda Credit Checks and Veda IDMatrix Identity Verification service.'
+  spec.homepage      = 'https://github.com/easylodge/equifax'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -26,6 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'shoulda-matchers'
   spec.add_development_dependency 'pry'
+  spec.add_dependency 'veda_credit', '>= 0.0.50'
+  spec.add_dependency 'veda_idmatrix', '~> 0.0.8'
   spec.add_dependency 'nokogiri'
   spec.add_dependency 'httparty'
   spec.add_dependency 'activesupport'

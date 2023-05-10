@@ -151,3 +151,6 @@ dev_config = YAML.load_file('dev_config.yml')
 @com_req = VedaCredit::CommercialRequest.create(ref_id: 123, access: @com_access_hash, service: @com_service_hash, entity: @com_entity_hash, enquiry: @com_enquiry_hash)
 # @com_post = @com_req.post
 # @com_res = VedaCredit::CommercialResponse.create(xml: @com_post.body, commercial_request_id: @com_req.id)
+@req = VedaIdmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+@post = @req.post
+@res = VedaIdmatrix::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
