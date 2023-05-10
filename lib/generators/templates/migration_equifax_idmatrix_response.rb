@@ -1,6 +1,6 @@
-class CreateVedaIdmatrixResponse < ActiveRecord::Migration
+class CreateEquifaxIdmatrixResponse < ActiveRecord::Migration
   def self.up
-    create_table :veda_idmatrix_responses do |t|
+    create_table :equifax_idmatrix_responses do |t|
       t.text :headers
       t.integer :code
       t.text :xml
@@ -11,6 +11,6 @@ class CreateVedaIdmatrixResponse < ActiveRecord::Migration
   end
   
   def self.down
-    drop_table :veda_idmatrix_responses
+    drop_table :equifax_idmatrix_responses
   end
 end

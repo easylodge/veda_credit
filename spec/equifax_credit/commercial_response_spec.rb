@@ -11,7 +11,7 @@ describe EquifaxCredit::CommercialResponse do
 
   context "with valid xml" do
     before(:all) do
-      @xml = File.read('spec/veda_credit/CE_Resp.xml')
+      @xml = File.read('spec/equifax_credit/CE_Resp.xml')
       @headers = {"date"=>["Tue, 21 Oct 2014 13:16:48 GMT"], "server"=>["Apache-Coyote/1.1"], "http"=>[""], "content-type"=>["text/xml"], "content-length"=>["4888"], "connection"=>["close"]}
       @request_id = 1
       @response = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: @request_id)
@@ -120,7 +120,7 @@ describe EquifaxCredit::CommercialResponse do
     ['commercial_error_response.xml', 'commercial_html_error.html'].each do |file|
       context "#{file} error response" do
         before(:each) do
-          @xml = File.read("spec/veda_credit/#{file}")
+          @xml = File.read("spec/equifax_credit/#{file}")
           @resp = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
           @resp.save
         end
@@ -187,14 +187,14 @@ describe EquifaxCredit::CommercialResponse do
 
   context ".error" do
     it "xml - returns error message" do
-      @xml = File.read('spec/veda_credit/commercial_error_response.xml')
+      @xml = File.read('spec/equifax_credit/commercial_error_response.xml')
       @response = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
       
       expect(@response.error).to eq("Error: 030 - ASIC Org Extract Gateway Unavailable")
     end
     it "html - returns error message" do
-      @xml = File.read('spec/veda_credit/commercial_html_error.html')
+      @xml = File.read('spec/equifax_credit/commercial_html_error.html')
       @response = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
       

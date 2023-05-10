@@ -1,5 +1,5 @@
 class EquifaxIdmatrix::Response < ActiveRecord::Base
-  self.table_name = "veda_idmatrix_responses"
+  self.table_name = "equifax_idmatrix_responses"
   belongs_to :request, dependent: :destroy, inverse_of: :response
 
   serialize :headers

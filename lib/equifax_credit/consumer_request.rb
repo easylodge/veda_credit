@@ -1,5 +1,5 @@
 class EquifaxCredit::ConsumerRequest < ActiveRecord::Base
-  self.table_name = "veda_credit_consumer_requests"
+  self.table_name = "equifax_credit_consumer_requests"
 
   has_one :consumer_response, dependent: :destroy
 

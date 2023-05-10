@@ -1,6 +1,6 @@
-class CreateVedaIdmatrixRequest < ActiveRecord::Migration
+class CreateEquifaxIdmatrixRequest < ActiveRecord::Migration
   def self.up
-    create_table :veda_idmatrix_requests do |t|
+    create_table :equifax_idmatrix_requests do |t|
       t.integer :ref_id
       t.text :xml
       t.text :soap
@@ -13,6 +13,6 @@ class CreateVedaIdmatrixRequest < ActiveRecord::Migration
   end
   
   def self.down
-    drop_table :veda_idmatrix_requests
+    drop_table :equifax_idmatrix_requests
   end
 end

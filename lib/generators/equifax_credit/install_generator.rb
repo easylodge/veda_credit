@@ -7,7 +7,7 @@ module EquifaxCredit
       desc 'Sets up the Equifax Credit Configuration File'
 
       # def copy_config
-      #   template 'veda_credit.yml', 'config/veda_credit.yml'
+      #   template 'equifax_credit.yml', 'config/equifax_credit.yml'
       # end
 
       def self.next_migration_number(dirname)
@@ -16,15 +16,15 @@ module EquifaxCredit
 
       def create_migration_file
         # copy migration
-        migration_template 'migration_veda_credit_request.rb', 'db/migrate/create_veda_credit_request.rb'
+        migration_template 'migration_equifax_credit_request.rb', 'db/migrate/create_equifax_credit_request.rb'
         sleep 1
-        migration_template 'migration_veda_credit_response.rb', 'db/migrate/create_veda_credit_response.rb'
+        migration_template 'migration_equifax_credit_response.rb', 'db/migrate/create_equifax_credit_response.rb'
         sleep 1
-        migration_template 'migration_veda_credit_commercial_request.rb', 'db/migrate/create_veda_credit_commercial_request.rb'
+        migration_template 'migration_equifax_credit_commercial_request.rb', 'db/migrate/create_equifax_credit_commercial_request.rb'
         sleep 1
-        migration_template 'migration_veda_credit_commercial_response.rb', 'db/migrate/create_veda_credit_commercial_response.rb'
+        migration_template 'migration_equifax_credit_commercial_response.rb', 'db/migrate/create_equifax_credit_commercial_response.rb'
         sleep 1
-        migration_template 'migration_rename_table.rb', 'db/migrate/rename_veda_table.rb'
+        migration_template 'migration_rename_table.rb', 'db/migrate/rename_equifax_table.rb'
       end
     end
   end

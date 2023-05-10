@@ -1,7 +1,7 @@
 module EquifaxCredit
   module V2
     class IndepthCompanyTradingHistoryResponse < ActiveRecord::Base
-      self.table_name = 'veda_credit_commercial_responses'
+      self.table_name = 'equifax_credit_commercial_responses'
 
       belongs_to :indepth_company_trading_history_request, foreign_key: 'commercial_request_id', dependent: :destroy
 
@@ -1003,7 +1003,7 @@ module EquifaxCredit
         end
       end
 
-      # This is for veda
+      # This is for equifax
       def age_of_file
         @age_of_file ||= begin
           create_date = get_hash('/in-depth-trading-history-report/company-response/company-identity//file-creation-date')['file_creation_date']

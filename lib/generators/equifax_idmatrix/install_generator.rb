@@ -12,9 +12,9 @@ module EquifaxIdmatrix
       
       def create_migration_file
         #copy migration
-        migration_template "migration_veda_idmatrix_request.rb", "db/migrate/create_veda_idmatrix_request.rb"
+        migration_template "migration_equifax_idmatrix_request.rb", "db/migrate/create_equifax_idmatrix_request.rb"
         sleep 1
-        migration_template "migration_veda_idmatrix_response.rb", "db/migrate/create_veda_idmatrix_response.rb"
+        migration_template "migration_equifax_idmatrix_response.rb", "db/migrate/create_equifax_idmatrix_response.rb"
         
       end
     end
