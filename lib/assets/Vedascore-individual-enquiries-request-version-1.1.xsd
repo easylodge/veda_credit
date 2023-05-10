@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by nancy (private) -->
-<!-- ? Copyright Veda Advantage Information Services and Solutions Ltd 2007 -->
+<!-- ? Copyright Equifax Advantage Information Services and Solutions Ltd 2007 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<xs:element name="family-name" type="xs:string"/>
 	<xs:element name="first-given-name" type="xs:string"/>

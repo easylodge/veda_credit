@@ -1,7 +1,7 @@
 # For gem developer/contributor:
 # Create file called 'dev_config.yml' in your project root with the following
 #
-# url: 'https://ctaau.vedaxml.com/cta/sys1'
+# url: 'https://ctaau.equifaxxml.com/cta/sys1'
 # access_code: 'your access code'
 # password: 'your password'
 # subscriber_id: 'your subscriber id'
@@ -18,7 +18,7 @@ ActiveRecord::Base.establish_connection(
 require_relative 'spec/schema'
 
 dev_config = YAML.load_file('dev_config.yml')
-@veda_url = dev_config['url']
+@equifax_url = dev_config['url']
 @access_code = dev_config['access_code']
 @password = dev_config['password']
 @subscriber_id = dev_config['subscriber_id']
@@ -29,7 +29,7 @@ dev_config = YAML.load_file('dev_config.yml')
 @com_password = dev_config['com_password']
 
 @access_hash = {
-  url: @veda_url,
+  url: @equifax_url,
   access_code: @access_code,
   password: @password,
   subscriber_id: @subscriber_id,
@@ -52,7 +52,7 @@ dev_config = YAML.load_file('dev_config.yml')
 @entity_hash = {
   family_name: 'Verry',
   first_given_name: 'Dore',
-  employer: 'Veda',
+  employer: 'Equifax',
   current_address: {
     street_name: 'Arthur',
     suburb: 'North Sydney',
@@ -63,7 +63,7 @@ dev_config = YAML.load_file('dev_config.yml')
 }
 
 @enquiry_hash = {
-  product_name: 'vedascore-financial-consumer-1.1',
+  product_name: 'equifaxscore-financial-consumer-1.1',
   summary: 'yes',
   role: 'principal',
   enquiry_type: 'credit-application',
@@ -74,7 +74,7 @@ dev_config = YAML.load_file('dev_config.yml')
 }
 
 # @bca_enquiry_hash = {
-#   product_name: 'vedascore-financial-consumer-1.1',
+#   product_name: 'equifaxscore-financial-consumer-1.1',
 #   summary: 'yes',
 #   role: 'principal',
 #   enquiry_type: 'credit-application',
@@ -145,12 +145,12 @@ dev_config = YAML.load_file('dev_config.yml')
 
 @bureau_reference = '186492371'
 
-@con_req = VedaCredit::ConsumerRequest.create(ref_id: 123, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+@con_req = EquifaxCredit::ConsumerRequest.create(ref_id: 123, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 # @con_post = @con_req.post
-# @con_res = VedaCredit::ConsumerResponse.create(xml: @con_post.body, consumer_request_id: @con_req.id)
-@com_req = VedaCredit::CommercialRequest.create(ref_id: 123, access: @com_access_hash, service: @com_service_hash, entity: @com_entity_hash, enquiry: @com_enquiry_hash)
+# @con_res = EquifaxCredit::ConsumerResponse.create(xml: @con_post.body, consumer_request_id: @con_req.id)
+@com_req = EquifaxCredit::CommercialRequest.create(ref_id: 123, access: @com_access_hash, service: @com_service_hash, entity: @com_entity_hash, enquiry: @com_enquiry_hash)
 # @com_post = @com_req.post
-# @com_res = VedaCredit::CommercialResponse.create(xml: @com_post.body, commercial_request_id: @com_req.id)
-@req = VedaIdmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+# @com_res = EquifaxCredit::CommercialResponse.create(xml: @com_post.body, commercial_request_id: @com_req.id)
+@req = EquifaxIdmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 @post = @req.post
-@res = VedaIdmatrix::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
+@res = EquifaxIdmatrix::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)

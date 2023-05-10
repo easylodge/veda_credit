@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 sp1 (x64) (http://www.altova.com) by Asad Nasir (Veda) -->
+<!-- edited with XMLSpy v2014 sp1 (x64) (http://www.altova.com) by Asad Nasir (Equifax) -->
 <!-- idmatrix-v4-0-12.xsd -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:idm="http://vedaxml.com/vxml2/idmatrix-v4-0.xsd" targetNamespace="http://vedaxml.com/vxml2/idmatrix-v4-0.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:simpleType name="family-nameType">

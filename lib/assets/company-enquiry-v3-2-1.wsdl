@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2010 (http://www.altova.com) by Colin Field (Veda) -->
+<!-- edited with XMLSpy v2010 (http://www.altova.com) by Colin Field (Equifax) -->
 <wsdl:definitions xmlns:tns="http://vedaxml.com/vxml2/company-enquiry-v3-2.xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns="http://vedaxml.com/vxml2/company-enquiry-v3-2.wsdl" targetNamespace="http://vedaxml.com/vxml2/company-enquiry-v3-2.wsdl">
 	<wsdl:types>
 		<!-- company-enquiry-v3-2-0.xsd -->
