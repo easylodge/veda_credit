@@ -14,7 +14,9 @@ And then execute:
 
 Then run install generator:
 
-	rails g equifax:install
+	rails g equifax_credit:install
+    rails g equifax_idmatrix:install
+
 
 Then run migrations:
 
