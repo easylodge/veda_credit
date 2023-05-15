@@ -1,5 +1,6 @@
 require 'bundler/setup'
-require 'veda_credit'
+require 'equifax_credit'
+require 'equifax_idmatrix'
 require 'shoulda/matchers'
 require 'pry'
 Bundler.setup

@@ -1784,17 +1784,17 @@
 	</xs:complexType>
 	<xs:complexType name="allCreditEnquiryListType">
 			<xs:annotation>
-				<xs:documentation>Container for list of all types of credit enquiries  for this organisation recorded in the Veda credit bureau</xs:documentation>
+				<xs:documentation>Container for list of all types of credit enquiries  for this organisation recorded in the Equifax credit bureau</xs:documentation>
 			</xs:annotation>
 		<xs:sequence>
 			<xs:element name="credit-enquiry-list" type="cenq:creditEnquiryListType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Container for list of the organisations credit enquiries recorded in the Veda credit bureau </xs:documentation>
+					<xs:documentation>Container for list of the organisations credit enquiries recorded in the Equifax credit bureau </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="broker-agent-enquiry-list" type="cenq:brokerAgentEnquiryListType" minOccurs="0">
 				<xs:annotation>
-				<xs:documentation>Container for list of the organisation&apos;s credit enquiries recorded by brokers and other dealers recorded in the Veda credit bureau </xs:documentation>
+				<xs:documentation>Container for list of the organisation&apos;s credit enquiries recorded by brokers and other dealers recorded in the Equifax credit bureau </xs:documentation>
 			</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1917,7 +1917,7 @@
 			<xs:sequence>
 				<xs:element name="bureau-reference" minOccurs="0">
 					<xs:annotation>
-					<xs:documentation>The Veda bureau file number of the subject business.</xs:documentation>
+					<xs:documentation>The Equifax bureau file number of the subject business.</xs:documentation>
 				</xs:annotation>
 				</xs:element>
 				<xs:element name="subject" maxOccurs="unbounded">
@@ -2112,7 +2112,7 @@ Note: primarily intended for future use. Only Current is available presently for
 									</xs:element>
 									<xs:element name="member-code" type="xs:string">
 										<xs:annotation>
-											<xs:documentation>The subscriber code issued to the subscriber by Veda.</xs:documentation>
+											<xs:documentation>The subscriber code issued to the subscriber by Equifax.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="branch-code" type="xs:string">
@@ -2122,7 +2122,7 @@ Note: primarily intended for future use. Only Current is available presently for
 									</xs:element>
 									<xs:element name="channel-code" type="xs:string">
 										<xs:annotation>
-											<xs:documentation>The internal Veda code for the request channel VedaConnect.</xs:documentation>
+											<xs:documentation>The internal Equifax code for the request channel EquifaxConnect.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="charge-back-code" type="xs:string" minOccurs="0">
@@ -2302,13 +2302,13 @@ Note: primarily intended for future use. Only Current is available presently for
 									</xs:element>
 									<xs:element name="organisation-credit-history" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Lists all credit enquiries, broker enquiries, mercantile enquiries, payment defaults and file notes registered against the organisation on the Veda credit bureau</xs:documentation>
+											<xs:documentation>Lists all credit enquiries, broker enquiries, mercantile enquiries, payment defaults and file notes registered against the organisation on the Equifax credit bureau</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="payment-default-list">
 													<xs:annotation>
-														<xs:documentation>Container for list of the organisation&apos;s payment defaults recorded in the Veda credit bureau </xs:documentation>
+														<xs:documentation>Container for list of the organisation&apos;s payment defaults recorded in the Equifax credit bureau </xs:documentation>
 													</xs:annotation>
 													<xs:complexType>
 														<xs:sequence>
@@ -2321,13 +2321,13 @@ Note: primarily intended for future use. Only Current is available presently for
 														<xs:sequence>
 															<xs:element name="mercantile-enquiries" minOccurs="0" maxOccurs="unbounded">
 																<xs:annotation>
-																	<xs:documentation>The organisation&apos;s mercantile enquiries recorded in the Veda credit bureau</xs:documentation>
+																	<xs:documentation>The organisation&apos;s mercantile enquiries recorded in the Equifax credit bureau</xs:documentation>
 																</xs:annotation>
 																<xs:complexType>
 																	<xs:sequence>
 																		<xs:element name="seq" type="xs:string" minOccurs="0">
 																			<xs:annotation>
-																				<xs:documentation>Sequence number of records position within the Veda credit bureau for this organisation&apos;s mercantile enquiries</xs:documentation>
+																				<xs:documentation>Sequence number of records position within the Equifax credit bureau for this organisation&apos;s mercantile enquiries</xs:documentation>
 																			</xs:annotation>
 																		</xs:element>
 																		<xs:element name="account-type" type="cenq:typeCodeType">
@@ -2337,7 +2337,7 @@ Note: primarily intended for future use. Only Current is available presently for
 																		</xs:element>
 																		<xs:element name="role" type="cenq:typeCodeType">
 																			<xs:annotation>
-																				<xs:documentation>Veda credit bureau code used to indicate the role the organisation had in the original credit arrangement that this enquiry is associated with</xs:documentation>
+																				<xs:documentation>Equifax credit bureau code used to indicate the role the organisation had in the original credit arrangement that this enquiry is associated with</xs:documentation>
 																			</xs:annotation>
 																		</xs:element>
 																		<xs:element name="co-borrower" type="xs:string" minOccurs="0">
@@ -2389,12 +2389,12 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 												</xs:element>
 												<xs:element name="all-credit-enquiry-list" type="cenq:allCreditEnquiryListType">
 													<xs:annotation>
-														<xs:documentation>Container for list of all types of credit enquiries  for this organisation recorded in the Veda credit bureau</xs:documentation>
+														<xs:documentation>Container for list of all types of credit enquiries  for this organisation recorded in the Equifax credit bureau</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="file-note-list" type="cenq:fileNoteListType">
 													<xs:annotation>
-														<xs:documentation>Container for list of the organisation&apos;s credit file notes recorded in the Veda credit bureau </xs:documentation>
+														<xs:documentation>Container for list of the organisation&apos;s credit file notes recorded in the Equifax credit bureau </xs:documentation>
 													</xs:annotation>
 												</xs:element>
 											</xs:sequence>
@@ -2407,7 +2407,7 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 									</xs:element>
 									<xs:element name="trade-payments" type="cenq:tradePaymentsType" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Lists payments summary, payments history, late payment days and industry comparison, for information registered against the organisation on the Veda Trade Payments bureau.</xs:documentation>
+											<xs:documentation>Lists payments summary, payments history, late payment days and industry comparison, for information registered against the organisation on the Equifax Trade Payments bureau.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="company-identity">
@@ -2418,18 +2418,18 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 											<xs:sequence>
 												<xs:element name="bureau-info">
 													<xs:annotation>
-														<xs:documentation>Container for Veda credit bureau identifier</xs:documentation>
+														<xs:documentation>Container for Equifax credit bureau identifier</xs:documentation>
 													</xs:annotation>
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element name="bureau-reference" type="xs:string">
 																<xs:annotation>
-																	<xs:documentation>Veda credit bureau file number</xs:documentation>
+																	<xs:documentation>Equifax credit bureau file number</xs:documentation>
 																</xs:annotation>
 															</xs:element>
 															<xs:element name="file-creation-date" type="xs:date" minOccurs="0">
 																<xs:annotation>
-																	<xs:documentation>Date the Veda credit bureau file was created</xs:documentation>
+																	<xs:documentation>Date the Equifax credit bureau file was created</xs:documentation>
 																</xs:annotation>
 															</xs:element>
 														</xs:sequence>
@@ -2472,7 +2472,7 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 												</xs:element>
 												<xs:element name="last-search-date" type="xs:date" minOccurs="0">
 													<xs:annotation>
-														<xs:documentation>Date that Veda last searched ASIC for a business name extract for this organisation</xs:documentation>
+														<xs:documentation>Date that Equifax last searched ASIC for a business name extract for this organisation</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="principal-place-of-business" type="cenq:officeAddressType" minOccurs="0">
@@ -2793,7 +2793,7 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 									</xs:element>
 									<xs:element name="score" type="cenq:scoreType" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Risk rating of the organisation calculated by Veda including list of contributing factors, errors and warnings.</xs:documentation>
+											<xs:documentation>Risk rating of the organisation calculated by Equifax including list of contributing factors, errors and warnings.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="df-address" type="cenq:addressType" minOccurs="0"/>
@@ -2845,7 +2845,7 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 		<xs:sequence>
 			<xs:element name="seq" type="xs:string">
 				<xs:annotation>
-					<xs:documentation>Veda bureau sequence number for the item within this organisation&apos;s file</xs:documentation>
+					<xs:documentation>Equifax bureau sequence number for the item within this organisation&apos;s file</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="action-date" type="xs:date" minOccurs="0">
@@ -2865,7 +2865,7 @@ Note: only populated where the role type =&quot;JOINT&quot;</xs:documentation>
 			</xs:element>
 			<xs:element name="role" type="cenq:typeCodeType">
 				<xs:annotation>
-					<xs:documentation>Veda credit bureau code used to indicate the role the organisation had in the original credit arrangement that this enquiry is associated with</xs:documentation>
+					<xs:documentation>Equifax credit bureau code used to indicate the role the organisation had in the original credit arrangement that this enquiry is associated with</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="action-status" type="cenq:typeCodeType">

@@ -1,12 +1,12 @@
-# Veda Credit
+# Equifax
 
-Ruby gem to make requests to Veda Credit service. Website: [https://www.veda.com.au](https://www.veda.com.au/)
+Ruby gem to make requests to Equifax service. Website: [https://www.equifax.com.au](https://www.equifax.com.au/)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'veda_credit'
+    gem 'equifax'
 
 And then execute:
 
@@ -14,7 +14,9 @@ And then execute:
 
 Then run install generator:
 
-	rails g veda_credit:install
+	rails g equifax_credit:install
+  rails g equifax_idmatrix:install
+
 
 Then run migrations:
 
@@ -26,7 +28,7 @@ Then run migrations:
 ### Request
 
 
-    request = VedaCredit::Request.create(application_id: 123456, access: access_hash, service: service_hash, entity: entity_hash, enquiry: enquiry_hash)
+    request = EquifaxCredit::Request.create(application_id: 123456, access: access_hash, service: service_hash, entity: entity_hash, enquiry: enquiry_hash)
 
 Attributes for access_hash:
 
@@ -68,7 +70,7 @@ Attributes for entity_hash:
         :country_code => "AU",
       },
       :previous_address => {
-        :property => "Veda House",
+        :property => "Equifax House",
         :unit_number => "15",
         :street_number => "100",
         :street_name => "Arthur",
@@ -93,7 +95,7 @@ Attributes for entity_hash:
 Attributes for enquiry_hash:
 
     {
-      :product_name=>"vedascore-financial-consumer-1.1",
+      :product_name=>"equifaxscore-financial-consumer-1.1",
       :summary=>"yes",
       :role=>"principal",
       :enquiry_type => 'credit-application',
@@ -112,12 +114,12 @@ Attributes for enquiry_hash:
     request.xml - XML body of request
     request.schema - XSD that xml is validated against
     request.validate_xml - Validate the xml
-    request.post - Post to Veda
+    request.post - Post to Equifax
 
 ### Response
 
     post = request.post
-    response = VedaCredit::Response.create(xml: post.body, headers: post.headers, code: post.code, success: post.success?, request_id: request.id)
+    response = EquifaxCredit::Response.create(xml: post.body, headers: post.headers, code: post.code, success: post.success?, request_id: request.id)
 
 #### Instance Methods:
 
@@ -133,7 +135,7 @@ Attributes for enquiry_hash:
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/veda_credit/fork )
+1. Fork it ( http://github.com/<my-github-username>/equifax/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. See dev.rb file in root
