@@ -152,8 +152,8 @@ describe EquifaxIdmatrix::Response do
         @request = EquifaxIdmatrix::Request.new(
           access: {
             url: @config["url"],
-            user_code: "xxxxx",
-            password: "xxxxx",
+            user_code: @config["access_code"],
+            password: @config["password"]
             },
           entity: @entity_hash,
           enquiry: @enquiry_hash)
@@ -216,7 +216,7 @@ describe EquifaxIdmatrix::Response do
           access: {
             url: @config["url"],
             access_code: @config["access_code"],
-            password: "xxxxx",
+            password: @config["password"],
             },
           entity: @entity_hash,
           enquiry: @enquiry_hash)
@@ -265,7 +265,7 @@ describe EquifaxIdmatrix::Response do
         end
       end
 
-     describe ".error" do
+      describe ".error" do
         it "returns message" do
           expect(@response.error).to include("Authentication Failed")
         end
