@@ -14,7 +14,7 @@ And then execute:
 
 Then run install generator:
 
-	rails g equifax_credit:install
+  rails g equifax_credit:install
   rails g equifax_idmatrix:install
 
 
@@ -135,7 +135,7 @@ Attributes for enquiry_hash:
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/equifax/fork )
+1. Fork it ( http://github.com/<my-github-username>//fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. See dev.rb file in root

@@ -2,6 +2,7 @@ require 'active_record'
 
 require 'nokogiri'
 require 'httparty'
+
 module Equifax
 
 end

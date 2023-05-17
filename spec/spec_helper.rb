@@ -1,6 +1,6 @@
 require 'bundler/setup'
-require 'equifax_credit'
-require 'equifax_idmatrix'
+require 'credit'
+require 'idmatrix'
 require 'shoulda/matchers'
 require 'pry'
 Bundler.setup
