@@ -2,10 +2,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'equifax'
-  spec.version       = '1.0.1'
+  spec.version       = Equifax::VERSION
   spec.authors       = ['Andre Mouton', 'Barry Mieny']
   spec.email         = 'info@easylodge.com.au'
   spec.summary       = 'Equifax Credit Checks and Equifax IDMatrix Identity Verification.'
