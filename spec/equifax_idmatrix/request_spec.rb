@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EquifaxIdmatrix::Request do
+describe Equifax::Idmatrix::Request do
   it { should have_one(:response).dependent(:destroy) }
   it { should validate_presence_of(:ref_id) }
   it { should validate_presence_of(:access) }
@@ -99,7 +99,7 @@ describe EquifaxIdmatrix::Request do
       :reason_for_enquiry => "Test"
     }
 
-    @request = EquifaxIdmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+    @request = Equifax::Idmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
   end
 
   describe "with valid access credentials" do
@@ -300,7 +300,7 @@ describe EquifaxIdmatrix::Request do
               :device_intelligence_org_id => "org-abc",
               :device_intelligence_session_id => "X123"
           }
-          @request = EquifaxIdmatrix::Request.new(access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+          @request = Equifax::Idmatrix::Request.new(access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
           @request.to_soap
         end
 
@@ -396,7 +396,7 @@ describe EquifaxIdmatrix::Request do
       no_medicare = @entity_hash.dup
       no_medicare[:medicare_card_number] = ''
 
-      @request_no_medicare = EquifaxIdmatrix::Request.new(access: @access_hash, entity: no_medicare, enquiry: @enquiry_hash)
+      @request_no_medicare = Equifax::Idmatrix::Request.new(access: @access_hash, entity: no_medicare, enquiry: @enquiry_hash)
       expect(@request_no_medicare.to_soap).to_not include('<idm:medicare>')
     end
   end

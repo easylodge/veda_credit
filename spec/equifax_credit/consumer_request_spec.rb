@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EquifaxCredit::ConsumerRequest do
+describe Equifax::Credit::ConsumerRequest do
   it { should have_one(:consumer_response).dependent(:destroy) }
   it { should validate_presence_of(:access) }
   it { should validate_presence_of(:service) }
@@ -75,7 +75,7 @@ describe EquifaxCredit::ConsumerRequest do
           :enquiry_amount => '5000',
           :client_reference => '123456789'
         }
-      @request = EquifaxCredit::ConsumerRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      @request = Equifax::Credit::ConsumerRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
       @request.save
     end
 

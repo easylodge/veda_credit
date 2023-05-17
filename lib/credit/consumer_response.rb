@@ -88,8 +88,8 @@ class Equifax::Credit::ConsumerResponse < ActiveRecord::Base
   end
 
   def error
-    bca_error = EquifaxCredit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
-    product_error = EquifaxCredit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
+    bca_error = Equifax::Credit::ConsumerResponse.nested_hash_value(self.as_hash, "BCAerror")
+    product_error = Equifax::Credit::ConsumerResponse.nested_hash_value(self.as_hash, "error")
     if bca_error
       service_request = self.as_hash["BCAmessage"]["service_request_id"]
       error = self.as_hash["BCAmessage"]["BCAservices"]["BCAservice"]["BCAservice_data"]["BCAerror"]["BCAerror_description"]

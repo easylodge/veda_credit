@@ -28,7 +28,7 @@ Then run migrations:
 ### Request
 
 
-    request = EquifaxCredit::Request.create(application_id: 123456, access: access_hash, service: service_hash, entity: entity_hash, enquiry: enquiry_hash)
+    request = Equifax::Credit::Request.create(application_id: 123456, access: access_hash, service: service_hash, entity: entity_hash, enquiry: enquiry_hash)
 
 Attributes for access_hash:
 
@@ -119,7 +119,7 @@ Attributes for enquiry_hash:
 ### Response
 
     post = request.post
-    response = EquifaxCredit::Response.create(xml: post.body, headers: post.headers, code: post.code, success: post.success?, request_id: request.id)
+    response = Equifax::Credit::Response.create(xml: post.body, headers: post.headers, code: post.code, success: post.success?, request_id: request.id)
 
 #### Instance Methods:
 

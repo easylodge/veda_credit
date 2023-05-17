@@ -1,4 +1,4 @@
-module EquifaxCredit
+module Equifax::Credit
   module V2
     class IndepthCompanyTradingHistoryResponse < ActiveRecord::Base
       self.table_name = 'equifax_credit_commercial_responses'

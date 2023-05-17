@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EquifaxCredit::V2::IndepthCompanyTradingHistoryRequest do
+describe Equifax::Credit::V2::IndepthCompanyTradingHistoryRequest do
   it { should have_one(:commercial_response).dependent(:destroy) }
   it { should validate_presence_of(:access) }
   it { should validate_presence_of(:service) }
@@ -38,7 +38,7 @@ describe EquifaxCredit::V2::IndepthCompanyTradingHistoryRequest do
         ppsr_required: 'no',
         credit_type: 'COMMERCIAL'
       }
-      @request = EquifaxCredit::V2::IndepthCompanyTradingHistoryRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+      @request = Equifax::Credit::V2::IndepthCompanyTradingHistoryRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
       @request.save
     end
 

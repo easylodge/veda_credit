@@ -145,12 +145,12 @@ dev_config = YAML.load_file('dev_config.yml')
 
 @bureau_reference = '186492371'
 
-@con_req = EquifaxCredit::ConsumerRequest.create(ref_id: 123, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+@con_req = Equifax::Credit::ConsumerRequest.create(ref_id: 123, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 # @con_post = @con_req.post
-# @con_res = EquifaxCredit::ConsumerResponse.create(xml: @con_post.body, consumer_request_id: @con_req.id)
-@com_req = EquifaxCredit::CommercialRequest.create(ref_id: 123, access: @com_access_hash, service: @com_service_hash, entity: @com_entity_hash, enquiry: @com_enquiry_hash)
+# @con_res = Equifax::Credit::ConsumerResponse.create(xml: @con_post.body, consumer_request_id: @con_req.id)
+@com_req = Equifax::Credit::CommercialRequest.create(ref_id: 123, access: @com_access_hash, service: @com_service_hash, entity: @com_entity_hash, enquiry: @com_enquiry_hash)
 # @com_post = @com_req.post
-# @com_res = EquifaxCredit::CommercialResponse.create(xml: @com_post.body, commercial_request_id: @com_req.id)
-@req = EquifaxIdmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+# @com_res = Equifax::Credit::CommercialResponse.create(xml: @com_post.body, commercial_request_id: @com_req.id)
+@req = Equifax::Idmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
 @post = @req.post
-@res = EquifaxIdmatrix::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)
+@res = Equifax::Idmatrix::Response.create(xml: @post.body, headers: @post.header, code: @post.code, success: @post.success?, request_id: @req.id)

@@ -1,9 +1,9 @@
-module EquifaxCredit
+module Equifax::Credit
   module V2
     class IndepthCompanyTradingHistoryRequest < ActiveRecord::Base
       self.table_name = 'equifax_credit_commercial_requests'
 
-      has_one :commercial_response, class_name: 'EquifaxCredit::V2::IndepthCompanyTradingHistoryResponse', foreign_key: 'commercial_request_id', dependent: :destroy
+      has_one :commercial_response, class_name: 'Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse', foreign_key: 'commercial_request_id', dependent: :destroy
 
       serialize :access
       serialize :service

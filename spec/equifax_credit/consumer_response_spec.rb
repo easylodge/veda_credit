@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EquifaxCredit::ConsumerResponse do
+describe Equifax::Credit::ConsumerResponse do
   it { should belong_to(:consumer_request).dependent(:destroy) }
   it { should validate_presence_of(:consumer_request_id) }
   it { should validate_presence_of(:xml) }
@@ -98,7 +98,7 @@ describe EquifaxCredit::ConsumerResponse do
       @code = 200
       @success = true
       @request_id = 1
-      @response = EquifaxCredit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
+      @response = Equifax::Credit::ConsumerResponse.new(xml: @xml, headers: @headers, code: @code, success: @success, consumer_request_id: @request_id)
       @response.save
     end
 

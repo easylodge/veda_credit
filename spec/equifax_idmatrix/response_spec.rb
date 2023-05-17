@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe EquifaxIdmatrix::Response do
+describe Equifax::Idmatrix::Response do
   it { should belong_to(:request).dependent(:destroy) }
 
   describe ".initialize" do
     it "converts :header to a hash" do
       not_a_hash = OpenStruct.new
       expect(not_a_hash).to receive(:to_h)
-      EquifaxIdmatrix::Response.new(headers: not_a_hash)
+      Equifax::Idmatrix::Response.new(headers: not_a_hash)
     end
   end
 
@@ -93,9 +93,9 @@ describe EquifaxIdmatrix::Response do
 
     describe "created by request.post with valid access details" do
       before(:all) do
-        @request = EquifaxIdmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
+        @request = Equifax::Idmatrix::Request.new(ref_id: 1, access: @access_hash, entity: @entity_hash, enquiry: @enquiry_hash)
         @post = @request.post
-        @response = EquifaxIdmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+        @response = Equifax::Idmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
 
       describe "is valid" do
@@ -150,7 +150,7 @@ describe EquifaxIdmatrix::Response do
 
     describe "created by request.post with invalid access details" do
       before(:all) do
-        @request = EquifaxIdmatrix::Request.new(
+        @request = Equifax::Idmatrix::Request.new(
           access: {
             url: @config["url"],
             user_code: @config["access_code"],
@@ -159,7 +159,7 @@ describe EquifaxIdmatrix::Response do
           entity: @entity_hash,
           enquiry: @enquiry_hash)
         @post = @request.post
-        @response = EquifaxIdmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+        @response = Equifax::Idmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
 
       describe "is valid" do
@@ -213,7 +213,7 @@ describe EquifaxIdmatrix::Response do
     describe "created by request.post with incorrect password" do
 
       before(:all) do
-        @request = EquifaxIdmatrix::Request.new(
+        @request = Equifax::Idmatrix::Request.new(
           access: {
             url: @config["url"],
             access_code: @config["access_code"],
@@ -222,7 +222,7 @@ describe EquifaxIdmatrix::Response do
           entity: @entity_hash,
           enquiry: @enquiry_hash)
         @post = @request.post
-        @response = EquifaxIdmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
+        @response = Equifax::Idmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
 
       it "is valid" do

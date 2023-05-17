@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EquifaxCredit::CommercialResponse do
+describe Equifax::Credit::CommercialResponse do
   it { should belong_to(:commercial_request).dependent(:destroy) } 
   it { should validate_presence_of(:commercial_request_id) }
   it { should validate_presence_of(:xml) }
@@ -14,7 +14,7 @@ describe EquifaxCredit::CommercialResponse do
       @xml = File.read('spec/equifax_credit/CE_Resp.xml')
       @headers = {"date"=>["Tue, 21 Oct 2014 13:16:48 GMT"], "server"=>["Apache-Coyote/1.1"], "http"=>[""], "content-type"=>["text/xml"], "content-length"=>["4888"], "connection"=>["close"]}
       @request_id = 1
-      @response = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: @request_id)
+      @response = Equifax::Credit::CommercialResponse.new(xml: @xml, commercial_request_id: @request_id)
       @response.save
     end
       
@@ -121,7 +121,7 @@ describe EquifaxCredit::CommercialResponse do
       context "#{file} error response" do
         before(:each) do
           @xml = File.read("spec/equifax_credit/#{file}")
-          @resp = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
+          @resp = Equifax::Credit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
           @resp.save
         end
         it ".get_hash for error" do
@@ -155,7 +155,7 @@ describe EquifaxCredit::CommercialResponse do
 
   context "with empty xml" do
     before(:each) do
-      @resp = EquifaxCredit::CommercialResponse.new(xml: nil, commercial_request_id: 1)
+      @resp = Equifax::Credit::CommercialResponse.new(xml: nil, commercial_request_id: 1)
       @resp.save
     end
     it ".error returns blank" do
@@ -188,14 +188,14 @@ describe EquifaxCredit::CommercialResponse do
   context ".error" do
     it "xml - returns error message" do
       @xml = File.read('spec/equifax_credit/commercial_error_response.xml')
-      @response = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
+      @response = Equifax::Credit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
       
       expect(@response.error).to eq("Error: 030 - ASIC Org Extract Gateway Unavailable")
     end
     it "html - returns error message" do
       @xml = File.read('spec/equifax_credit/commercial_html_error.html')
-      @response = EquifaxCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
+      @response = Equifax::Credit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
       
       expect(@response.error).to eq("Bad Request The request sent by the client was syntactically incorrect.")
