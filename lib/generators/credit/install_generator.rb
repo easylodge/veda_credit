@@ -1,4 +1,4 @@
-module EquifaxCredit
+module Equifax::Credit
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include Rails::Generators::Migration

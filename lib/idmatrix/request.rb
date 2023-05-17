@@ -1,4 +1,4 @@
-class EquifaxIdmatrix::Request < ActiveRecord::Base
+class Equifax::Idmatrix::Request < ActiveRecord::Base
   self.table_name = "equifax_idmatrix_requests"
   has_one :response, dependent: :destroy, inverse_of: :request
   serialize :access

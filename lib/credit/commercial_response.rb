@@ -1,4 +1,4 @@
-class EquifaxCredit::CommercialResponse < ActiveRecord::Base
+class Equifax::Credit::CommercialResponse < ActiveRecord::Base
   self.table_name = "equifax_credit_commercial_responses"
 
   belongs_to :commercial_request, dependent: :destroy

@@ -1,4 +1,4 @@
-class EquifaxCredit::ConsumerRequest < ActiveRecord::Base
+class Equifax::Credit::ConsumerRequest < ActiveRecord::Base
   self.table_name = "equifax_credit_consumer_requests"
 
   has_one :consumer_response, dependent: :destroy

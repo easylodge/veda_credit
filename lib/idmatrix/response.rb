@@ -1,4 +1,4 @@
-class EquifaxIdmatrix::Response < ActiveRecord::Base
+class Equifax::Idmatrix::Response < ActiveRecord::Base
   self.table_name = "equifax_idmatrix_responses"
   belongs_to :request, dependent: :destroy, inverse_of: :response
 

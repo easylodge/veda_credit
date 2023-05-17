@@ -1,6 +1,6 @@
 require 'rails'
 
-module EquifaxIdmatrix
+module Equifax::Idmatrix
   class Railtie < Rails::Railtie
 	 railtie_name :equifax_idmatrix
   end

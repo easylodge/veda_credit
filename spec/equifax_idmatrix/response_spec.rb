@@ -118,6 +118,7 @@ describe EquifaxIdmatrix::Response do
 
       describe ".success?" do
         it "returns boolean of post action" do
+          puts @response.inspect
           expect(@response.success?).to be(true)
         end
       end
