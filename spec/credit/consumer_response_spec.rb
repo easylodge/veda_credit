@@ -93,7 +93,7 @@ describe Equifax::Credit::ConsumerResponse do
 
   describe "with valid response xml" do
     before(:all) do
-      @xml = File.read('spec/equifax_credit/valid_consumer_response.xml')
+      @xml = File.read('spec/credit/valid_consumer_response.xml')
       @headers = {"date"=>["Tue, 21 Oct 2014 13:16:48 GMT"], "server"=>["Apache-Coyote/1.1"], "http"=>[""], "content-type"=>["text/xml"], "content-length"=>["4888"], "connection"=>["close"]}
       @code = 200
       @success = true

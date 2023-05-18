@@ -11,7 +11,7 @@ describe Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse do
 
   context 'with valid xml' do
     before(:all) do
-      @xml = File.read('spec/equifax_credit/v2/indepth_company_trading_history_response.xml')
+      @xml = File.read('spec/credit/v2/indepth_company_trading_history_response.xml')
       @headers = {
         'date' => ['Tue, 21 Oct 2014 13:16:48 GMT'],
         'server' => ['Apache-Coyote/1.1'],
@@ -126,7 +126,7 @@ describe Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse do
     ['commercial_error_response.xml', 'commercial_html_error.html'].each do |file|
       context "#{file} error response" do
         before(:each) do
-          @xml = File.read("spec/equifax_credit/#{file}")
+          @xml = File.read("spec/credit/#{file}")
           @resp = Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
           @resp.save
         end
@@ -193,14 +193,14 @@ describe Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse do
 
   context '.error' do
     it 'xml - returns error message' do
-      @xml = File.read('spec/equifax_credit/commercial_error_response.xml')
+      @xml = File.read('spec/credit/commercial_error_response.xml')
       @response = Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
 
       expect(@response.error).to eq('Error: 030 - ASIC Org Extract Gateway Unavailable')
     end
     it 'html - returns error message' do
-      @xml = File.read('spec/equifax_credit/commercial_html_error.html')
+      @xml = File.read('spec/credit/commercial_html_error.html')
       @response = Equifax::Credit::V2::IndepthCompanyTradingHistoryResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
 
