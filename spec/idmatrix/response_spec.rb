@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Equifax::Idmatrix::Response do
   it { should belong_to(:request).dependent(:destroy) }
 
+
   describe ".initialize" do
     it "converts :header to a hash" do
       not_a_hash = OpenStruct.new
@@ -105,8 +106,8 @@ describe Equifax::Idmatrix::Response do
       end
 
       describe ".code" do
-        it "returns status code" do
-          expect(@response.code).to be(200)
+        it "returns status code #{@response}" do
+          expect(@response.code).to eq(200)
         end
       end
 
@@ -118,7 +119,6 @@ describe Equifax::Idmatrix::Response do
 
       describe ".success?" do
         it "returns boolean of post action" do
-          puts @response.inspect
           expect(@response.success?).to be(true)
         end
       end
@@ -153,8 +153,8 @@ describe Equifax::Idmatrix::Response do
         @request = Equifax::Idmatrix::Request.new(
           access: {
             url: @config["url"],
-            user_code: @config["access_code"],
-            password: @config["password"]
+            user_code: "XXXXX",
+            password: "XXXXX"
             },
           entity: @entity_hash,
           enquiry: @enquiry_hash)
@@ -217,7 +217,7 @@ describe Equifax::Idmatrix::Response do
           access: {
             url: @config["url"],
             access_code: @config["access_code"],
-            password: @config["password"],
+            password: "XXXXX",
             },
           entity: @entity_hash,
           enquiry: @enquiry_hash)
