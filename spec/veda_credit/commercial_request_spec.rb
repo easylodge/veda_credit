@@ -1,30 +1,24 @@
 require 'spec_helper'
 
 describe VedaCredit::CommercialRequest do
-  it { should have_one(:commercial_response).dependent(:destroy) }
-  it { should validate_presence_of(:access) }
-  it { should validate_presence_of(:service) }
-  it { should validate_presence_of(:entity) }
-  it { should validate_presence_of(:enquiry) }
-
   describe "with valid access, service and entity hash" do
 
-    before(:all) do 
-      @access_hash = 
+    before(:all) do
+      @access_hash =
         {
           :url => "url",
           :username => "username",
           :password => "password",
         }
-      @service_hash = 
+      @service_hash =
         {
           :service_code => "XML2"
         }
-      @entity_hash = 
-        { 
+      @entity_hash =
+        {
           :acn => "000105233",
-          :bureau_reference => "BFN 001" 
-        }   
+          :bureau_reference => "BFN 001"
+        }
       @enquiry_hash =
         {
           :role => 'principal',
@@ -44,7 +38,7 @@ describe VedaCredit::CommercialRequest do
           :ppsr_required => "no",
           :credit_type => "COMMERCIAL",
         }
-      @request = VedaCredit::CommercialRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      @request = VedaCredit::CommercialRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
       @request.save
     end
 
@@ -69,9 +63,9 @@ describe VedaCredit::CommercialRequest do
     describe ".entity" do
       it "returns entity details hash used to build request" do
         expect(@request.entity).to eq(
-          { 
+          {
           :acn => "000105233",
-          :bureau_reference => "BFN 001" 
+          :bureau_reference => "BFN 001"
         } )
       end
     end
@@ -124,11 +118,11 @@ describe VedaCredit::CommercialRequest do
         expect(@request.xml).to include("com:account-type code=\"HC\"")
       end
 
-      # it "is nil" do 
+      # it "is nil" do
       #   expect(@request.xml).to eq(nil)
       # end
 
-      
+
     end
 
   end

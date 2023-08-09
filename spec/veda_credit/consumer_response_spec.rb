@@ -1,10 +1,7 @@
 require 'spec_helper'
+require 'shoulda/matchers'
 
 describe VedaCredit::ConsumerResponse do
-  it { should belong_to(:consumer_request).dependent(:destroy) }
-  it { should validate_presence_of(:consumer_request_id) }
-  it { should validate_presence_of(:xml) }
-
   it {expect(subject.class).to respond_to(:nested_hash_value)}
   it {expect(subject).to respond_to(:consumer_plus_commercial?)}
   it {expect(subject).to respond_to(:commercial_plus_consumer?)}

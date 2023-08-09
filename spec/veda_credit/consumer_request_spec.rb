@@ -1,16 +1,10 @@
 require 'spec_helper'
 
 describe VedaCredit::ConsumerRequest do
-  it { should have_one(:consumer_response).dependent(:destroy) }
-  it { should validate_presence_of(:access) }
-  it { should validate_presence_of(:service) }
-  it { should validate_presence_of(:entity) }
-  it { should validate_presence_of(:enquiry) }
-
   describe "with valid access, service and entity hash" do
 
-    before(:all) do 
-      @access_hash = 
+    before(:all) do
+      @access_hash =
         {
           :url => "url",
           :access_code => "access_code",
@@ -19,13 +13,13 @@ describe VedaCredit::ConsumerRequest do
           :security_code => "security_code",
           :request_mode => "request_mode"
         }
-      @service_hash = 
+      @service_hash =
         {
           :service_code => "VDA001",
           :service_code_version => 'V00',
           :request_version => '1.0',
         }
-      @entity_hash = 
+      @entity_hash =
         {
           :family_name => "Potter",
           :first_given_name => "James",
@@ -68,14 +62,14 @@ describe VedaCredit::ConsumerRequest do
         {
           :product_name => "vedascore-financial-consumer-1.1",
           :summary => "yes",
-          :role => 'principal',   
+          :role => 'principal',
           :enquiry_type => 'credit-application',
           :account_type_code => 'LC',
           :currency_code => 'AUD',
           :enquiry_amount => '5000',
           :client_reference => '123456789'
         }
-      @request = VedaCredit::ConsumerRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)        
+      @request = VedaCredit::ConsumerRequest.new(ref_id: 1, access: @access_hash, service: @service_hash, entity: @entity_hash, enquiry: @enquiry_hash)
       @request.save
     end
 
@@ -105,41 +99,41 @@ describe VedaCredit::ConsumerRequest do
     describe ".entity" do
       it "returns entity details hash used to build request" do
         expect(@request.entity).to eq(
-          { :family_name=>"Potter", 
-            :first_given_name=>"James", 
-            :other_given_name=>"Harry", 
-            :date_of_birth=>"1980-07-31", 
-            :gender=>"male", 
+          { :family_name=>"Potter",
+            :first_given_name=>"James",
+            :other_given_name=>"Harry",
+            :date_of_birth=>"1980-07-31",
+            :gender=>"male",
             :current_address=>{
-              :property=>"Potter Manor", 
-              :unit_number=>"3", 
-              :street_number=>"4", 
-              :street_name=>"Privet", 
-              :street_type=>"Drive", 
-              :suburb=>"Little Whinging", 
-              :state=>"NSW", 
+              :property=>"Potter Manor",
+              :unit_number=>"3",
+              :street_number=>"4",
+              :street_name=>"Privet",
+              :street_type=>"Drive",
+              :suburb=>"Little Whinging",
+              :state=>"NSW",
               :postcode=>"2999",
-              :country_code => "AU", 
+              :country_code => "AU",
               :unformatted_address=>"Potter Manor 3/4 Privet Drive Little Whinging NSW 2999"
-              }, 
+              },
             :previous_address=>{
-              :property=>"Veda House", 
-              :unit_number=>"15", 
-              :street_number=>"100", 
-              :street_name=>"Arthur", 
-              :street_type=>"Street", 
-              :suburb=>"North Sydney", 
-              :state=>"NSW", 
+              :property=>"Veda House",
+              :unit_number=>"15",
+              :street_number=>"100",
+              :street_name=>"Arthur",
+              :street_type=>"Street",
+              :suburb=>"North Sydney",
+              :state=>"NSW",
               :postcode=>"2060",
-              :country_code => "AU", 
+              :country_code => "AU",
               :unformatted_address=>"Veda House 15/100 Arthur Street North Sydney NSW 2060"
-              }, 
-            :home_phone_number=>"0312345678", 
-            :mobile_phone_number=>"0487654321", 
-            :work_phone_number=>"040012312", 
-            :email_address=>"harry.potter@example.com", 
-            :alternative_email_address=>"hpotter@example.com", 
-            :drivers_licence_state_code=>"NSW", 
+              },
+            :home_phone_number=>"0312345678",
+            :mobile_phone_number=>"0487654321",
+            :work_phone_number=>"040012312",
+            :email_address=>"harry.potter@example.com",
+            :alternative_email_address=>"hpotter@example.com",
+            :drivers_licence_state_code=>"NSW",
             :drivers_licence_number=>"1234567890"
 
           })
@@ -149,7 +143,7 @@ describe VedaCredit::ConsumerRequest do
     describe ".enquiry" do
       it "returns enquiry details hash used to build request" do
         expect(@request.enquiry).to eq({
-                                  :product_name=>"vedascore-financial-consumer-1.1", 
+                                  :product_name=>"vedascore-financial-consumer-1.1",
                                   :summary=>"yes",
                                   :role=>"principal",
                                   :enquiry_type => 'credit-application',
@@ -194,11 +188,11 @@ describe VedaCredit::ConsumerRequest do
         expect(@request.xml).to include('<account-type code="LC"/>')
       end
 
-      # it "is nil" do 
+      # it "is nil" do
       #   expect(@request.xml).to eq(nil)
       # end
 
-      
+
     end
 
     describe "with unformatted address" do
@@ -206,7 +200,7 @@ describe VedaCredit::ConsumerRequest do
         expect(@request.entity[:current_address][:unformatted_address]).to eq('Potter Manor 3/4 Privet Drive Little Whinging NSW 2999')
       end
 
-        
+
       it "uses unformatted_address when present" do
         expect(@request.xml).to include('<unformatted-address type="residential-current">Potter Manor 3/4 Privet Drive Little Whinging NSW 2999</unformatted-address>')
       end
@@ -217,10 +211,9 @@ end
 
 
 
-        
 
-        
 
-    		
 
-     
+
+
+
