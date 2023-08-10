@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    veda_credit (0.0.50)
+    veda_credit (1.0.0)
       activesupport
       httparty
       nokogiri
