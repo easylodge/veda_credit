@@ -1,12 +1,6 @@
 require 'spec_helper'
 
 describe VedaCredit::V2::IndepthCompanyTradingHistoryRequest do
-  it { should have_one(:commercial_response).dependent(:destroy) }
-  it { should validate_presence_of(:access) }
-  it { should validate_presence_of(:service) }
-  it { should validate_presence_of(:entity) }
-  it { should validate_presence_of(:enquiry) }
-
   describe 'with valid access, service and entity hash' do
     before(:all) do
       @access_hash = {

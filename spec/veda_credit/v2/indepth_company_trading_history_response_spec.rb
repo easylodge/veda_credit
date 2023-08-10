@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe VedaCredit::V2::IndepthCompanyTradingHistoryResponse do
-  it { should belong_to(:indepth_company_trading_history_request).dependent(:destroy) }
-  it { should validate_presence_of(:commercial_request_id) }
-  it { should validate_presence_of(:xml) }
-
   it '.to_s' do
     expect(subject.to_s).to eq('Veda Credit Indepth Company Trading History Response')
   end

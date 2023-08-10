@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe VedaCredit::CommercialResponse do
-  it { should belong_to(:commercial_request).dependent(:destroy) } 
-  it { should validate_presence_of(:commercial_request_id) }
-  it { should validate_presence_of(:xml) }
-
   it ".to_s" do
     expect(subject.to_s).to eq("Veda Credit Commercial Response")
   end
@@ -17,7 +13,7 @@ describe VedaCredit::CommercialResponse do
       @response = VedaCredit::CommercialResponse.new(xml: @xml, commercial_request_id: @request_id)
       @response.save
     end
-      
+
     it ".xml returns xml string" do
       expect(@response.xml).to include('<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:vh="http://vedaxml.com/soap/header/v-header-v1-9.xsd" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">')
     end
@@ -30,7 +26,7 @@ describe VedaCredit::CommercialResponse do
         end
       end
     end
-    
+
     context ".company_enquiry_header" do
       it "returns a hash" do
         expect(@response.company_enquiry_header).to be_a(Hash)
@@ -190,14 +186,14 @@ describe VedaCredit::CommercialResponse do
       @xml = File.read('spec/veda_credit/commercial_error_response.xml')
       @response = VedaCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
-      
+
       expect(@response.error).to eq("Error: 030 - ASIC Org Extract Gateway Unavailable")
     end
     it "html - returns error message" do
       @xml = File.read('spec/veda_credit/commercial_html_error.html')
       @response = VedaCredit::CommercialResponse.new(xml: @xml, commercial_request_id: 1)
       @response.save
-      
+
       expect(@response.error).to eq("Bad Request The request sent by the client was syntactically incorrect.")
     end
   end

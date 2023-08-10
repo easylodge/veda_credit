@@ -1,3 +1,5 @@
+require 'active_support/all'
+
 class VedaCredit::ConsumerResponse < ActiveRecord::Base
   self.table_name = "veda_credit_consumer_responses"
 
